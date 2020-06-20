@@ -1,0 +1,16 @@
+{
+  "name": "hermitcraftbot",
+  "version": "1.0.0",
+  "description": "A custom Discord bot for Hermitcraft Fan Server on Discord.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "TheMLGDude#2177",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "discord.js-commando": "^0.10.0",
+    "quick.db": "^7.1.1"
+  }
+}
