@@ -1,4 +1,7 @@
 const Commando = require("discord.js-commando");
+const discord = require('discord.js');
+const db = require('quick.db');
+const Errors = require("../../Errors");
 
 class CoinFlipCommand extends Commando.Command
 {
