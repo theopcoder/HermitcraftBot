@@ -26,7 +26,7 @@ class BotChangeCommand extends Commando.Command
             .addField("Bot Dev:", "TheMLGDude#2177(GitHub: theopcoder)")
             .addField("Bot Version", Version)
             .addField("Latest Update Name:", VersionName)
-            .addField("Changelog:", "Visit https://github.com/theopcoder/HermitcraftBot then head to the 1.0.0+ Changelog to see the latest bot updates!")//TODO in version 1.1.0, update this to show the GitHub changelog file
+            .addField("Changelog:", "Visit https://github.com/theopcoder/HermitcraftBot/tree/master/Changelogs then head to the 1.0.0+ Changelog to see the latest bot updates!")
             .addField("These are the most recent bot updates! Thanks for checking them out! Sincerely,", "BotDev")
         message.member.sendEmbed(BotChangeLogmsg);
 

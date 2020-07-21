@@ -1,7 +1,7 @@
 Release Name: Out of Beta!
-Release Description: 
+Release Description: Wow! This has been a big project! This update includes tons of changes, new features and bug fixes! This update goes from the bottom from some grammar fixes to pretty much redoing the whole admin folder! The bot is now officially out of Beta and should now be stable and usable. More updates are to come with new features, bug fixes, and changes to the commands and features. A complete changelog can be found in the Changelogs folder then 1.0.0+ File then look for the 1.0.0 update! More awesome updates are soon to come! Sincerely, theopcoder
 Release Version: 1.0.0
-Release Date: 
+Release Date: 7/20/2020
 
 New Commands/Features:
 1. Added Procfile for Heroku support and as a secondary bot hosting solution
@@ -98,11 +98,29 @@ Bug Fixes:
 14. Fixed -bal showing money as null(Bug#: 15)
 15. (Bug#: 16)
 
-Notes: 
+Notes: Out of Beta! 7/20/2020 :) This update took almost one month to make!
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name: Quick Fix
+Release Description: Just a few quick fixes
+Release Version: 1.0.1
+Release Date: 7/20/2020
+
+New Commands/Features:
+1. 
+
+Changes: 
+1. -botlog has had the url changed slightly to show the changelog folder
+2. Made README.md look a bit nicer
+3. Added Missing Data to 1.0.0 Update
+
+Bug Fixes:
+1. 
+
+Notes: No New Commands/Feature and no Bug Fixes
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Release Name:
 Release Description: 
-Release Version: 1.1.0
+Release Version: 
 Release Date: 
 
 New Commands/Features:
