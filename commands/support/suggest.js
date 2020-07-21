@@ -1,7 +1,7 @@
 const Commando = require("discord.js-commando");
-const discord = require('discord.js');
-const db = require('quick.db');
-const Errors = require("../../Errors");
+const discord = require("discord.js");
+const db = require("quick.db");
+const Errors = require("../../BotData.js");
 
 class SuggestCommand extends Commando.Command
 {
@@ -24,16 +24,18 @@ class SuggestCommand extends Commando.Command
             if (!suggestion) return message.reply("Please say your suggestion!")
             .then(msg => {
                 msg.delete(10000)
-            })
+            });
         }
         const Suggestionmsg = new discord.RichEmbed()
             .setColor("0x20B2AA")
             .setTimestamp()
-            .setFooter("Click the green check to like the idea or the red x to not have the suggestion done!")
             .setTitle('Suggestion')
+            .setAuthor(message.author.tag, message.author.avatarURL)
+            .setThumbnail(message.author.avatarURL)
             .addField('User:', 
             `${message.author}`)
             .addField('Sugestion:', suggestion)
+            .setFooter("Click the green check to like the idea or the red x to not have the suggestion done!")
         let logchannel = message.guild.channels.find('name', 'suggestions'); 
         logchannel.send(Suggestionmsg).then(embedMessage => {
             embedMessage.react("✅");
@@ -42,11 +44,12 @@ class SuggestCommand extends Commando.Command
         const SuggestionUsermsg = new discord.RichEmbed()
             .setColor("0x20B2AA")
             .setTimestamp()
-            .setFooter('Hi Their! This bot is in BETA. If you find any bugs report them in #report-a-bug')
             .setTitle("Suggestion")
+            .setAuthor(message.author.tag, message.author.avatarURL)
+            .setThumbnail(message.author.avatarURL)
             .addField("User:", message.author)
             .addField("Your Suggestion:", suggestion)
-            .addField("Thank you for sending in your suggestion! This message is a quick recap of what you suggested! We hope your suggestion gets added! Sincerely,", "-HermitcraftDevTeam")
+            .setFooter("Thank you for your suggestion! This is just a quick recap of what you suggested! Good luck! Sincerely, HC Dev Team")
         message.member.sendEmbed(SuggestionUsermsg);
     }
 }

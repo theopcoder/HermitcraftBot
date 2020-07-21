@@ -1,7 +1,7 @@
 const Commando = require("discord.js-commando");
-const discord = require('discord.js');
-const db = require('quick.db');
-const Errors = require("../../Errors");
+const discord = require("discord.js");
+const db = require("quick.db");
+const Errors = require("../../BotData.js");
 
 class MuteCommand extends Commando.Command
 {
@@ -22,7 +22,7 @@ class MuteCommand extends Commando.Command
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
             .then(msg => {
                 msg.delete(10000)
-            })
+            });
             return;
         }
         let MutedUser = message.guild.member(message.mentions.users.first());
@@ -31,7 +31,7 @@ class MuteCommand extends Commando.Command
             message.channel.send(":warning: Sorry, I couldn't find that user")
             .then(msg => {
                 msg.delete(10000)
-            })
+            });
             return;
         }
         let words = args.split(' ');
@@ -40,44 +40,51 @@ class MuteCommand extends Commando.Command
             if (!reason) return message.reply(':warning: Please supply a reason for the mute!')
             .then(msg => {
                 msg.delete(10000)
-            })
+            });
         }
-        {
-            let role = message.guild.roles.find(r => r.name === "mute");
-            let member = message.mentions.members.first();
-            member.addRole(role)
-        }
-        {
-            let role = message.guild.roles.find(r => r.name === "Member");
-            let member = message.mentions.members.first();
-            member.removeRole(role)
-        }
-        {
-            message.reply(message.author.tag+'Has muted '+message.mentions.users.first()+ ' For, '+reason);
-        }
-        {
-            db.get(`{mutep}_${message.mentions.members.first().id}`)
-            db.add(`{mutep}_${message.mentions.members.first().id}`, 1);
-        }
-        {
-            db.get(`{reputation}_${message.mentions.members.first().id}`)
-            db.add(`{reputation}_${message.mentions.members.first().id}`, 1);
-        }
-        const mutemsg = new discord.RichEmbed()
-        .setColor("0xFFA500")
-        .setTimestamp()
-        .setThumbnail(message.author.avatarURL)
-        .addField('Action:', 'Mute') 
-        .addField('Moderator:', 
-        `${message.author.tag}`)
-        .addField('Muted User:', message.mentions.users.first())
-        .addField("User ID:", message.mentions.users.first().id)
-        .addField('Reason', reason)
-        .addField('Offences: ', 'This is, '+message.mentions.users.first()+' '+db.get(`{reputation}_${message.mentions.users.first().id}`)+' offence!')
-        .addField('Info: ', message.mentions.users.first()+' Has, '+db.get(`{warnp}_${message.mentions.users.first().id}`)+' Warning(s), '+db.get(`{mutep}_${message.mentions.users.first().id}`)+' Mute(s), '+db.get(`{kickp}_${message.mentions.users.first().id}`)+' Kick(s), '+db.get(`{banp}_${message.mentions.users.first().id}`)+' Ban(s)!')
-        message.channel.send(`This has been logged and a REP point was added!`)
+
+        let member = message.mentions.members.first();
+        let MutedRole = message.guild.roles.find(r => r.name === "Muted");
+        member.addRole(MutedRole)
+        let MemberRole = message.guild.roles.find(r => r.name === "Member");
+        member.removeRole(MemberRole)
+
+        db.add(`{mutep}_${message.mentions.members.first().id}`, 1);
+        db.add(`{reputation}_${message.mentions.members.first().id}`, 1);
+        db.add(`{CurrentlyMuted}_${message.mentions.users.first().id}`, 1);//This is a chat bypass mute protection module
+        let RepP = db.get(`{reputation}_${message.mentions.users.first().id}`); if (RepP == null)RepP = "0";
+        let WarnP = db.get(`{warnp}_${message.mentions.users.first().id}`); if (WarnP == null)WarnP = "0";
+        let MuteP = db.get(`{mutep}_${message.mentions.users.first().id}`); if (MuteP == null)MuteP = "0";
+        let KickP = db.get(`{kickp}_${message.mentions.users.first().id}`); if (KickP == null)KickP = "0";
+        let BanP = db.get(`{banp}_${message.mentions.users.first().id}`); if (BanP == null)BanP = "0";
+        let users = message.mentions.users.first();
+
+        message.mentions.members.first().send(`You have been muted on ${message.guild.name} because, ${reason}.`)
+
+        const ChatMutemsg = new discord.RichEmbed()
+            .setColor("0x8B4513")
+            .setTimestamp()
+            .setThumbnail(users.displayAvatarURL)
+            .addField('Action:', 'Mute')
+            .addField(`Moderator:`, message.author)
+            .addField(`User:`, message.mentions.users.first())
+            .addField(`Reason:`, reason)
+            .setFooter(`Successfully logged and muted ${message.mentions.users.first().tag}!`)
+        message.channel.sendEmbed(ChatMutemsg)
+
+        const Mutemsg = new discord.RichEmbed()
+            .setColor("0x8B4513")
+            .setTimestamp()
+            .setThumbnail(users.displayAvatarURL)
+            .addField('Action:', 'Mute') 
+            .addField('Moderator:', `${message.author}`)
+            .addField('Muted User:', message.mentions.users.first())
+            .addField("User ID:", message.mentions.users.first().id)
+            .addField('Reason:', reason)
+            .addField('Offences:', message.mentions.users.first()+" has **"+RepP+"** offence(s).")
+            .addField('Info:', message.mentions.users.first()+' Has, '+WarnP+' Warning(s), '+MuteP+' Mute(s), '+KickP+' Kick(s), '+BanP+' Ban(s)!')
         let logchannel = message.guild.channels.find('name', 'logs');
-        return logchannel.send(mutemsg);
+        return logchannel.send(Mutemsg);
     }
 }
 

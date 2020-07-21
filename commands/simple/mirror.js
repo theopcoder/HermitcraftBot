@@ -1,7 +1,7 @@
 const Commando = require("discord.js-commando");
-const discord = require('discord.js');
-const db = require('quick.db');
-const Errors = require("../../Errors");
+const discord = require("discord.js");
+const db = require("quick.db");
+const Errors = require("../../BotData.js");
 
 class MirrorCommand extends Commando.Command
 {
@@ -11,13 +11,19 @@ class MirrorCommand extends Commando.Command
             name: "mirror",
             group: "simple",
             memberName: 'mirror',
-            description: 'Shows you your pfp!'
+            description: 'Shows you your pfp or another users pfp!'
         });
     }
 
     async run(message, args)
     {
-        message.reply(message.author.avatarURL)
+        let MirrorUser = message.guild.member(message.mentions.users.first());
+        if (MirrorUser){
+            let users = message.mentions.users.first();
+            message.reply(users.displayAvatarURL)
+        }else{
+            message.reply(message.author.avatarURL)
+        }
     }
 }
 

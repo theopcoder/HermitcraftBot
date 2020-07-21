@@ -1,7 +1,7 @@
 const Commando = require("discord.js-commando");
-const discord = require('discord.js');
-const db = require('quick.db');
-const Errors = require("../../Errors");
+const discord = require("discord.js");
+const db = require("quick.db");
+const Errors = require("../../BotData.js");
 
 class WarCommand extends Commando.Command
 {
@@ -34,7 +34,7 @@ class WarCommand extends Commando.Command
             db.add(`{WarMember}_${message.author.id}`, 1)
             db.add(`WarMemberGlobal`, 1)
 
-            let WarRole = message.guild.roles.find(r => r.name === "---WarRoles---");
+            let WarRole = message.guild.roles.find(r => r.name === "---------WarRoles---------");
             message.member.addRole(WarRole)
             let RedTeam = message.guild.roles.find(r => r.name === "Red Team");
             message.member.addRole(RedTeam)
@@ -43,7 +43,7 @@ class WarCommand extends Commando.Command
             let WarMember = message.guild.roles.find(r => r.name === "War Member");
             message.member.addRole(WarMember)
 
-            return message.channel.send("Congradulations, "+message.author+"! You have now officially joined the Red Team!");
+            message.channel.send("Congradulations, "+message.author+"! You have now officially joined the Red Team!");
         }
 
         if (reason == "blue")
@@ -67,7 +67,7 @@ class WarCommand extends Commando.Command
             let WarMember = message.guild.roles.find(r => r.name === "War Member");
             message.member.addRole(WarMember)
 
-            return message.channel.send("Congradulations, "+message.author+"! You have now officially joined the Blue Team!");
+            message.channel.send("Congradulations, "+message.author+"! You have now officially joined the Blue Team!");
         }
 
         const Warinfo = new discord.RichEmbed()

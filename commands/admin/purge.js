@@ -1,7 +1,7 @@
 const Commando = require("discord.js-commando");
-const discord = require('discord.js');
-const db = require('quick.db');
-const Errors = require("../../Errors");
+const discord = require("discord.js");
+const db = require("quick.db");
+const Errors = require("../../BotData.js");
 
 class PurgeCommand extends Commando.Command
 {
@@ -28,11 +28,11 @@ class PurgeCommand extends Commando.Command
         let words = args.split(' ');
         let reason = words.slice(0).join(' ');
         {
-            if (!reason) return message.reply('Please specify the amount of messages you want to delete! Make sure its between 2-99!')
+            if (!reason) return message.reply('Please specify the amount of messages you want to purge! Make sure its between 2-99!')
             .then(msg => {
                 msg.delete(10000)
             })
-            if (reason == "1")return message.reply("Please use 2 to 99!")
+            if (reason == "1")return message.reply("The purge must be 2 to 99!")
             .then(msg => {
                 msg.delete(10000)
             })

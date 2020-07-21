@@ -1,7 +1,7 @@
 const Commando = require("discord.js-commando");
-const discord = require('discord.js');
-const db = require('quick.db');
-const Errors = require("../../Errors");
+const discord = require("discord.js");
+const db = require("quick.db");
+const Errors = require("../../BotData.js");
 
 class BotChangeCommand extends Commando.Command
 {
@@ -17,17 +17,20 @@ class BotChangeCommand extends Commando.Command
 
     async run(message, args)
     {
+        let user = message.author;
         const BotChangeLogmsg = new discord.RichEmbed()
             .setColor("0x20B2AA")
             .setTimestamp()
-            .setFooter("Hi there! Did you encounter a bug/error with the bot? Make sure to do report the bug using -bug! Thanks! -Hermitcraft BotDev")
-            .setThumbnail(client.guild.avatarURL)
+            .setFooter("Hello! Have you encountered any bugs, errors or, issues? Well, head to #bug-reports and do -bug so we can fix the issue as soon as possible! Sincerely, Hermitcraft BotDev")
             .setTitle("Bot ChangeLog")
-            .addField("Bot Dev:", "TheMLGDude#2177")
-            .addField("Bot Version", "0.2.1")
-            .addField("Changelog:", "PlaceHolder")
-            .addField("These are the key changes in the latest bot update! Sincerely,", "-Hermitcraft BotDev")
+            .addField("Bot Dev:", "TheMLGDude#2177(GitHub: theopcoder)")
+            .addField("Bot Version", Version)
+            .addField("Latest Update Name:", VersionName)
+            .addField("Changelog:", "Visit https://github.com/theopcoder/HermitcraftBot then head to the 1.0.0+ Changelog to see the latest bot updates!")//TODO in version 1.1.0, update this to show the GitHub changelog file
+            .addField("These are the most recent bot updates! Thanks for checking them out! Sincerely,", "BotDev")
         message.member.sendEmbed(BotChangeLogmsg);
+
+        message.channel.send("Successfully sent the Bot Changelog")
     }
 }
 

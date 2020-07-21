@@ -1,7 +1,7 @@
 const Commando = require("discord.js-commando");
-const discord = require('discord.js');
-const db = require('quick.db');
-const Errors = require("../../Errors");
+const discord = require("discord.js");
+const db = require("quick.db");
+const Errors = require("../../BotData.js");
 
 class ReportCommand extends Commando.Command
 {
@@ -19,32 +19,45 @@ class ReportCommand extends Commando.Command
     {
         message.delete();
         let words = args.split(' ');
-        let report = words.slice(0).join(' ');
-        {
-            if (!report) return message.reply("Please say the name of the user and what they where doing, alongside proof if possible!")
+        let ReportedUser = words[0];
+        let report = words.slice(1).join(' ');
+
+        if (!ReportedUser){
+            message.channel.send(`Please say the name of the user, there ID or, mention them so staff know who your reporting! If they have spaces in there names, please use _ Thanks!`)
             .then(msg => {
                 msg.delete(10000)
-            })
+            });
+            return;
         }
+        if (!report){
+            message.channel.send(`Please say the report or else staff cant help you!`)
+            .then(msg => {
+                msg.delete(10000)
+            });
+            return;
+        }
+
         const UserReportmsg = new discord.RichEmbed()
-            .setColor("0x20B2AA")
+            .setColor("0xFF0000")
             .setTimestamp()
-            .setFooter("Click the green check to like the idea or the red x to not have the suggestion done!")
-            .setTitle('Player Report')
-            .addField('User reporting:', 
-            `${message.author}`)
-            .addField('Report:', report)
+            .setThumbnail(message.author.avatarURL)
+            .setAuthor(message.author.tag, message.author.avatarURL)
+            .setTitle("User Report")
+            .addField("User:", message.author)
+            .addField("Reported User:", ReportedUser)
+            .addField("Report:", report)
         let logchannel = message.guild.channels.find('name', 'user-reports'); 
         logchannel.send(UserReportmsg)
 
-        const UserReportermsg = new discord.RichEmbed()
+        const ConfirmedReport = new discord.RichEmbed()
             .setColor("0x20B2AA")
             .setTimestamp()
-            .setFooter('Hi Their! This bot is in BETA. If you find any bugs report them in #report-a-bug')
-            .setTitle("Player Report")
-            .addField("Your report:", report)
-            .addField("Thank you for reporting the user! Our staff team will take care of the issue as soon as possible! Stay safe! Sincerely, ", "-Hermitcraft Staff Team")
-        message.member.sendEmbed(UserReportermsg);
+            .setThumbnail(message.author.avatarURL)
+            .setAuthor(message.author.tag, message.author.avatarURL)
+            .setTitle("User Report")
+            .addField("Reported User:", ReportedUser)
+            .addField("Report:", report)
+        message.member.sendEmbed(ConfirmedReport);
     }
 }
 

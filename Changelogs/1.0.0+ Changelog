@@ -1,0 +1,118 @@
+Release Name: Out of Beta!
+Release Description: 
+Release Version: 1.0.0
+Release Date: 
+
+New Commands/Features:
+1. Added Procfile for Heroku support and as a secondary bot hosting solution
+2. Added -settings command
+3. Added Changelogs Folder to keep organized bot updates
+4. Added 1.0.0+ Changelog for changes between 1.0.0-2.0.0
+5. Added welcome messages. It also messages the user and sends a small message
+6. Added a mute bypass check
+7. Added mew message replys
+8. Added -pay command
+9. Added -tax command
+10. Added a chat filter
+11. Added -store command
+12. Deleted messages will now trigger a bot response saying when a message is deleted
+13. Added -season to show people how long you have been on the server!
+14. Added VersionName in BotData.js to seperate the version number and Update name
+15. 
+
+Changes: 
+1. Removed unessecary code in commands (Especially in Admin commands)
+2. Fixed a typo in -softwarn
+3. The MLS now checks if the setting is turned on before it starts working
+4. Changed the wording slightely for -ui command
+5. Changed ui.js to user_info.js
+6. -ui has been updated with new Features
+    6a. Info requested now mentions the user
+    6b. Now shows mentioned users pfp
+    6c. Now shows mentioned users id
+    6d. Level now is Rank
+    6e. Rank now shows Level and XP
+7. Updated -ban command with interface improvements
+    7a. Cleaned up code
+    7b. The log now mentions the staff member instead of the tag
+    7c. Updated message on why user was muted
+    7d. Log message shows the banned users pfp
+    7e. Updated the Reputation field
+8. Updated -kick command with interface improvements
+    8a. Cleaned up code
+    8b. The log now mentions the staff member instead of the tag
+    8c. Updated message on why user was kicked
+    8d. Log message shows the kicked users pfp
+    8e. Updated the Reputation field
+9. Updated -mute command with interface improvements
+    9a. Cleaned up code
+    9b. The log now mentions the staff member instead of the tag
+    9c. Updated message on why user was muted
+    9d. Log message shows the muted users pfp
+    9e. Updated the Reputation field
+10. Updated -unmute command with interface improvements
+    10a. Cleaned up code
+    10b. The log now mentions the staff member instead of the tag
+    10c. Updated message on why user was unmuted
+    10d. Log message shows the unmuted users pfp
+    10e. Updated the Reputation field
+11. Updated -softwarn command with interface improvements
+    11a. Cleaned up code
+    11b. Updated message on why user was softwarned
+    11c. Log message shows the softwarned users pfp
+12. Updated -warn command with interface improvements
+    11a. Cleaned up code
+    11b. The log now mentions the staff member instead of the tag
+    11c. Updated message on why user was warned
+    11d. Log message shows the warned users pfp
+    11e. Updated the Reputation field
+13. Updated .gitignore
+14. -mirror can now show mentioned users pfp
+15. Updated the messages slightly for the purge command
+16. Compltely redid the code for -gamble command. It now gives random money rewards and is harder to win
+17. -botlog now shows the global bot version from the global bot data and updated the footer of the embed. Version and the latest update name are now on seperate fields
+18. Changed errors file to BotData
+19. All commands now support the new file name and all have support to the dependencies
+20. Updated README.md so the dependencies used aren't squished together and made it look nicer. Author changed to Developer and is now theopcoder
+21. Level up messages have now moved into embeds and sent into a dedicated channel
+22. Changed the bot logon message
+23. Changed the interface of -suggest command a little
+24. Updated -report to look like a user report
+25. -bug command now numbers the bugs and has had some interface additions/changes
+26. 
+
+Bug Fixes:
+1. Fixed -gamble command (Bug#: 2)
+2. Fixed -ui showing information as null. Now shows as 0 (Bug#: 3)
+3. Fixed -ban sending log report as null. Now shows 0 (Bug#: 4)
+4. Fixed -kick sending log report as null. Now shows 0(Bug#: 5)
+5. Fixed -mute sending log report as null. Now shows 0(Bug#: 6)
+6. Fixed -unmute sending log report as null. Now shows 0(Bug#: 7)
+7. Fixed -warn sending log report as null. Now shows 0(Bug#: 8)
+8. Fixed The MLS now stays off even if MLS settings = null(Bug#: 9)
+9. Fixed -mute command not removing the Member roll leading to the command being broken(Bug#: 10)
+10. Fixed -rank showing stats as null. The now show as 0(Bug#: 11)
+11. Fixed a bug where when you mention a user in -rank, it didn't show the mentioned users pfp.(Bug#: 12)
+12. Fixed -gamble not always giving out the money and coming out with an error(Bug#: 13)
+13. Fixed -bal not showing the mentioned users pfp(Bug#: 14)
+14. Fixed -bal showing money as null(Bug#: 15)
+15. (Bug#: 16)
+
+Notes: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name:
+Release Description: 
+Release Version: 1.1.0
+Release Date: 
+
+New Commands/Features:
+1. 
+
+Changes: 
+1. 
+
+Bug Fixes:
+1. 
+
+Notes: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
