@@ -17,6 +17,10 @@ class BugCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         let words = args.split(' ');
         let bug = words.slice(1).join(' ');
         {

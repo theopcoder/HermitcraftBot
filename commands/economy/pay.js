@@ -17,6 +17,10 @@ class PayCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         let PayedUser = message.guild.member(message.mentions.users.first());
         if(!PayedUser){
             message.channel.send(":warning: Sorry, I couldn't find that user")

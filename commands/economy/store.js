@@ -16,8 +16,15 @@ class StoreCommand extends Commando.Command
     }
 
     async run(message, args)
-    {
-        message.reply("This command is coming soon! Stay tuned!")//TODO In next minor release, add this command
+    {//TODO finish command in the next update
+        return message.reply(Error1);
+        const MentionedUsersMoney = new discord.RichEmbed()
+            .setColor(0x668d3c)
+            .setThumbnail(users.displayAvatarURL)
+            .setTitle("Store")
+            .addField("User:", message.mentions.users.first())
+            .addField("Bal:", `$${MentionedUsersBalance}`)
+        message.channel.sendEmbed(MentionedUsersMoney);
     }
 }
 

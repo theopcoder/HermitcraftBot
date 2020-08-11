@@ -17,6 +17,10 @@ class UnmuteCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         if(!message.member.hasPermission("MANAGE_MESSAGES"))
         {
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")

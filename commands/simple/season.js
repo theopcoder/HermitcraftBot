@@ -17,6 +17,10 @@ class ServerSeasonCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         let role = message.guild.roles.find(role => role.name === "Season 1 Hermitcraft Fan Server Member :)");
         if (role) 
         message.member.addRole(role);

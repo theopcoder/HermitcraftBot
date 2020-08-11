@@ -17,6 +17,10 @@ class GambleCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         let words = args.split(' ');
         let bet = words.slice(0).join(' ');
         let Extra = words.slice(1).join(' ');

@@ -17,6 +17,10 @@ class BalCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         let BalUser = message.guild.member(message.mentions.users.first());
         {
             if (BalUser)

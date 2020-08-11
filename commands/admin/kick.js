@@ -17,6 +17,10 @@ class KickCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         if(!message.member.hasPermission("KICK_MEMBERS"))
         {
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
@@ -79,7 +83,7 @@ class KickCommand extends Commando.Command
             .addField("User ID:", message.mentions.users.first().id)
             .addField('Reason:', reason)
             .addField('Offences: ', message.mentions.users.first()+" has **"+RepP+"** offence(s).")
-            .addField('Info:', message.mentions.users.first()+' Has, '+db.get(`{warnp}_${message.mentions.users.first().id}`)+' Warning(s), '+db.get(`{mutep}_${message.mentions.users.first().id}`)+' Mute(s), '+db.get(`{kickp}_${message.mentions.users.first().id}`)+' Kick(s), '+db.get(`{banp}_${message.mentions.users.first().id}`)+' Ban(s)!')
+            .addField('Info:', message.mentions.users.first()+`${WarnP} Warn(s), ${MuteP} Mute(s), ${KickP} Kick(s), ${BanP} Bans!`)
         let logchannel = message.guild.channels.find('name', 'logs'); 
         return logchannel.send(Kickmsg);
     }

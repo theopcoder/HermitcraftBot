@@ -17,7 +17,10 @@ class BotChangeCommand extends Commando.Command
 
     async run(message, args)
     {
-        let user = message.author;
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         const BotChangeLogmsg = new discord.RichEmbed()
             .setColor("0x20B2AA")
             .setTimestamp()

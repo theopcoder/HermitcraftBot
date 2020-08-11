@@ -17,59 +17,10 @@ class WarCommand extends Commando.Command
 
     async run(message, args)
     {
-        if (message.author.bot)return;
-        let words = args.split(' ');
-        let reason = words.slice(0).join(' ');
-        let WarConfirm = words.slice(1).join(' ');
-
-        if (reason == "red")
-        {
-            if (db.get(`{WarMember}_${message.author.id}`)== 1)return message.reply("Sorry, you have already joined a team!")
-            message.reply("Are you sure you want to join the red team? If you do, there's no turning back! Do ```-war red confirmRed``` to proceed!");
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
         }
-        if (WarConfirm == "confirmRed"){
-            if (db.get(`{WarMember}_${message.author.id}`)== 1)return message.reply("Sorry, you have already joined a team!")
-            db.add(`{RedTeam}_${message.author.id}`, 1)
-            db.add(`RedTeamGlobal`, 1)
-            db.add(`{WarMember}_${message.author.id}`, 1)
-            db.add(`WarMemberGlobal`, 1)
-
-            let WarRole = message.guild.roles.find(r => r.name === "---------WarRoles---------");
-            message.member.addRole(WarRole)
-            let RedTeam = message.guild.roles.find(r => r.name === "Red Team");
-            message.member.addRole(RedTeam)
-            let WarUpdates = message.guild.roles.find(r => r.name === "War Updates");
-            message.member.addRole(WarUpdates)
-            let WarMember = message.guild.roles.find(r => r.name === "War Member");
-            message.member.addRole(WarMember)
-
-            message.channel.send("Congradulations, "+message.author+"! You have now officially joined the Red Team!");
-        }
-
-        if (reason == "blue")
-        {
-            if (db.get(`{WarMember}_${message.author.id}`)== 1)return message.reply("Sorry, you have already joined a team!")
-            message.reply("Are you sure you want to join the blue team? When you do, there's no turning back! Do ```-war blue confirmBlue``` to proceed!");
-        }
-        if (WarConfirm == "confirmBlue"){
-            if (db.get(`{WarMember}_${message.author.id}`)== 1)return message.reply("Sorry, you have already joined a team!")
-            db.add(`{BlueTeam}_${message.author.id}`, 1)
-            db.add(`BlueTeamGlobal`, 1)
-            db.add(`{WarMember}_${message.author.id}`, 1)
-            db.add(`WarMemberGlobal`, 1)
-
-            let WarRole = message.guild.roles.find(r => r.name === "---WarRoles---");
-            message.member.addRole(WarRole)
-            let BlueTeam = message.guild.roles.find(r => r.name === "Blue Team");
-            message.member.addRole(BlueTeam)
-            let WarUpdates = message.guild.roles.find(r => r.name === "War Updates");
-            message.member.addRole(WarUpdates)
-            let WarMember = message.guild.roles.find(r => r.name === "War Member");
-            message.member.addRole(WarMember)
-
-            message.channel.send("Congradulations, "+message.author+"! You have now officially joined the Blue Team!");
-        }
-
         const Warinfo = new discord.RichEmbed()
             .setColor('0xffa500')
             .setTimestamp()

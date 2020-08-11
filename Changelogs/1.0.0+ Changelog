@@ -118,6 +118,70 @@ Bug Fixes:
 
 Notes: No New Commands/Feature and no Bug Fixes
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name: Applications & Bug Fixes
+Release Description: This update brings staff sign up commands, bug fixes and some changes. More can be found in the 1.0.0+ Changelog file
+Release Version: 1.1.0
+Release Date: 8/10/2020
+
+New Commands/Features:
+1. Added an Early Access warning (EAWarning) to seperate early access versions between official builds
+2. Added -accept command
+3. Added -apply command
+4. Added -deny command
+5. Added -apprtoggle command 
+6. Added DMMessage error to BotData.js
+
+Changes: 
+1. MLS will no longer collect xp from #spamland
+2. Updated README.md file to look better and show the proper version
+3. Removed the ability to get war roles from the -war command
+4. Updated Mute Bypass message
+5. Chat filter messages will now automatically delete after 15 seconds
+6. Level ups now give $200 instead of $100
+7. Added a footer to Level Up messages
+8. Updated console log message when the bot turns on
+
+Bug Fixes:
+1. Fixed commands executing in private messages and creating errors
+2. Fixed -kick, now shows numbers instead of null
+3. Fixed Chat Filter not filtering words
+4. Fixed Deleted messages not showing the correct user who deleted the message
+5. Fixed some stability issues
+
+Notes: The -store command should be in version 1.2.0. There will also be a command to view all your data in one command! This should also arrive in 1.2.0.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name:
+Release Description: 
+Release Version: 
+Release Date: 
+
+New Commands/Features:
+1. 
+
+Changes: 
+1. 
+
+Bug Fixes:
+1. 
+
+Notes: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name:
+Release Description: 
+Release Version: 
+Release Date: 
+
+New Commands/Features:
+1. 
+
+Changes: 
+1. 
+
+Bug Fixes:
+1. 
+
+Notes: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Release Name:
 Release Description: 
 Release Version: 

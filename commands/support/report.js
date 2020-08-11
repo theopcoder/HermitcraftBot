@@ -17,6 +17,10 @@ class ReportCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         message.delete();
         let words = args.split(' ');
         let ReportedUser = words[0];

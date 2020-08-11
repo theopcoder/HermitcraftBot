@@ -17,6 +17,10 @@ class SettingsCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         if(!message.member.hasPermission("ADMINISTRATOR"))
         {
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
@@ -81,7 +85,7 @@ class SettingsCommand extends Commando.Command
         }
         if (reason == "ar off")
         {
-            if (db.get("closedrequests")== 0)return message.reply("Sorry, Application Requests are already off!")
+            if (db.get("closedrequests")== 0)return message.reply("Sorry, Application Requests are already off!");
             db.subtract("closedrequests", 1)
             message.reply("Successfully turned **off** Application Requests!")
         }
@@ -94,12 +98,12 @@ class SettingsCommand extends Commando.Command
 
         //Settings message
         const BotSettings = new discord.RichEmbed()
-        .setColor("0xFFA500")
-        .setTimestamp()
-        .setThumbnail('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvypYAFynUpTRITuiYvJstD17LjWB2zIzfLA&usqp=CAU')//I do not own this image. The image is from google.com. Click the link for the image
-        .setTitle("Bot Settings")
-        .addField("Message Level System: ", MLS)
-        .addField("Application Requests: ", AR)
+            .setColor("0xFFA500")
+            .setTimestamp()
+            .setThumbnail('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvypYAFynUpTRITuiYvJstD17LjWB2zIzfLA&usqp=CAU')//I do not own this image. The image is from google.com. Click the link for the image
+            .setTitle("Bot Settings")
+            .addField("Message Level System: ", MLS)
+            .addField("Application Requests: ", AR)
         message.channel.sendEmbed(BotSettings)
     }
 }

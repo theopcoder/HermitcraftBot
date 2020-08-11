@@ -17,6 +17,10 @@ class RankCommand extends Commando.Command
 
     async run(message, args)
     {
+        if (message.guild === null){
+            message.reply(DMMessage)
+            return;
+        }
         let RankUser = message.guild.member(message.mentions.users.first());
         if (RankUser)
         {   
