@@ -18,14 +18,14 @@ class KickCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         if(!message.member.hasPermission("KICK_MEMBERS"))
         {
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
             .then(msg => {
-                msg.delete(10000)
+                msg.delete(10000);
             });
             return;
         }
@@ -40,15 +40,10 @@ class KickCommand extends Commando.Command
         }
         let words = args.split(' ');
         let reason = words.slice(1).join(' ');
-        
         if (!reason) return message.reply(':warning: Please supply a reason for the kick!')
         .then(msg => {
-            msg.delete(10000)
+            msg.delete(10000);
         });
-
-        message.guild.member(kickedUser).kick(reason)
-        //.then(console.log)
-        .catch(console.error)
 
         db.add(`{kickp}_${message.mentions.members.first().id}`, 1);
         db.add(`{reputation}_${message.mentions.members.first().id}`, 1);
@@ -59,33 +54,38 @@ class KickCommand extends Commando.Command
         let BanP = db.get(`{banp}_${message.mentions.users.first().id}`); if (BanP == null)BanP = "0";
         let users = message.mentions.users.first();
 
-            //User to be members
-        message.mentions.users.first().send(`You have been kicked from ${message.guild.name} because, ${reason}.`)
+        message.guild.member(kickedUser).kick(reason)
+            //.then(console.log)
+            .catch(console.error)
+        message.mentions.users.first().send(`You have been kicked from ${message.guild.name} because, ${reason}.`);
 
-        const ChatKickmsg = new discord.RichEmbed()
-            .setColor("0xF2771D")
+        const ChatKickMessage = new discord.RichEmbed()
+            .setColor("0xFFA500")
             .setTimestamp()
             .setThumbnail(users.displayAvatarURL)
-            .addField('Action:', 'Kick')
-            .addField(`Moderator:`, message.author)
-            .addField(`User:`, message.mentions.users.first())
-            .addField(`Reason:`, reason)
-            .setFooter(`Successfully logged and kicked ${message.mentions.users.first().tag}!`)
-        message.channel.sendEmbed(ChatKickmsg)
+            .setTitle("Kick")
+            .setDescription(`
+                **Moderator:** ${message.author}
+                **User:** ${KickedUser}
+                **Reason:** ${reason}
+            `)
+        message.channel.sendEmbed(ChatKickMessage);
 
-        const Kickmsg = new discord.RichEmbed()
-            .setColor("0xF2771D")
+        const KickMessage = new discord.RichEmbed()
+            .setColor("0xFFA500")
             .setTimestamp()
-            .setThumbnail(message.author.avatarURL)
-            .addField('Action:', 'Kick') 
-            .addField('Staff:', `${message.author}`)
-            .addField('Kicked User:', message.mentions.users.first())
-            .addField("User ID:", message.mentions.users.first().id)
-            .addField('Reason:', reason)
-            .addField('Offences: ', message.mentions.users.first()+" has **"+RepP+"** offence(s).")
-            .addField('Info:', message.mentions.users.first()+`${WarnP} Warn(s), ${MuteP} Mute(s), ${KickP} Kick(s), ${BanP} Bans!`)
-        let logchannel = message.guild.channels.find('name', 'logs'); 
-        return logchannel.send(Kickmsg);
+            .setThumbnail(users.displayAvatarURL)
+            .setTitle("Kick")
+            .setDescription(`
+                **Moderator:** ${message.author}
+                **User:** ${KickedUser}
+                **User ID:** ${message.mentions.users.first().id}
+                **Reason:** ${reason}
+                **Violations:** ${RepP}
+                **Other Offences:** Warnings: ${WarnP} | Mutes: ${MuteP} | Kicks: ${KickP} | Bans: ${BanP}
+            `)
+        let logchannel = message.guild.channels.find('name', 'logs');
+        return logchannel.send(KickMessage);
     }
 }
 

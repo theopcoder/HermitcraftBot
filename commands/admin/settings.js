@@ -11,33 +11,34 @@ class SettingsCommand extends Commando.Command
             name: "settings",
             group: "admin",
             memberName: 'settings',
-            description: 'Shows administration available setting to toggle!'
+            description: 'A command to change the bot settings'
         });
     }
 
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         if(!message.member.hasPermission("ADMINISTRATOR"))
         {
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
             .then(msg => {
-                msg.delete(10000)
-            })
+                msg.delete(10000);
+            });
             return;
         }
         let words = args.split(' ');
         let reason = words.slice(0).join(' ');
 
-        if (!reason) message.channel.send("Do you need help turning a feature on/off? Do -settings help to get started!")
+        if (!reason) message.channel.send("Do you need help turning a feature on/off? Do -settings help to get started!");
         if (reason == "help")
         {
             const BotSettingsHelp = new discord.RichEmbed()
             .setColor("0xFFA500")
             .setTimestamp()
+            .setThumbnail('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvypYAFynUpTRITuiYvJstD17LjWB2zIzfLA&usqp=CAU')//I do not own this image. The image is from google.com. Click the link for the image
             .setTitle("Bot Settings Help")
             .addField("Feature Available: ", 
             `These are features you are able to turn off! The names in parentheses are nicknames
@@ -55,45 +56,45 @@ class SettingsCommand extends Commando.Command
                 Example: -settings mls off
             `)
             .addField("Congrats!", "You now know how to turn features on/off! You can always refer back to this by doing the command -settings help")
-            message.channel.sendEmbed(BotSettingsHelp)
+            message.channel.sendEmbed(BotSettingsHelp);
         }
 
         //MLS Settings
         if (reason == "mls on")
         {
-            if (db.get("MLS")== 1)return message.reply("Sorry, the Message Level System is already on!")
-            db.add("MLS", 1)
-            message.reply("Successfully turned on the Message Level System!")
+            if (db.get("MLS")== 1)return message.reply("Sorry, the Message Level System is already on!");
+            db.add("MLS", 1);
+            message.reply("Successfully turned on the Message Level System!");
         }
         if (reason == "mls off")
         {
-            if (db.get("MLS")== 0)return message.reply("Sorry, the Message Level System is already off!")
-            db.subtract("MLS", 1)
-            message.reply("Successfully turned off the Message Level System!")
+            if (db.get("MLS")== 0)return message.reply("Sorry, the Message Level System is already off!");
+            db.subtract("MLS", 1);
+            message.reply("Successfully turned off the Message Level System!");
         }
         if (db.get("MLS")== 1){
-            var MLS = "On"
+            var MLS = ":white_check_mark: On";
         }else{
-            MLS = "Off";
+            MLS = ":x: Off";
         }
         //Application requests settings
         if (reason == "ar on")
         {
-            if (db.get("closedrequests")== 1)return message.reply("Sorry, Application Requests are already on!")
-            db.add("closedrequests", 1)
-            message.reply("Successfully turned **on** Application Requests!")
+            if (db.get("closedrequests")== 1)return message.reply("Sorry, Application Requests are already on!");
+            db.add("closedrequests", 1);
+            message.reply("Successfully turned **on** Application Requests!");
         }
         if (reason == "ar off")
         {
             if (db.get("closedrequests")== 0)return message.reply("Sorry, Application Requests are already off!");
-            db.subtract("closedrequests", 1)
-            message.reply("Successfully turned **off** Application Requests!")
+            db.subtract("closedrequests", 1);
+            message.reply("Successfully turned **off** Application Requests!");
         }
 
         if (db.get("closedrequests")== 1){
-            var AR = "On"
+            var AR = ":white_check_mark: On";
         }else{
-            AR = "Off";
+            AR = ":x: Off";
         }
 
         //Settings message
@@ -104,7 +105,7 @@ class SettingsCommand extends Commando.Command
             .setTitle("Bot Settings")
             .addField("Message Level System: ", MLS)
             .addField("Application Requests: ", AR)
-        message.channel.sendEmbed(BotSettings)
+        message.channel.sendEmbed(BotSettings);
     }
 }
 

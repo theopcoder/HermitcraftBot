@@ -41,7 +41,7 @@ class RankCommand extends Commando.Command
         {
             let Level = db.get(`{Level}_${message.author.id}`); if (Level == null)Level = "0";
             let XP = db.get(`{xp}_${message.author.id}`); if (XP == null)XP = "0";
-
+            
             const RankUser = new discord.RichEmbed()
                 .setColor(0x668d3c)
                 .setThumbnail(message.author.avatarURL)

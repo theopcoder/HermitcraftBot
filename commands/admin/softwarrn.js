@@ -18,14 +18,14 @@ class SoftWarnCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         if(!message.member.hasPermission("MANAGE_MESSAGES"))
         {
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
             .then(msg => {
-                msg.delete(10000)
+                msg.delete(10000);
             });
             return;
         }
@@ -34,7 +34,7 @@ class SoftWarnCommand extends Commando.Command
         {
             message.channel.send(":warning: Sorry, I couldn't find that user")
             .then(msg => {
-                msg.delete(10000)
+                msg.delete(10000);
             });
             return;
         }
@@ -42,21 +42,23 @@ class SoftWarnCommand extends Commando.Command
         let reason = words.slice(1).join(' ');
         if (!reason) return message.reply(':warning: Please supply a reason for the softwarn!')
         .then(msg => {
-            msg.delete(10000)
+            msg.delete(10000);
         });
 
         let users = message.mentions.users.first();
-        const SoftWarnmsg = new discord.RichEmbed()
+
+        const SoftWarnMessage = new discord.RichEmbed()
             .setColor("0xFFFF00")
             .setTimestamp()
             .setThumbnail(users.displayAvatarURL)
-            .addField('Action:', 'Softwarn')
-            .addField(`Moderator:`, message.author)
-            .addField(`User:`, message.mentions.users.first())
-            .addField(`Reason:`, reason)
-            .addField("Note:", "You have just been softwarned. This means, nothing has been recorded. Please take this as a warning though!")
-            .setFooter(`Successfully softwarned ${message.mentions.users.first().tag}!`)
-        message.channel.sendEmbed(SoftWarnmsg)
+            .setTitle("SoftWarn")
+            .setDescription(`
+                **Moderator:** ${message.author}
+                **User:** ${SoftWarnedUser}
+                **Reason:** ${reason}
+            `)
+            .setDescription("Note: This hasn't been recorded!")
+        message.channel.sendEmbed(SoftWarnMessage);
     }
 }
 

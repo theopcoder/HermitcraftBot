@@ -32,7 +32,7 @@ bot.on('guildMemberAdd', member => {
         .setColor('0x008080')
         .setTimestamp()
         .setThumbnail(member.user.displayAvatarURL)
-        .setTitle(`Welcome to ${member.guild.name} ${member.user.tag}!`)
+        .setTitle(`Welcome to ${member.guild.name} ${member.user.tag}!`)//TODO have it dm user how 2 link mc account
         .addField("Information:", 
         `
             :globe_with_meridians: Discord: https://discord.gg/AURDPCN
@@ -40,7 +40,7 @@ bot.on('guildMemberAdd', member => {
         `)
         .addField("Member:", `${member}, you are the ${member.guild.memberCount} member! Thanks for joining!`)
         .addField("Other:", `Welcome to the ${member.guild.name}. Make sure to read <#689198026488545334> and <#704460219521957907> for the Minecraft server IP. Have fun and enjoy!`)
-    let WelcomeChannel = member.guild.channels.get('689198081857552463')
+    let WelcomeChannel = member.guild.channels.get('719838618176323658')
     WelcomeChannel.send(Welcomemsg);
     let memberRole = member.guild.roles.find("name", "Member")
     member.addRole(memberRole)
@@ -74,6 +74,10 @@ bot.on('message', function(message){
         if (message.author.bot)return;
         message.channel.send("I like pizza! Can I have a slice "+message.author+"?");
     }
+    if (message.content == "test"){
+        if (message.author.bot)return;
+        message.reply(Error1);
+    }
 });
 
 bot.on('message', function(message){
@@ -94,7 +98,8 @@ bot.on('message', function(message){
             .setTitle("Auto Moderation: Mute Bypass")
             .addField("User:", message.author)
             .addField("Times Bypassed Mute:", MuteBypassCheckmsg)
-            .addField("What is this?", "This is an Mute Bypass Protection System to check if you have bypassed your mute! If you are reading this, that means you have bypassed you mute and the mute role has been automatically reapplied to you!")
+            .addField("What is this?", "If you are seeing this, that means you have managed to bypass your mute! You have been automatically remuted!")
+            //.addField("What is this?", "This is an Mute Bypass Protection System to check if you have bypassed your mute! If you are reading this, that means you have bypassed you mute and the mute role has been automatically reapplied to you!")
         message.channel.sendEmbed(MuteBypassProtection);
     }
 });

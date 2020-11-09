@@ -150,23 +150,46 @@ Bug Fixes:
 
 Notes: The -store command should be in version 1.2.0. There will also be a command to view all your data in one command! This should also arrive in 1.2.0.
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Release Name:
-Release Description: 
-Release Version: 
-Release Date: 
+Release Name: README.md Fix
+Release Description: Fixed the dependencies and Documentation showing on the same line
+Release Version: 1.1.1
+Release Date: 10/7/2020
+
+Changes:
+1. Updated README.md file
+
+Notes: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name: 1.2.0 Admin UI Update
+Release Description: Updated the admin commands ui and cleaned up some code
+Release Version: 1.2.0
+Release Date: 11/9/2020
 
 New Commands/Features:
-1. 
+1. Added a LICENSE file
 
-Changes: 
-1. 
+Changes:
+1. Updated -gamble command
+2. Updated -ui command with user interface changes
+3. Updated -warn command user interface
+4. Updated -ban command user interface
+5. Updated -kick command user interface
+6. Updated -mute command user interface
+7. Updated -softwarn command user interface
+8. Updated -unmute command user interface
+9. Updated -settings command
+    a. Description changed
+    b. UI change
 
 Bug Fixes:
 1. 
 
+Security Fixes:
+1. Updated quick.db from version 7.1.1 to 7.1.2
+
 Notes: 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Release Name:
+Release Name: 
 Release Description: 
 Release Version: 
 Release Date: 
@@ -174,23 +197,7 @@ Release Date:
 New Commands/Features:
 1. 
 
-Changes: 
-1. 
-
-Bug Fixes:
-1. 
-
-Notes: 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Release Name:
-Release Description: 
-Release Version: 
-Release Date: 
-
-New Commands/Features:
-1. 
-
-Changes: 
+Changes:
 1. 
 
 Bug Fixes:

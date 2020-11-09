@@ -38,7 +38,7 @@ class GambleCommand extends Commando.Command
         .then(msg => {
             msg.delete(10000)
         });
-        if (bet < 1000)return message.reply("Sorry, you have to bet $1000 or more to use this command!");
+        if (bet < 1000)return message.channel.send(`I'm sorry ${message.author}, you have to bet $1000 or more to use this command!`);
         if (bet > bal)return message.channel.send(`I'm sorry ${message.author}, You don't have enough money to make a $**${bet}** bet. You only have $**${bal}**!`);
         db.subtract(`{money}_${message.author.id}`, bet)
         var GambleBet = Math.floor(Math.random() * 25)

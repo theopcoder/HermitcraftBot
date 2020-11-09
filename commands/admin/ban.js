@@ -18,23 +18,23 @@ class BanCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         if(!message.member.hasPermission("BAN_MEMBERS"))
         {
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
             .then(msg => {
-                msg.delete(10000)
+                msg.delete(10000);
             });
             return;
         }
-        let bannedUser = message.guild.member(message.mentions.users.first());
-        if(!bannedUser)
+        let BannedUser = message.guild.member(message.mentions.users.first());
+        if(!BannedUser)
         {
             message.channel.send(":warning: Sorry, I couldn't find that user")
             .then(msg => {
-                msg.delete(10000)
+                msg.delete(10000);
             });
             return;
         }
@@ -42,7 +42,7 @@ class BanCommand extends Commando.Command
         let reason = words.slice(1).join(' ');
         if (!reason) return message.reply(':warning: Please supply a reason for the ban!')
         .then(msg => {
-            msg.delete(10000)
+            msg.delete(10000);
         });
         
         db.add(`{reputation}_${message.mentions.members.first().id}`, 1);
@@ -54,36 +54,38 @@ class BanCommand extends Commando.Command
         let BanP = db.get(`{banp}_${message.mentions.users.first().id}`); if (BanP == null)BanP = "0";
         let users = message.mentions.users.first();
 
-        message.guild.member(bannedUser).ban(reason)
-        //.then(console.log)
-        .catch(console.error);
-        
+        message.guild.member(BannedUser).ban(reason)
+            //.then(console.log)
+            .catch(console.error);
         message.mentions.users.first().send(`You have been banned from ${message.guild.name} because, ${reason}.`)
 
-        const ChatBanmsg = new discord.RichEmbed()
-            .setColor("0xFF0000")
+        const ChatBanMessage = new discord.RichEmbed()
+            .setColor("0xFFA500")
             .setTimestamp()
             .setThumbnail(users.displayAvatarURL)
-            .addField('Action:', 'Ban')
-            .addField(`Moderator:`, message.author)
-            .addField(`User:`, message.mentions.users.first())
-            .addField(`Reason:`, reason)
-            .setFooter(`Successfully logged and banned ${message.mentions.users.first().tag}!`)
-        message.channel.sendEmbed(ChatBanmsg)
+            .setTitle("Ban")
+            .setDescription(`
+                **Moderator:** ${message.author}
+                **User:** ${BannedUser}
+                **Reason:** ${reason}
+            `)
+        message.channel.sendEmbed(ChatBanMessage);
 
-        const Banmsg = new discord.RichEmbed()
-            .setColor("0xFF0000")
+        const BanMessage = new discord.RichEmbed()
+            .setColor("0xFFA500")
             .setTimestamp()
             .setThumbnail(users.displayAvatarURL)
-            .addField('Action:', 'Ban') 
-            .addField('Staff:', `${message.author}`)
-            .addField('Banned User:', message.mentions.users.first())
-            .addField("User ID:", message.mentions.users.first().id)
-            .addField('Reason:', reason)
-            .addField('Offences: ', message.mentions.users.first()+" has **"+RepP+"** offence(s).")
-            .addField('Info:', message.mentions.users.first()+' Has, '+WarnP+' Warning(s), '+MuteP+' Mute(s), '+KickP+' Kick(s), '+BanP+' Ban(s)!')
-        let logchannel = message.guild.channels.find('name', 'logs'); 
-        return logchannel.send(Banmsg);
+            .setTitle("Ban")
+            .setDescription(`
+                **Moderator:** ${message.author}
+                **User:** ${BannedUser}
+                **User ID:** ${message.mentions.users.first().id}
+                **Reason:** ${reason}
+                **Violations:** ${RepP}
+                **Other Offences:** Warnings: ${WarnP} | Mutes: ${MuteP} | Kicks: ${KickP} | Bans: ${BanP}
+            `)
+        let logchannel = message.guild.channels.find('name', 'logs');
+        return logchannel.send(BanMessage);
     }
 }
 

@@ -18,15 +18,15 @@ class WarnCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         if(!message.member.hasPermission("MANAGE_MESSAGES"))
         {
             message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
             .then(msg => {
-                msg.delete(10000)
-            })
+                msg.delete(10000);
+            });
             return;
         }
         let WarnedUser = message.guild.member(message.mentions.users.first());
@@ -34,15 +34,15 @@ class WarnCommand extends Commando.Command
         {
             message.channel.send(":warning: Sorry, I couldn't find that user")
             .then(msg => {
-                msg.delete(10000)
-            })
+                msg.delete(10000);
+            });
             return;
         }
         let words = args.split(' ');
         let reason = words.slice(1).join(' ');
         if (!reason) return message.reply(':warning: Please supply a reason for the warn!')
         .then(msg => {
-            msg.delete(10000)
+            msg.delete(10000);
         });
 
         db.add(`{warnp}_${message.mentions.members.first().id}`, 1);
@@ -54,31 +54,33 @@ class WarnCommand extends Commando.Command
         let BanP = db.get(`{banp}_${message.mentions.users.first().id}`); if (BanP == null)BanP = "0";
         let users = message.mentions.users.first();
 
-        const ChatWarnmsg = new discord.RichEmbed()
+        const ChatWarnMessage = new discord.RichEmbed()
             .setColor("0xFFA500")
             .setTimestamp()
             .setThumbnail(users.displayAvatarURL)
-            .addField('Action:', 'Warn')
-            .addField(`Moderator:`, message.author)
-            .addField(`User:`, message.mentions.users.first())
-            .addField(`Reason:`, reason)
-            .setFooter(`Successfully logged and warned ${message.mentions.users.first().tag}!`)
-        message.channel.sendEmbed(ChatWarnmsg)
+            .setTitle("Warning")
+            .setDescription(`
+                **Moderator:** ${message.author}
+                **User:** ${WarnedUser}
+                **Reason:** ${reason}
+            `)
+        message.channel.sendEmbed(ChatWarnMessage);
 
-        const Warnmsg = new discord.RichEmbed()
+        const WarnMessage = new discord.RichEmbed()
             .setColor("0xFFA500")
             .setTimestamp()
             .setThumbnail(users.displayAvatarURL)
-            .addField('Action:', 'Warn') 
-            .addField('Moderator:', 
-            `${message.author}`)
-            .addField('Warned User:', message.mentions.users.first())
-            .addField("User ID:", message.mentions.users.first().id)
-            .addField('Reason', reason)
-            .addField('Offences: ', message.mentions.users.first()+" has **"+RepP+"** offence(s).")
-            .addField('Info: ', message.mentions.users.first()+' Has, '+WarnP+' Warning(s), '+MuteP+' Mute(s), '+KickP+' Kick(s), '+BanP+' Ban(s)!')
+            .setTitle("Warning")
+            .setDescription(`
+                **Moderator:** ${message.author}
+                **User:** ${WarnedUser}
+                **User ID:** ${message.mentions.users.first().id}
+                **Reason:** ${reason}
+                **Violations:** ${RepP}
+                **Other Offences:** Warnings: ${WarnP} | Mutes: ${MuteP} | Kicks: ${KickP} | Bans: ${BanP}
+            `)
         let logchannel = message.guild.channels.find('name', 'logs');
-        return logchannel.send(Warnmsg);
+        return logchannel.send(WarnMessage);
     }
 }
 
