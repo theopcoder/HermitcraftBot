@@ -18,17 +18,15 @@ class BugCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         let words = args.split(' ');
         let bug = words.slice(1).join(' ');
-        {
-            if (!bug) return message.reply("Please report the bug and say where the bug occured!")
-            .then(msg => {
-                msg.delete(10000)
-            });
-        }
+        if (!bug) return message.reply("Please report the bug and say where the bug occured!")
+        .then(msg => {
+            msg.delete(10000);
+        });
 
         db.add("BugNumber", 1)
 

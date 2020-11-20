@@ -24,9 +24,9 @@ class MirrorCommand extends Commando.Command
         let MirrorUser = message.guild.member(message.mentions.users.first());
         if (MirrorUser){
             let users = message.mentions.users.first();
-            message.reply(users.displayAvatarURL)
+            message.reply(users.displayAvatarURL);
         }else{
-            message.reply(message.author.avatarURL)
+            message.reply(message.author.avatarURL);
         }
     }
 }

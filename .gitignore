@@ -5,3 +5,4 @@ package-lock.json
 bot_token.js
 test.js
 unban.js
+.vscode

@@ -18,18 +18,17 @@ class SuggestCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         message.delete();
         let words = args.split(' ');
         let suggestion = words.slice(0).join(' ');
-        {
-            if (!suggestion) return message.reply("Please say your suggestion!")
-            .then(msg => {
-                msg.delete(10000)
-            });
-        }
+        if (!suggestion) return message.reply("Please say your suggestion!")
+        .then(msg => {
+            msg.delete(10000);
+        });
+        
         const Suggestionmsg = new discord.RichEmbed()
             .setColor("0x20B2AA")
             .setTimestamp()

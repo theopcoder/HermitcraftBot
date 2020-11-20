@@ -47,7 +47,7 @@ class SoftWarnCommand extends Commando.Command
 
         let users = message.mentions.users.first();
 
-        const SoftWarnMessage = new discord.RichEmbed()
+        /*const SoftWarnMessage = new discord.RichEmbed()
             .setColor("0xFFFF00")
             .setTimestamp()
             .setThumbnail(users.displayAvatarURL)
@@ -58,7 +58,20 @@ class SoftWarnCommand extends Commando.Command
                 **Reason:** ${reason}
             `)
             .setDescription("Note: This hasn't been recorded!")
-        message.channel.sendEmbed(SoftWarnMessage);
+        message.channel.sendEmbed(SoftWarnMessage);*/
+
+        const SoftWarnMessage = new discord.RichEmbed()
+            .setColor("0xFFFF00")
+            .setTimestamp()
+            .setThumbnail(users.displayAvatarURL)
+            .setTitle("Softwarn")
+            .setDescription(`
+                **Moderator:** ${message.author}
+                **User:** ${SoftWarnedUser}
+                **Reason:** ${reason}
+            `)
+            .setFooter("Note: This hasn't been recorded!")
+        message.channel.send(SoftWarnMessage);
     }
 }
 

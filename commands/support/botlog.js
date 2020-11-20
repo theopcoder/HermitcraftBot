@@ -33,7 +33,7 @@ class BotChangeCommand extends Commando.Command
             .addField("These are the most recent bot updates! Thanks for checking them out! Sincerely,", "BotDev")
         message.member.sendEmbed(BotChangeLogmsg);
 
-        message.channel.send("Successfully sent the Bot Changelog")
+        message.channel.send("Successfully sent the Bot Changelog");
     }
 }
 

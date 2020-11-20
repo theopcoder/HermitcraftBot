@@ -61,7 +61,7 @@ class MuteCommand extends Commando.Command
         let BanP = db.get(`{banp}_${message.mentions.users.first().id}`); if (BanP == null)BanP = "0";
         let users = message.mentions.users.first();
 
-        message.mentions.members.first().send(`You have been muted on ${message.guild.name} because, ${reason}.`)
+        message.mentions.members.first().send(`You have been muted on ${message.guild.name} because, ${reason}.`);
 
         const ChatMuteMessage = new discord.RichEmbed()
             .setColor("0xFFA500")

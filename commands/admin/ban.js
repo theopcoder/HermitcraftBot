@@ -54,10 +54,9 @@ class BanCommand extends Commando.Command
         let BanP = db.get(`{banp}_${message.mentions.users.first().id}`); if (BanP == null)BanP = "0";
         let users = message.mentions.users.first();
 
-        message.guild.member(BannedUser).ban(reason)
-            //.then(console.log)
-            .catch(console.error);
-        message.mentions.users.first().send(`You have been banned from ${message.guild.name} because, ${reason}.`)
+        message.mentions.users.first().send(`You have been banned from ${message.guild.name} because, ${reason}.`).then(message => {
+            BannedUser.ban(reason);
+        });
 
         const ChatBanMessage = new discord.RichEmbed()
             .setColor("0xFFA500")

@@ -18,7 +18,7 @@ class ReportCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         message.delete();
@@ -29,14 +29,14 @@ class ReportCommand extends Commando.Command
         if (!ReportedUser){
             message.channel.send(`Please say the name of the user, there ID or, mention them so staff know who your reporting! If they have spaces in there names, please use _ Thanks!`)
             .then(msg => {
-                msg.delete(10000)
+                msg.delete(10000);
             });
             return;
         }
         if (!report){
             message.channel.send(`Please say the report or else staff cant help you!`)
             .then(msg => {
-                msg.delete(10000)
+                msg.delete(10000);
             });
             return;
         }
@@ -51,7 +51,7 @@ class ReportCommand extends Commando.Command
             .addField("Reported User:", ReportedUser)
             .addField("Report:", report)
         let logchannel = message.guild.channels.find('name', 'user-reports'); 
-        logchannel.send(UserReportmsg)
+        logchannel.send(UserReportmsg);
 
         const ConfirmedReport = new discord.RichEmbed()
             .setColor("0x20B2AA")

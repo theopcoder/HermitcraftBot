@@ -18,14 +18,14 @@ class OpenClosedCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         if(!message.member.hasPermission("ADMINISTRATOR"))
         {
             message.channel.send(":warning: You do NOT have the permission to perform this command! :warning:")
             .then(msg => {
-                msg.delete(10000)
+                msg.delete(10000);
             });
             return;
         }
@@ -34,7 +34,7 @@ class OpenClosedCommand extends Commando.Command
 
         if (!reason) return message.reply('Do you want to open or close application requests? EXP: -apprtoggle open or -apprtoggle close')
         .then(msg => {
-            msg.delete(10000)
+            msg.delete(10000);
         });
         if (reason == 'open'){
             if (db.get("closedrequests")== 1)return message.reply("Sorry, Application Requests are already **open!**");

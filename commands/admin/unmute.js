@@ -57,7 +57,7 @@ class UnmuteCommand extends Commando.Command
         db.delete(`{AMPSMuteBypass}_${message.mentions.users.first().id}`);
 
         let users = message.mentions.users.first();
-        message.mentions.members.first().send(`You have been unmuted on ${message.guild.name} because, `+reason+".")
+        message.mentions.members.first().send(`You have been unmuted on ${message.guild.name} because, ${reason}.`);
 
         const ChatUnmuteMessage = new discord.RichEmbed()
             .setColor("0xFFA500")
@@ -81,8 +81,6 @@ class UnmuteCommand extends Commando.Command
                 **User:** ${UnmutedUser}
                 **User ID:** ${message.mentions.users.first().id}
                 **Reason:** ${reason}
-                **Violations:** ${RepP}
-                **Other Offences:** Warnings: ${WarnP} | Mutes: ${MuteP} | Kicks: ${KickP} | Bans: ${BanP}
             `)
         let logchannel = message.guild.channels.find('name', 'logs');
         return logchannel.send(UnmuteMessage);

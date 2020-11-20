@@ -18,7 +18,7 @@ class ApplyCommand extends Commando.Command
     async run(message, args)
     {
         if (message.guild === null){
-            message.reply(DMMessage)
+            message.reply(DMMessage);
             return;
         }
         if (db.get("closedrequests")== null)return message.channel.send(`I'm sorry ${message.author}, Staff applications are currently closed!`);

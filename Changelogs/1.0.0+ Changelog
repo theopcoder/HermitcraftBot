@@ -189,6 +189,33 @@ Security Fixes:
 
 Notes: 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name: 1.3.0 Improvement Update
+Release Description: Updated commands and fixed many bugs
+Release Version: 1.3.0
+Release Date: 11/19/2020
+
+New Commands/Features:
+1. Added new message listener
+2. Added -stats command
+3. Member leaves are now recorded
+
+Changes:
+1. Redid the new members message
+2. Updated the -season role
+3. You can now do -store but, there are no items for sale yet
+
+Bug Fixes:
+1. Cleaned up code
+2. Fixed -ban not sending user the message why they where ban, the command throwing errors in console
+3. Fixed -kick not sending user message on why they where kicked, fixes command throwing errors, kick will now kick users again
+4. Fixed mute bypass not showing the users pfp
+5. Fixed level ups not showing some peoples pfp
+6. Fixed deleted messages not showing some users pfp
+7. Fixed chat filter not showing some users pfp
+8. Fixed -softwarn not showing all the information
+
+Notes: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Release Name: 
 Release Description: 
 Release Version: 
@@ -205,3 +232,18 @@ Bug Fixes:
 
 Notes: 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name: 
+Release Description: 
+Release Version: 
+Release Date: 
+
+New Commands/Features:
+1. 
+
+Changes:
+1. 
+
+Bug Fixes:
+1. 
+
+Notes: 

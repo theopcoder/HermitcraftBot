@@ -29,8 +29,8 @@ class KickCommand extends Commando.Command
             });
             return;
         }
-        let kickedUser = message.guild.member(message.mentions.users.first());
-        if(!kickedUser)
+        let KickedUser = message.guild.member(message.mentions.users.first());
+        if(!KickedUser)
         {
             message.channel.send(":warning: Sorry, I couldn't find that user")
             .then(msg => {
@@ -54,10 +54,9 @@ class KickCommand extends Commando.Command
         let BanP = db.get(`{banp}_${message.mentions.users.first().id}`); if (BanP == null)BanP = "0";
         let users = message.mentions.users.first();
 
-        message.guild.member(kickedUser).kick(reason)
-            //.then(console.log)
-            .catch(console.error)
-        message.mentions.users.first().send(`You have been kicked from ${message.guild.name} because, ${reason}.`);
+        message.mentions.users.first().send(`You have been kicked from ${message.guild.name} because, ${reason}.`).then(message => {
+            KickedUser.kick(reason);
+        });
 
         const ChatKickMessage = new discord.RichEmbed()
             .setColor("0xFFA500")
