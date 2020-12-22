@@ -8,7 +8,7 @@ const client = new discord.Client();
 const bot = new Commando.Client({
     commandPrefix: "-"
 });
-
+//TODO add check for commands in dm's if they don't work
 bot.registry.registerGroup("admin", 'Admin');
 bot.registry.registerGroup("economy", 'Economy');
 bot.registry.registerGroup("simple", 'Simple');
@@ -62,15 +62,17 @@ bot.on('guildMemberAdd', member => {
 
 bot.on('guildMemberRemove', member => {
     const WelcomeMessage = new discord.RichEmbed()
-    .setTimestamp()
-    .setColor("#00008b")
-    .setThumbnail(member.user.displayAvatarURL)
-    .setTitle(`Lost a member`)
-    .setDescription(`
-        ${member} left the server :(
-    `)
+        .setTimestamp()
+        .setColor("#00008b")
+        .setThumbnail(member.user.displayAvatarURL)
+        .setTitle(`Lost a member`)
+        .setDescription(`
+            ${member} (${member.name}) left the server :(
+        `)
     let WelcomeChannel = member.guild.channels.get('715377790811242527');
     WelcomeChannel.send(WelcomeMessage);
+
+    member.send("Where sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5");
 });
 
 bot.on('message', function(message){
@@ -96,6 +98,15 @@ bot.on('message', function(message){
     if (message.content == "test"){
         if (message.author.bot)return;
         message.reply(Error1);
+    }
+    var MCIPListener = ["ip"];
+    let msg = message.content.toLowerCase();
+    for (x = 0; x < MCIPListener.length; x++){
+        if (msg.includes(MCIPListener[x])){
+            if (message.author.bot)return;
+            message.reply("If you need the ip for the Minecraft server, please visit <#704460219521957907>!");
+            return;     
+        }
     }
 });
 

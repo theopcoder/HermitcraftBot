@@ -216,19 +216,25 @@ Bug Fixes:
 
 Notes: 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Release Name: 
-Release Description: 
-Release Version: 
-Release Date: 
+Release Name: Security Patch
+Release Description: Fixed a security issue and updated some features
+Release Version: 1.3.1
+Release Date: 12/22/2020
 
 New Commands/Features:
-1. 
+1. Added -poll command
+2. Added a check for some one saying ip
+3. Members who leave will now be asked why they left
 
 Changes:
-1. 
+1. Updated -rank command
 
 Bug Fixes:
-1. 
+1. Fixed -deny not resetting application attempts
+2. Fixed -accept not resetting application
+
+Security Patch:
+1. Updated quick.db 7.1.2 to 7.1.3
 
 Notes: 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

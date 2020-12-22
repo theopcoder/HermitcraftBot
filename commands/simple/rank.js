@@ -33,22 +33,25 @@ class RankCommand extends Commando.Command
                 .setThumbnail(users.displayAvatarURL)
                 .setTitle("Rank")
                 .addField("User:", message.mentions.users.first())
-                .addField("Level: ", MentionLevel)
-                .addField("XP: ", MentionXP)
+                .setDescription(`
+                    **Level:** ${MentionLevel}
+                    **XP:** ${MentionXP}
+                `)
             message.channel.sendEmbed(RankMentions);
-        }
-        else
-        {
+        }else{
             let Level = db.get(`{Level}_${message.author.id}`); if (Level == null)Level = "0";
             let XP = db.get(`{xp}_${message.author.id}`); if (XP == null)XP = "0";
             
             const RankUser = new discord.RichEmbed()
+                .setTimestamp()
                 .setColor(0x668d3c)
+                .setAuthor(message.author.tag, message.author.displayAvatarURL)
                 .setThumbnail(message.author.avatarURL)
                 .setTitle("Rank")
-                .addField("User:", message.author)
-                .addField("Level: ", Level)
-                .addField("XP: ", XP)
+                .setDescription(`
+                    **Level:** ${Level}
+                    **XP:** ${XP}
+                `)
             message.channel.sendEmbed(RankUser);
         }
     }

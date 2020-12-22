@@ -86,7 +86,7 @@ class AcceptApplicationCommand extends Commando.Command
             .setFooter('Congrats on becoming a staff member! Good luck!')
         message.mentions.users.first().sendEmbed(UserAcceptmsg);
 
-        db.subtract(`{ApplicationSent}_${message.author.id}`, 1)
+        db.subtract(`{ApplicationSent}_${message.mentions.users.first().id}`, 1);
         let member = message.mentions.members.first();
         let StaffRole = message.guild.roles.find(r => r.name === "Staff");
         member.addRole(StaffRole)

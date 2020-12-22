@@ -71,7 +71,7 @@ class DenyApplicationCommand extends Commando.Command
             .setTitle("Application Denied! :anguished: ")
             .addField("Sorry, your application has been denied.", reason)
         message.mentions.users.first().sendEmbed(UserDeniedmsg);
-        db.subtract(`{ApplicationSent}_${message.author.id}`, 1);
+        db.subtract(`{ApplicationSent}_${message.mentions.users.first().id}`, 1);
     }
 }
 
