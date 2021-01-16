@@ -8,7 +8,7 @@ const client = new discord.Client();
 const bot = new Commando.Client({
     commandPrefix: "-"
 });
-//TODO add check for commands in dm's if they don't work
+
 bot.registry.registerGroup("admin", 'Admin');
 bot.registry.registerGroup("economy", 'Economy');
 bot.registry.registerGroup("simple", 'Simple');
@@ -99,7 +99,7 @@ bot.on('message', function(message){
         if (message.author.bot)return;
         message.reply(Error1);
     }
-    var MCIPListener = ["ip"];
+    var MCIPListener = [" ip"];
     let msg = message.content.toLowerCase();
     for (x = 0; x < MCIPListener.length; x++){
         if (msg.includes(MCIPListener[x])){
@@ -133,13 +133,13 @@ bot.on('message', function(message){
 });
 
 //Chat Filter
-var profanities =                                                                                                                                                                                                                                                ["bitch", "fuck", "shit"];
+var profanities =                                                                                                                                                                                                                                                ["yee", "bitch", "fuck", "shit"];
 bot.on('message', async message => {//If you don't like seeing curse words, dont scroll to the side. Chat filter ==>
     let msg = message.content.toLowerCase();
     for (x = 0; x < profanities.length; x++){
         if (msg.includes(profanities[x])){
             message.delete()
-            db.add(`{AMPSChatFilter}_${message.author.id}`, 1)
+            db.add(`{AMPSChatFilter}_${message.author.id}`, 1);
             const ChatFilterWarnmsg = new discord.RichEmbed()
                 .setColor("0xFFFF00")
                 .setTimestamp()

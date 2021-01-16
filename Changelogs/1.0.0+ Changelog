@@ -238,6 +238,16 @@ Security Patch:
 
 Notes: 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Release Name: MicroUpdate 1.3.2
+Release Description: A mini update
+Release Version: 1.3.2
+Release Date: 1/15/2021
+
+Bug Fixes:
+1. Fixed the IP listener from activating with word containing ip
+
+Notes: 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Release Name: 
 Release Description: 
 Release Version: 
