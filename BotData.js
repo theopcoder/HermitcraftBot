@@ -1,6 +1,6 @@
 var Errors = [
-    Version = "1.3.1",//TODO Updated # for new updates
-    VersionName = "Improvements",
+    Version = "1.3.2",//TODO Updated # for new updates
+    VersionName = "MicroUpdate 1.3.2",
 
     Error1 = ":warning: Error 1: This command has not been implemented yet! Check back in the next bot update!",
     Error2 = ":warning: Error 2: This feature has not been implemented yet! Check back in the next bot update!",
