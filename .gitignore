@@ -1,8 +1,4 @@
 node_modules
-DeveloperFolder
-json.sqlite
 package-lock.json
-bot_token.js
-test.js
-unban.js
-.vscode
+Token.js
+json.sqlite

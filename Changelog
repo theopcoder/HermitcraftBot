@@ -1,0 +1,21 @@
+==================================================
+Title: 0.1.0 Infrastructure Update
+Version: 0.1.0
+DevID: 2021.03.16.0.1.0
+Date: 3/16/2021
+Description: This update gets the bare minimum to start the bot while laying a template for future work to begin.
+
+Additions:
+1. N/A
+
+Deletions:
+1. N/A
+
+Bug Fixes:
+1. N/A
+
+Security Patches:
+1. N/A
+
+Notes: Added DevID which goes year.month.day.version
+==================================================

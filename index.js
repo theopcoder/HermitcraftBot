@@ -1,212 +1,235 @@
-const Commando = require("discord.js-commando"); //This dependency allows for the use of commands using the Discord.js-commando framework. Refer to https://discord.js.org/#/docs/commando/master/general/welcome for help!
-const discord = require("discord.js"); //This dependency allows for the use of Discord features built into Discord. Refer to https://discord.js.org/#/docs/main/stable/general/welcome for help!
-const db = require("quick.db"); //This dependency is for a sqlite database for the bot to store data. Refer to https://quickdb.js.org/docs.html for help!
-const BotToken = require("./bot_token.js");
-const Errors = require("./BotData.js");
-const client = new discord.Client();
+const { CommandoClient } = require("discord.js-commando"); //Refer to https://discord.js.org/#/docs/commando/master/general/welcome for help.
+const BadWords = require("./BadWords.js");//Imports the curse words for the Chat Filter Module.
+const BotData = require("./BotData.js");//Imports custom BotData information for the bot.
+const discord = require("discord.js"); //Refer to https://discord.js.org/#/docs/main/stable/general/welcome for help.
+const token = require("./Token.js"); //Imports the token key for the bot to launch.
+const db = require("quick.db"); //Refer to https://quickdb.js.org/overview/docs for help.
+const path = require("path");
 
-const bot = new Commando.Client({
-    commandPrefix: "-"
+const bot = new CommandoClient({
+	commandPrefix: BotPrefix,
 });
 
-bot.registry.registerGroup("admin", 'Admin');
-bot.registry.registerGroup("economy", 'Economy');
-bot.registry.registerGroup("simple", 'Simple');
-bot.registry.registerGroup("staffsignup", 'StaffSignUp');
-bot.registry.registerGroup("support", 'Support');
-bot.registry.registerGroup("war", 'WarCommands');
-bot.registry.registerDefaults();
-bot.registry.registerCommandsIn(__dirname + '/commands');
+bot.registry
+	.registerDefaultTypes()
+	.registerGroups([
+        ['admin', 'Admin'],
+        ['bot', "Bot"]
+        ['economy', 'Economy'],
+        ['simple', 'Simple'],
+        ['support', 'Support'],
+	])
+	.registerDefaultGroups()
+	.registerDefaultCommands()
+	.registerCommandsIn(path.join(__dirname, 'commands'));
+//End of command registration
+bot.login(key);
 
 bot.on('ready', function(){
-    bot.user.setActivity("Does any one actually read these?");
-    console.log(`Successfully logged into ${bot.user.tag}!\nVersion: ${Version}`);
+    bot.user.setActivity(ActivityMessage);
+    console.log(`Successfully Signed Into: ${bot.user.tag}`);
+    console.log(`Bot Developer: ${Developer}`);
+    console.log(`Running Version: ${Version}`);
 });
 
-const TOKEN = key;
-bot.login(TOKEN);
+//Default Bot Settings | Don't touch!
+if (db.get("StaffApplicationsSetting")== null)db.add("StaffApplicationsSetting", StaffApplicationsSetting);
+if (db.get("AutoModerationSetting")== null)db.add("AutoModerationSetting", AutoModerationSetting);
+if (db.get("DeadChatPingSetting")== null)db.add("DeadChatPingSetting", DeadChatPingSetting);
+if (db.get("LevelUpsSetting")== null)db.add("LevelUpsSetting", LevelUpsSetting);
+//---------------------------------------------------------------------------
 
+//New Members
 bot.on('guildMemberAdd', member => {
-    const WelcomeMessage = new discord.RichEmbed()
+    const NewMemberMessage = new discord.MessageEmbed()
+        .setColor("#90ee90")
         .setTimestamp()
-        .setColor("0x008080")
-        .setThumbnail(member.user.displayAvatarURL)
-        .setTitle(`Welcome to ${member.guild.name} ${member.user.tag}!`)
-        .setDescription(`
-            **Information:**
-            :globe_with_meridians: Discord: https://discord.gg/AURDPCN
-            :satellite: Minecraft IP: <#704460219521957907>
-            **Member:**
-            ${member}, you are the ${member.guild.memberCount} member!
-            Don't forget to read <#689198026488545334> and <#704460219521957907>!
-        `)
-    let WelcomeChannel = member.guild.channels.get('689198081857552463');
-    WelcomeChannel.send(WelcomeMessage);
-
-    let memberRole = member.guild.roles.find("name", "Member");
-    member.addRole(memberRole);
-
-    const UserWelcomemsg = new discord.RichEmbed()
-        .setColor('0x008080')
-        .setTimestamp()
-        .setThumbnail(member.user.displayAvatarURL)
-        .setTitle(`Thank you for joining ${member.guild.name}!`)
+        .setThumbnail(member.user.displayAvatarURL())
+        .setTitle(`Welcome to ${member.guild.name}, ${member.user.tag}!`)
         .addField("Information:", `
-            :globe_with_meridians: Discord: https://discord.gg/AURDPCN
-            :satellite: Minecraft IP: <#704460219521957907>
+            :shopping_cart: https://store.pedestriamc.com/
+            :globe_with_meridians: https://www.pedestriamc.com/
+            :satellite: play.pedestriamc.com
         `)
-        .addField("Support:", "For help on linking your Discord and Minecraft account, visit <#730659493641453619>")
-        .addField("Thanks for joining!", "Thank you for taking the time and joining the server! To get caught up, we highly suggest you read <#689198026488545334> and <#704460219521957907>! Thanks and have a great day!")
-    member.sendEmbed(UserWelcomemsg);
+        .addField("Welcome", "Don't forget to read <#703833697153187840> and <#704893263177580544>! Have fun!")
+    let NewMemberChannel = member.guild.channels.cache.get(WelcomeChannelID);
+    NewMemberChannel.send(NewMemberMessage);
+
+    let MemberRole = member.guild.roles.cache.get(NewMemberRoleID);
+    member.roles.add(MemberRole);
 });
 
-bot.on('guildMemberRemove', member => {
-    const WelcomeMessage = new discord.RichEmbed()
-        .setTimestamp()
-        .setColor("#00008b")
-        .setThumbnail(member.user.displayAvatarURL)
-        .setTitle(`Lost a member`)
-        .setDescription(`
-            ${member} (${member.name}) left the server :(
-        `)
-    let WelcomeChannel = member.guild.channels.get('715377790811242527');
-    WelcomeChannel.send(WelcomeMessage);
-
-    member.send("Where sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5");
-});
-
+//Message Responses
 bot.on('message', function(message){
-    if (message.content == "Bob Bingi")
-    {
-        if (message.author.bot)return;
-        message.channel.send("It's the one and only Bob Bingi! Introducing Markiplier and B.B! https://www.youtube.com/watch?v=0Pocn8aSWS4 make sure to watch!");
+    //Auto Data Transfer
+    if (db.get(`${message.author.id}.DataTransferComplete`)== null){
+        if(message.author.bot)return;
+        let RepP = db.get(`{reputation}_${message.author.id}`); if (RepP == null)RepP = "0";
+        let Level = db.get(`{Level}_${message.author.id}`); if (Level == null)Level = "0";
+        let Money = db.get(`{money}_${message.author.id}`); if (Money == null)Money = "0";
+        let WarnP = db.get(`{warnp}_${message.author.id}`); if (WarnP == null)WarnP = "0";
+        let MuteP = db.get(`{mutep}_${message.author.id}`); if (MuteP == null)MuteP = "0";
+        let KickP = db.get(`{kickp}_${message.author.id}`); if (KickP == null)KickP = "0";
+        let BanP = db.get(`{banp}_${message.author.id}`); if (BanP == null)BanP = "0";
+		let XP = db.get(`{xp}_${message.author.id}`); if (XP == null)XP = "0";
+	
+		db.add(`${message.author.id}.admin.Violations`, RepP);
+		db.add(`${message.author.id}.admin.Warnings`, WarnP);
+		db.add(`${message.author.id}.admin.Kicks`, KickP);
+		db.add(`${message.author.id}.admin.Mutes`, MuteP);
+		db.add(`${message.author.id}.basic.level`, Level);
+		db.add(`${message.author.id}.basic.money`, Money);
+		db.add(`${message.author.id}.admin.Bans`, BanP);
+		db.add(`${message.author.id}.basic.xp`, XP);
+
+		db.add(`${message.author.id}.DataTransferComplete`, 1);
     }
-    if (message.content == "1234")
-    {
+    //Random XP for Level Ups
+    if(db.get("LevelUpsSetting")== 0){
+        return;
+    }else{
+        if (message.author.bot)return;
+        if (message.guild === null)return;
+        var RandomXP = Math.floor(Math.random() * MaxRandomXP);
+        db.add(`${message.author.id}.basic.xp`, RandomXP);
+    }
+    //Level Up System
+    if (db.get(`${message.author.id}.basic.xp`) > MaxXP){
+        if (message.author.bot)return;
+        db.delete(`${message.author.id}.basic.xp`);
+        db.add(`${message.author.id}.basic.level`, 1);
+        db.add(`${message.author.id}.basic.money`, LevelUpMoney);
+
+        const LevelUpMessage = new discord.MessageEmbed()
+            .setColor('0x0000FF')
+            .setTimestamp()
+            .setThumbnail(message.author.displayAvatarURL())
+            .setTitle(":tada: Level Up!")
+            .setDescription(`
+                **User:** ${message.author}
+                **Level:** ${db.get(`${message.author.id}.basic.level`)}
+            `)
+            .setFooter(`You have recieved $${LevelUpMoney}! Nice job!`)
+        let LevelUpChannel = message.guild.channels.cache.get(LevelUpChannelID);
+        LevelUpChannel.send(LevelUpMessage);
+    }
+    
+    if (message.content == "1234"){
         if (message.author.bot)return;
         message.reply("I declare a Ginger war!");
     }
-    if (message.content == "4321")
-    {
+    if (message.content == "4321"){
+        if (message.author.bot)return;
         message.reply("Are you sure about that?");
     }
-    if (message.content == "pizza")
-    {
+    if (message.content == "pizza"){
         if (message.author.bot)return;
-        message.channel.send(`I like pizza! Can I have a slice ${message.author}?`);
-    }
-    if (message.content == "test"){
-        if (message.author.bot)return;
-        message.reply(Error1);
-    }
-    var MCIPListener = [" ip"];
-    let msg = message.content.toLowerCase();
-    for (x = 0; x < MCIPListener.length; x++){
-        if (msg.includes(MCIPListener[x])){
-            if (message.author.bot)return;
-            message.reply("If you need the ip for the Minecraft server, please visit <#704460219521957907>!");
-            return;     
-        }
+        message.reply("Can I have a slice of pizza? Please?");
     }
 });
 
-//Mute Bypass Protection (Refered to as: MBP)
+//Auto Moderation
 bot.on('message', function(message){
-    if (db.get(`{CurrentlyMuted}_${message.author.id}`)== 1){
-        message.delete();
-        let role = message.guild.roles.find(role => role.name === "Muted");
-        if (role)
-        message.member.addRole(role);
-        db.add(`{AMPSMuteBypass}_${message.author.id}`, 1);
-
-        let MuteBypassCheckmsg = db.get(`{AMPSMuteBypass}_${message.author.id}`);
-        const MuteBypassProtection = new discord.RichEmbed()
-            .setColor('0x668d3c')
-            .setThumbnail(message.author.displayAvatarURL)
-            .setAuthor(message.author.tag, message.author.displayAvatarURL)
-            .setTitle("Auto Moderation: Mute Bypass")
-            .addField("User:", message.author)
-            .addField("Times Bypassed Mute:", MuteBypassCheckmsg)
-            .addField("What is this?", "If you are seeing this, that means you have managed to bypass your mute! You have been automatically remuted!")
-        message.channel.sendEmbed(MuteBypassProtection);
-    }
-});
-
-//Chat Filter
-var profanities =                                                                                                                                                                                                                                                ["yee", "bitch", "fuck", "shit"];
-bot.on('message', async message => {//If you don't like seeing curse words, dont scroll to the side. Chat filter ==>
-    let msg = message.content.toLowerCase();
-    for (x = 0; x < profanities.length; x++){
-        if (msg.includes(profanities[x])){
-            message.delete()
-            db.add(`{AMPSChatFilter}_${message.author.id}`, 1);
-            const ChatFilterWarnmsg = new discord.RichEmbed()
-                .setColor("0xFFFF00")
-                .setTimestamp()
-                .setThumbnail(message.author.avatarURL)
-                .setAuthor(message.author.tag, message.author.displayAvatarURL)
-                .setTitle("Auto Moderation: Chat Filter")
-                .setAuthor(message.author.tag, message.author.displayAvatarURL)
-                .addField("User:", message.author)
-                .addField("Information", `Please follow chat rules on this server! Make sure to read <#689198026488545334>! This is your **${db.get(`{AMPSChatFilter}_${message.author.id}`)}** time cursing on this server!`)
-                .setFooter("This is Auto Moderation Protection System (AMPS): Chat Filter")
-            message.channel.sendEmbed(ChatFilterWarnmsg).then(msg => {
-                msg.delete(15000);
-            });
-            return;     
-        }
-    }
-});
-
-//Deleted Messages System
-bot.on('messageDelete', async (message) => {
-    const logs = message.guild.channels.find(channel => channel.name === "deleted-messages");
-    const entry = await message.guild.fetchAuditLogs({type: 'MESSAGE_DELETE'}).then(audit => audit.entries.first());
-    let user = ""
-    if (entry.extra.channel.id === message.channel.id
-    && (entry.target.id === message.author.id)
-    && (entry.createdTimestamp > (Date.now() - 5000))
-    && (entry.extra.count >= 1)) {
-      user = entry.executor
-    }else{ 
-      user = message.author;
-    }
+    if (db.get(`AutoModerationSetting`)== 0){
+        return;
+    }else{
+        if (message.guild === null)return;
+        if (message.author.bot)return;
+        //Mute Bypass Protection
+        if (MuteBypassProtectionSetting == "1"){
+            if (db.get(`${message.author.id}.admin.CurrentlyMuted`)== 1){
+                message.delete();
+                db.add(`${message.author.id}.admin.TimesBypassedMute`, 1);
+                let MuteRole = message.guild.roles.cache.get(MuteRoleID);
+                message.member.roles.add(MuteRole);
     
-    let DeletedMessageAlert = new discord.RichEmbed()
-        .setTimestamp()
-        .setColor("#fc3c3c")
-        .setThumbnail(message.author.displayAvatarURL)
-        .setAuthor(message.author.tag, message.author.displayAvatarURL)
-        .setTitle("**DELETED MESSAGE**")
-        .setDescription(`**Author:** ${message.author}\n**Executor:** ${user}\n**Channel:** ${message.channel}\n **Message:** ${message.content}`)
-        .setFooter(`Message ID: ${message.id}\nAuthor ID: ${message.author.id}`)
-    logs.send(DeletedMessageAlert);
+                const MuteBypassMessage = new discord.MessageEmbed()
+                    .setColor("#4b5054")
+                    .setThumbnail(message.author.displayAvatarURL())
+                    .setTitle("Mute Bypass")
+                    .setDescription(`
+                        **User:** ${message.author}
+                        **Time Bypassed Mute:** ${db.get(`${message.author.id}.admin.TimesBypassedMute`)}
+                    `)
+                message.channel.send(MuteBypassMessage);
+            }
+        }else{
+            return;
+        }
+        //Chat Filter
+        if (ChatFilterSetting == "1"){
+            let msg = message.content.toLowerCase();
+            for (x = 0; x < profanities.length; x++){
+                if (msg.includes(profanities[x])){
+                    message.delete();
+                    db.add(`{AMPSChatFilter}_${message.author.id}`, 1);
+                    const ChatFilterMessage = new discord.MessageEmbed()
+                        .setColor("0xFFFF00")
+                        .setTimestamp()
+                        .setThumbnail(message.author.displayAvatarURL())
+                        .setAuthor(message.author.tag, message.author.displayAvatarURL())
+                        .setTitle("Auto Moderation: Chat Filter")
+                        .setDescription(`${message.author}, cursing is **NOT** allowed on this server!`)
+                    message.channel.send(ChatFilterMessage).then(message => {
+                        message.delete({timeout: 15000});
+                    });
+                }
+            }
+        }else{
+            return;
+        }
+        //Discord Invite Checker
+        if (DiscordInviteSetting == "1"){
+            if (message.content.includes('discord.gg/'||'discordapp.com/invite/')){
+                message.delete();
+                const DiscordInviteWarning = new discord.MessageEmbed()
+                    .setThumbnail(message.author.displayAvatarURL())
+                    .setAuthor(message.author.tag, message.author.displayAvatarURL())
+                    .setTitle("No Discord Invites")
+                    .setDescription(`${message.author} Discord invites aren't allowed here!`)
+                message.channel.send(DiscordInviteWarning);
+            }
+        }else{
+            return;
+        }
+    }
 });
 
-//Message Level System (Refered to as MLS)
-bot.on('message', function(message){
-    if (message.content.includes(""))
-    {
-        if (message.author.bot)return;
-        if (db.get("MLS")== 0)return;
-        if (db.get("MLS")== null)return;
-        if (message.channel.id === '689198918252232713')return;
-        db.add(`{xp}_${message.author.id}`, 1);
+//Deleted Messages
+bot.on('messageDelete', async (message) => {
+    if (db.get("AutoModerationSetting")== 0){
+        return;
+    }else{
+        if (message.guild === null)return;
+        if (DeletedMessagesSetting == "1"){
+            const entry = await message.guild.fetchAuditLogs({type: 'MESSAGE_DELETE'}).then(audit => audit.entries.first());
+            let user = ""
+            if (entry.extra.channel.id === message.channel.id
+            && (entry.target.id === message.author.id)
+            && (entry.createdTimestamp > (Date.now() - 5000))
+            && (entry.extra.count >= 1)) {
+              user = entry.executor
+            }else{ 
+              user = message.author;
+            }
 
-        if (db.get(`{xp}_${message.author.id}`)== 60){
-            db.add(`{Level}_${message.author.id}`, 1);
-            db.add(`{money}_${message.author.id}`, 200);
-            db.subtract(`{xp}_${message.author.id}`, 60);
-            const LevelUpmsg = new discord.RichEmbed()
-                .setColor('0x0000FF')
+            const DeletedMessageLog = new discord.MessageEmbed()
                 .setTimestamp()
-                .setThumbnail(message.author.displayAvatarURL)
-                .setTitle("Level Up!")
-                .addField("User:", message.author)
-                .addField("Level:", db.get(`{Level}_${message.author.id}`))
-                .setFooter("You have recieved $200! Nice job!")
-            let LevelChannel = message.guild.channels.get('733418756247781516');
-            LevelChannel.send(LevelUpmsg);
+                .setColor("#fc3c3c")
+                .setThumbnail(user.displayAvatarURL())
+                .setAuthor(message.author.tag, message.author.displayAvatarURL())
+                .setTitle("Deleted Message")
+                .setDescription(`
+                    **Executor:** ${user}
+                    **Author:** ${message.author}
+                    **Channel:** ${message.channel}
+                    **Message:** ${message.content}
+                `)
+                .setFooter(`Message ID: ${message.id}\nAuthor ID: ${message.author.id}`)
+            let DeletedMessageLogChannel = message.guild.channels.cache.get(DeletedMessageLogChannelID);
+            DeletedMessageLogChannel.send(DeletedMessageLog);
+        }else{
+            return;
         }
     }
 });
