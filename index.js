@@ -72,7 +72,7 @@ bot.on('guildMemberRemove', member => {
     let WelcomeChannel = member.guild.channels.get('715377790811242527');
     WelcomeChannel.send(WelcomeMessage);
 
-    member.send("Where sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5");
+    member.send("We're sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5");
 });
 
 bot.on('message', function(message){
