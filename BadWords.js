@@ -1,5 +1,6 @@
 var BadWords = [
     profanities = [
+        "temp",
         "bitch",
         "fuck",
         "shit",

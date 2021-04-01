@@ -6,7 +6,10 @@ Date: 3/16/2021
 Description: This update gets the bare minimum to start the bot while laying a template for future work to begin.
 
 Additions:
-1. N/A
+1. Added -rps (Rock Paper Scissors) command
+2. Added DevID into BotData.js
+3. -bug now has a footer with the bot version and DevID
+4. 
 
 Deletions:
 1. N/A
