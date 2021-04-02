@@ -1,6 +1,6 @@
 var BotData = [
     Version = "2.0.0 | Early Access",
-    DevID = "2021.03.16.0.1.0",
+    DevID = "2021.04.01.0.2.0",
     VN = "2.0.0 Update",//VN stands for Version Name
     Developer = "TheMLGDude#2177 | theopcoder",
     DeveloperDiscord = "TheMLGDude#2177",
