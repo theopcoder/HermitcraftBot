@@ -37,6 +37,7 @@ var BotConfiguration2 = [
     //======================
     //BotConfiguration======
         BotPrefix = "-",
+        BotID = "762199290365607936",
         ActivityMessage = "2.0.0 Early Access",
     //======================
     //AdminConfiguration====

@@ -21,6 +21,6 @@ module.exports = class SeasonCommand extends Command {
         }
         let SeasonRole = message.guild.roles.cache.get(SeasonRoleID);
 		message.member.roles.add(SeasonRole);
-        message.reply(`Successfully gave you Season 2 role!`);
+        message.reply(`Successfully gave you Season 3 role!`);
 	}
 };

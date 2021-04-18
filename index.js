@@ -6,6 +6,7 @@ const discord = require("discord.js");
 const token = require("./Token.js");
 const db = require("quick.db");
 const path = require("path");
+const ms = require("ms");
 
 const bot = new CommandoClient({
 	commandPrefix: BotPrefix,
@@ -63,10 +64,10 @@ bot.on('guildMemberRemove', member => {
     const MemberLeaveMessage = new discord.MessageEmbed()
         .setTimestamp()
         .setColor("#00008b")
-        .setThumbnail(member.user.displayAvatarURL)
+        .setThumbnail(member.user.displayAvatarURL)//BUG images don't show
         .setTitle("Lost a member")
         .setDescription(`
-            ${member} (${member.name}) left the server :(
+            ${member} (${member.name}) left the server :( //BUG () says undefined
         `)
     let MemberLeaveChannel = member.guild.channels.cache.get(MemberLeaveChannelID);
     MemberLeaveChannel.send(MemberLeaveMessage);
@@ -74,11 +75,9 @@ bot.on('guildMemberRemove', member => {
 
 //member.send("We're sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5");
 
-
-
 bot.on('message', function(message){
     //Level Up System
-    if (db.get(`LevelUpSystem`)== 1){//TODO Replace null with value
+    if (db.get(`LevelUpSystem`)== null){//TODO Replace null with value
         //XP Generator
         if (message.author.bot)return;
         if (message.guild === null)return;
@@ -106,8 +105,6 @@ bot.on('message', function(message){
             let LevelUpChannel = message.guild.channels.cache.get(LevelUpChannelID);
             LevelUpChannel.send(LevelUpMessage);
         }
-    }else{
-        return;
     }
     //Message Reactions
     if (message.content == "1234"){
@@ -119,6 +116,15 @@ bot.on('message', function(message){
     if (message.content == "pizza"){
         message.reply("Can I have a slice of pizza? Please?");
     }
+    if (message.content == "Bob Bingi"){
+        message.channel.send("It's the one and only Bob Bingi! Introducing Markiplier and B.B! https://www.youtube.com/watch?v=0Pocn8aSWS4 make sure to watch!");
+    }
+    if (message.attachments.size > 0) {
+        console.log("Check works?")
+        let LevelUpChannel = message.guild.channels.cache.get(LevelUpChannelID);
+        LevelUpChannel.send(message.content.attachments);
+    }
+    //TODO Minecraft IP listener
 });
 
 //Auto Moderation
@@ -135,6 +141,7 @@ bot.on('message', function(message){
                 let MuteRole = message.guild.roles.cache.get(MuteRoleID);
                 message.member.roles.add(MuteRole);
 
+                //Chat Response
                 const MuteBypassMessage = new discord.MessageEmbed()
                     .setTimestamp()
                     .setColor("")//Keep Empty
@@ -146,30 +153,55 @@ bot.on('message', function(message){
                 message.channel.send(MuteBypassMessage).then(message => {
                     message.delete({timeout: 15000});
                 });
-                ModLogChannel.send(MuteBypassMessage);
+
+                //Logged Resonse
+                const MuteBypassMessageLog = new discord.MessageEmbed()
+                    .setTimestamp()
+                    .setColor("")//Keep Empty
+                    .setAuthor("Mute Bypass | "+message.author.tag, message.author.displayAvatarURL())
+                    .setDescription(`
+                        **User:** ${message.author}
+                        **Bypasses:** ${db.get(`${message.author.id}.admin.TimesBypassedMute`)}
+                    `)
+                    .setFooter("Auto Moderation: Mute Bypass")
+                ModLogChannel.send(MuteBypassMessageLog);
             }
         }else{
             return;
         }
         //Chat Filter
+        //TODO rework chat filter
         if (ChatFilterSetting == "1"){
             let msg = message.content.toLowerCase();
             for (x = 0; x < profanities.length; x++){
                 if (msg.includes(profanities[x])){
                     message.delete();
                     db.add(`{AMPSChatFilter}_${message.author.id}`, 1);
+
+                    //Chat Response
                     const ChatFilterMessage = new discord.MessageEmbed()
                         .setTimestamp()
-                        .setColor("0xFFFF00")
+                        .setColor("#FFFF00")
                         .setAuthor(message.author.tag, message.author.displayAvatarURL())
                         .setDescription(`
                             ${message.author}, cursing **isn't** allowed!
                         `)
                         .setFooter("Auto Moderation: Chat Filter")
                     message.channel.send(ChatFilterMessage).then(message => {
-                        ModLogChannel.send(ChatFilterMessage);
                         message.delete({timeout: 15000});
                     });
+
+                    //Logged Response
+                    const ChatFilterMessageLog = new discord.MessageEmbed()
+                        .setTimestamp()
+                        .setColor("#FFFF00")
+                        .setAuthor("Chat Filter | "+message.author.tag, message.author.displayAvatarURL())
+                        .setDescription(`
+                            **User:** ${message.author}
+                            **Message:** ${message.content}
+                        `)
+                        .setFooter("Auto Moderation: Chat Filter")
+                    ModLogChannel.send(ChatFilterMessageLog);
                 }
             }
         }else{
@@ -180,6 +212,7 @@ bot.on('message', function(message){
             if (message.content.includes('discord.gg/'||'discordapp.com/invite/')){
                 message.delete();
                 
+                //Chat Response
                 const DiscordInviteWarning = new discord.MessageEmbed()
                     .setTimestamp()
                     .setColor("")//Leave empty
@@ -191,6 +224,18 @@ bot.on('message', function(message){
                 message.channel.send(DiscordInviteWarning).then(message => {
                     message.delete({timeout: 15000});
                 });
+
+                //Logged Response
+                const DiscordInviteWarningLog = new discord.MessageEmbed()
+                    .setTimestamp()
+                    .setColor("")//Leave empty
+                    .setAuthor("Discord Invite | "+message.author.tag, message.author.displayAvatarURL())
+                    .setDescription(`
+                        **User:** ${message.author}
+                        **Message:** ${message.content}
+                    `)
+                    .setFooter("Auto Moderation: Discord Invite")
+                ModLogChannel.send(DiscordInviteWarningLog);
             }
         }else{
             return;
@@ -200,25 +245,13 @@ bot.on('message', function(message){
     }
 });
 
-
-//NOTE Unchecked code below
-//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===
-
-//Default Bot Settings | Don't touch!
-//if (db.get("StaffApplicationsSetting")== null)db.add("StaffApplicationsSetting", StaffApplicationsSetting);
-//if (db.get("AutoModerationSetting")== null)db.add("AutoModerationSetting", AutoModerationSetting);
-//if (db.get("DeadChatPingSetting")== null)db.add("DeadChatPingSetting", DeadChatPingSetting);
-//if (db.get("LevelUpsSetting")== null)db.add("LevelUpsSetting", LevelUpsSetting);
-//---------------------------------------------------------------------------
-
-//TODO move Deleted Messages into the auto moderation section.
-//Deleted Messages
+//Auto Moderation | Deleted Messages
 bot.on('messageDelete', async (message) => {
-    if (db.get("AutoModerationSetting")== 0){
-        return;
-    }else{
-        if (message.guild === null)return;
-        if (DeletedMessagesSetting == "1"){
+    let pizza = "1"//TODO deprecate
+    if (pizza = "1") {
+        if (DeletedMessagesSetting == "1") {//TODO Update to new quick.db setting checker?
+            if (message.guild === null)return;
+            let ModLogChannel = message.guild.channels.cache.get(ModLogID);
             const entry = await message.guild.fetchAuditLogs({type: 'MESSAGE_DELETE'}).then(audit => audit.entries.first());
             let user = ""
             if (entry.extra.channel.id === message.channel.id
@@ -230,46 +263,49 @@ bot.on('messageDelete', async (message) => {
               user = message.author;
             }
 
+            //BUG empty for message when its an embed/image for deleted messages
+
             const DeletedMessageLog = new discord.MessageEmbed()
                 .setTimestamp()
                 .setColor("#fc3c3c")
                 .setThumbnail(user.displayAvatarURL())
                 .setAuthor(message.author.tag, message.author.displayAvatarURL())
-                .setTitle("Deleted Message")
                 .setDescription(`
                     **Executor:** ${user}
                     **Author:** ${message.author}
                     **Channel:** ${message.channel}
                     **Message:** ${message.content}
                 `)
-                .setFooter(`Message ID: ${message.id}\nAuthor ID: ${message.author.id}`)
-            let DeletedMessageLogChannel = message.guild.channels.cache.get(DeletedMessageLogChannelID);
-            DeletedMessageLogChannel.send(DeletedMessageLog);
-        }else{
-            return;
+                .setFooter("Auto Moderation: Deleted Message")
+            ModLogChannel.send(DeletedMessageLog);
         }
+    }else{
+        return;
     }
 });
+
+//TODO Add bulk message delete listner
+
+//TODO Add rest of auto moderation sections
 
 //Dead Chat Pings
 bot.on('ready', () => {
     setInterval(() => {
-        //TODO Update questions
         var DeadChatQuestion = Math.round(Math.random() * 31);
         if (DeadChatQuestion == 0){DCPQuestion = "What is the most valuable thing you currently have ingame?"};
         if (DeadChatQuestion == 1){DCPQuestion = "What movie or book character do you most identify with?"};
         if (DeadChatQuestion == 2){DCPQuestion = "As a child, what did you wish to be when you grew up?"};
         if (DeadChatQuestion == 3){DCPQuestion = "Are we seeing signs of evolution in our species?"};
         if (DeadChatQuestion == 4){DCPQuestion = "What's a trait do you like most about yourself?"};
-        if (DeadChatQuestion == 5){DCPQuestion = "What are you currently working on in Survival?"};
+
         if (DeadChatQuestion == 6){DCPQuestion = "Why is science so important to modern society?"};
-        if (DeadChatQuestion == 7){DCPQuestion = "What are you currently working on in WarLands?"};
+
         if (DeadChatQuestion == 8){DCPQuestion = "What is your favorite form of transportation?"};
-        if (DeadChatQuestion == 9){DCPQuestion = "What's the worst thing you ever did as a kid?"};
+
         if (DeadChatQuestion == 10){DCPQuestion = "What is your favorite version of Minecraft?"};
         if (DeadChatQuestion == 11){DCPQuestion = "Is time relative to a person or universal?"};
         if (DeadChatQuestion == 12){DCPQuestion = "What song always puts you in a good mood?"};
-        if (DeadChatQuestion == 13){DCPQuestion = "What's the weirdest quirk you find funny?"};
+
         if (DeadChatQuestion == 14){DCPQuestion = "Survival, Creative or Hardcore Minecraft?"};
         if (DeadChatQuestion == 15){DCPQuestion = "What do you like to do on the weekends?"};
         if (DeadChatQuestion == 16){DCPQuestion = "Would you say you make friends easily?"};
@@ -280,7 +316,7 @@ bot.on('ready', () => {
         if (DeadChatQuestion == 21){DCPQuestion = "Laptop, Desktop or Handheld?"};
         if (DeadChatQuestion == 22){DCPQuestion = "What's your favorite food?"};
         if (DeadChatQuestion == 23){DCPQuestion = "Java or Bedrock Minecraft?"};
-        if (DeadChatQuestion == 24){DCPQuestion = "What's your first memory?"};
+
         if (DeadChatQuestion == 25){DCPQuestion = "Windows, MacOS or Linux?"};
         if (DeadChatQuestion == 26){DCPQuestion = "Playstation Or Xbox?"};
         if (DeadChatQuestion == 27){DCPQuestion = "How have you been?"};
@@ -303,3 +339,13 @@ bot.on('ready', () => {
         }
     }, 1000 * 60 * 60 * PingTime);
 });
+
+//NOTE Unchecked code below
+//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===
+
+//Default Bot Settings | Don't touch!
+//if (db.get("StaffApplicationsSetting")== null)db.add("StaffApplicationsSetting", StaffApplicationsSetting);
+//if (db.get("AutoModerationSetting")== null)db.add("AutoModerationSetting", AutoModerationSetting);
+//if (db.get("DeadChatPingSetting")== null)db.add("DeadChatPingSetting", DeadChatPingSetting);
+//if (db.get("LevelUpsSetting")== null)db.add("LevelUpsSetting", LevelUpsSetting);
+//---------------------------------------------------------------------------

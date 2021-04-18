@@ -58,7 +58,49 @@ module.exports = class KickCommand extends Command {
 			});
 			return;
 		}
-		
 
+		db.add(`${message.mentions.users.first().id}.admin.Kicks`, 1);
+		db.add(`${message.mentions.users.first().id}.admin.Violations`, 1);
+		var KickViolationNumber = db.add(`{KickViolationNumber}_${message.mentions.users.first().id}`, 1);
+		db.push(`{KickReason}_${message.mentions.users.first().id}`, `**Kick ${KickViolationNumber}:** [Mod: ${message.author} | Time: ${new Date().toLocaleString()}] \n${words.slice(1).join(' ')}`);
+		let Violations = db.get(`${message.mentions.users.first().id}.admin.Violations`); if (Violations == null)Violations = "0";
+		let Warnings = db.get(`${message.mentions.users.first().id}.admin.Warnings`); if (Warnings == null)Warnings = "0";
+		let Mutes = db.get(`${message.mentions.users.first().id}.admin.Mutes`); if (Mutes == null)Mutes = "0";
+		let Kicks = db.get(`${message.mentions.users.first().id}.admin.Kicks`); if (Kicks == null)Kicks = "0";
+		let Bans = db.get(`${message.mentions.users.first().id}.admin.Bans`); if (Bans == null)Bans = "0";
+		let users = message.mentions.users.first();
+
+		KickedUser.send(`You have been kicked from ${message.guild.name} because, ${reason}. Reinvite Link: https://discord.gg/wKVu2Cq`).catch(err => 
+			console.log(`Could not message kicked user!`)
+		);
+		KickedUser.kick(reason);
+
+		const ChatKickMessage = new discord.MessageEmbed()
+			.setTimestamp()
+			.setColor("#6a0dad")
+			.setThumbnail(users.displayAvatarURL())
+			.setTitle("Kick")
+			.setDescription(`
+				**Moderator:** ${message.author}
+				**User:** ${KickedUser}
+				**Reason:** ${reason}
+			`)
+		message.channel.send(ChatKickMessage);
+
+		const KickLogMessage = new discord.MessageEmbed()
+			.setTimestamp()
+			.setColor("#6a0dad")
+			.setThumbnail(users.displayAvatarURL())
+			.setTitle("Kick")
+			.setDescription(`
+				**Moderator:** ${message.author}
+				**User:** ${KickedUser}
+				**User ID:** ${KickedUser.id}
+				**Reason:** ${reason}
+				**Total Offences:** ${Violations}
+				**Other Offences:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
+			`)
+			let LogChannel = message.guild.channels.cache.get(LogChannelID);
+		LogChannel.send(KickLogMessage);
 	}
 };

@@ -46,6 +46,7 @@ module.exports = class PurgeCommand extends Command {
 		}
 		message.channel.bulkDelete(words[0]);
 
+		//TODO Move to Auto Moderation for bulk message deletions
 		const PurgeLogMessage = new discord.MessageEmbed()
 			.setTimestamp()
 			.setColor("#187ddb")

@@ -2,3 +2,5 @@ node_modules
 package-lock.json
 Token.js
 json.sqlite
+.vscode
+DeveloperFolder

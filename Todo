@@ -19,3 +19,7 @@ Add commands?
 Re added command from above:
 
 7. season.js
+
+TODOS
+
+//TODO make sure all admin commands log to correct admin storage
