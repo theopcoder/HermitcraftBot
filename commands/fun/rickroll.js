@@ -7,7 +7,7 @@ module.exports = class RickrollCommand extends Command {
 constructor(client) {
   super(client, {
     name: 'rickroll',
-    group: 'simple',
+    group: 'fun',
     memberName: 'rickroll',
     description: 'Rickrolls you!',
   });
