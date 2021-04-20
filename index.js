@@ -78,10 +78,9 @@ bot.on('guildMemberRemove', member => {
     let MemberLeaveChannel = member.guild.channels.cache.get(MemberLeaveChannelID);
     MemberLeaveChannel.send(MemberLeaveMessage);
 
-    member.send("We're sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5").catch(err => 
-        console.log(`Could not message the person who left!`)
-    );
-});
+member.send("We're sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5").catch(err => 
+    console.log(`Could not message the person who left!`)
+);
 
 bot.on('message', function(message){
     //Level Up System
