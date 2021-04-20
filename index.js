@@ -34,6 +34,11 @@ bot.on('ready', function(){
     console.log(`Running Version: ${Version}`);
 });
 
+/*if (db.get("settings.LevelUpSystem")== null)db.add("settings.LevelUpSystem", StaffApplicationsSetting);
+if (db.get("settings.DeadChatPings")== null)db.add("settings.DeadChatPings", AutoModerationSetting);
+if (db.get("settings.AutoModeration")== null)db.add("settings.AutoModeration", DeadChatPingSetting);
+if (db.get("settings.StaffApplications")== null)db.add("settings.StaffApplications", LevelUpsSetting);*/
+
 //-----------------------
 
 //New Members
@@ -64,20 +69,22 @@ bot.on('guildMemberRemove', member => {
     const MemberLeaveMessage = new discord.MessageEmbed()
         .setTimestamp()
         .setColor("#00008b")
-        .setThumbnail(member.user.displayAvatarURL)//BUG images don't show
+        .setThumbnail(member.user.displayAvatarURL())
         .setTitle("Lost a member")
         .setDescription(`
-            ${member} (${member.name}) left the server :( //BUG () says undefined
+            ${member} (${member.user.tag}) left the server :(
         `)
     let MemberLeaveChannel = member.guild.channels.cache.get(MemberLeaveChannelID);
     MemberLeaveChannel.send(MemberLeaveMessage);
-});
 
-//member.send("We're sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5");
+    member.send("We're sorry to see you go. If you don't mind, can you tell us why you left? https://forms.gle/UbyAV2Nze9ni24mx5").catch(err => 
+        console.log(`Could not message the person who left!`)
+    );
+});
 
 bot.on('message', function(message){
     //Level Up System
-    if (db.get(`LevelUpSystem`)== null){//TODO Replace null with value
+    if (db.get("settings.LevelUpSystem")== 1){
         //XP Generator
         if (message.author.bot)return;
         if (message.guild === null)return;
@@ -119,17 +126,12 @@ bot.on('message', function(message){
     if (message.content == "Bob Bingi"){
         message.channel.send("It's the one and only Bob Bingi! Introducing Markiplier and B.B! https://www.youtube.com/watch?v=0Pocn8aSWS4 make sure to watch!");
     }
-    if (message.attachments.size > 0) {
-        console.log("Check works?")
-        let LevelUpChannel = message.guild.channels.cache.get(LevelUpChannelID);
-        LevelUpChannel.send(message.content.attachments);
-    }
     //TODO Minecraft IP listener
 });
 
 //Auto Moderation
 bot.on('message', function(message){
-    if (db.get(`AutoModerationSetting`)== null){//TODO Replace null with value
+    if (db.get("settings.AutoModeration")== 1){
         if (message.guild === null)return;
         if (message.author.bot)return;
         let ModLogChannel = message.guild.channels.cache.get(ModLogID);
@@ -247,8 +249,7 @@ bot.on('message', function(message){
 
 //Auto Moderation | Deleted Messages
 bot.on('messageDelete', async (message) => {
-    let pizza = "1"//TODO deprecate
-    if (pizza = "1") {
+    if (db.get("settings.AutoModeration")== 1) {
         if (DeletedMessagesSetting == "1") {//TODO Update to new quick.db setting checker?
             if (message.guild === null)return;
             let ModLogChannel = message.guild.channels.cache.get(ModLogID);
@@ -263,8 +264,6 @@ bot.on('messageDelete', async (message) => {
               user = message.author;
             }
 
-            //BUG empty for message when its an embed/image for deleted messages
-
             const DeletedMessageLog = new discord.MessageEmbed()
                 .setTimestamp()
                 .setColor("#fc3c3c")
@@ -278,74 +277,66 @@ bot.on('messageDelete', async (message) => {
                 `)
                 .setFooter("Auto Moderation: Deleted Message")
             ModLogChannel.send(DeletedMessageLog);
+        }else {
+            return;
         }
     }else{
         return;
     }
 });
 
-//TODO Add bulk message delete listner
-
-//TODO Add rest of auto moderation sections
-
 //Dead Chat Pings
 bot.on('ready', () => {
     setInterval(() => {
-        var DeadChatQuestion = Math.round(Math.random() * 31);
-        if (DeadChatQuestion == 0){DCPQuestion = "What is the most valuable thing you currently have ingame?"};
-        if (DeadChatQuestion == 1){DCPQuestion = "What movie or book character do you most identify with?"};
-        if (DeadChatQuestion == 2){DCPQuestion = "As a child, what did you wish to be when you grew up?"};
-        if (DeadChatQuestion == 3){DCPQuestion = "Are we seeing signs of evolution in our species?"};
-        if (DeadChatQuestion == 4){DCPQuestion = "What's a trait do you like most about yourself?"};
-
-        if (DeadChatQuestion == 6){DCPQuestion = "Why is science so important to modern society?"};
-
-        if (DeadChatQuestion == 8){DCPQuestion = "What is your favorite form of transportation?"};
-
-        if (DeadChatQuestion == 10){DCPQuestion = "What is your favorite version of Minecraft?"};
-        if (DeadChatQuestion == 11){DCPQuestion = "Is time relative to a person or universal?"};
-        if (DeadChatQuestion == 12){DCPQuestion = "What song always puts you in a good mood?"};
-
-        if (DeadChatQuestion == 14){DCPQuestion = "Survival, Creative or Hardcore Minecraft?"};
-        if (DeadChatQuestion == 15){DCPQuestion = "What do you like to do on the weekends?"};
-        if (DeadChatQuestion == 16){DCPQuestion = "Would you say you make friends easily?"};
-        if (DeadChatQuestion == 17){DCPQuestion = "What do you like to do on a rainy day?"};
-        if (DeadChatQuestion == 18){DCPQuestion = "What's your favourite type of music?"};
-        if (DeadChatQuestion == 19){DCPQuestion = "What is your favourite Disney movie?"};
-        if (DeadChatQuestion == 20){DCPQuestion = "What's your favorite activity?"};
-        if (DeadChatQuestion == 21){DCPQuestion = "Laptop, Desktop or Handheld?"};
-        if (DeadChatQuestion == 22){DCPQuestion = "What's your favorite food?"};
-        if (DeadChatQuestion == 23){DCPQuestion = "Java or Bedrock Minecraft?"};
-
-        if (DeadChatQuestion == 25){DCPQuestion = "Windows, MacOS or Linux?"};
-        if (DeadChatQuestion == 26){DCPQuestion = "Playstation Or Xbox?"};
-        if (DeadChatQuestion == 27){DCPQuestion = "How have you been?"};
-        if (DeadChatQuestion == 28){DCPQuestion = "Iphone or Android?"};
-        if (DeadChatQuestion == 29){DCPQuestion = "Do you have pets?"};
-        if (DeadChatQuestion == 30){DCPQuestion = "Airplane or Car?"};
-
-        const DeadChatMessage = new discord.MessageEmbed()
-            .setTimestamp()
-            .setColor("RANDOM")
-            .setTitle("Dead Chat Ping!")
-            .addField(DCPQuestion, `<@&${DCPPingRoleID}>`)
-        let PingChannel = bot.channels.cache.get(DCPChannelID);
-        PingChannel.send(DeadChatMessage);
-
-        function DCP(message){
-            PingChannel.send(`Dead Chat Ping! <@&${DCPPingRoleID}>`).then(message => {
-                message.delete();
-            }); 
+        if (db.get("settings.DeadChatPings") == 1){
+            var DeadChatQuestion = Math.round(Math.random() * 31);
+            if (DeadChatQuestion == 0){DCPQuestion = "What is the most valuable thing you currently have ingame?"};
+            if (DeadChatQuestion == 1){DCPQuestion = "What movie or book character do you most identify with?"};
+            if (DeadChatQuestion == 2){DCPQuestion = "As a child, what did you wish to be when you grew up?"};
+            if (DeadChatQuestion == 3){DCPQuestion = "Are we seeing signs of evolution in our species?"};
+            if (DeadChatQuestion == 4){DCPQuestion = "What's a trait do you like most about yourself?"};
+            if (DeadChatQuestion == 5){DCPQuestion = "What subject are you the best at in school?"};
+            if (DeadChatQuestion == 6){DCPQuestion = "Why is science so important to modern society?"};
+            if (DeadChatQuestion == 7){DCPQuestion = "What would you do if you where offered the chance to go to Mars?"};
+            if (DeadChatQuestion == 8){DCPQuestion = "What is your favorite form of transportation?"};
+            if (DeadChatQuestion == 9){DCPQuestion = "Have you read the <#> for today?"};//TODO have this go for the QOD channel
+            if (DeadChatQuestion == 10){DCPQuestion = "What is your favorite version of Minecraft?"};
+            if (DeadChatQuestion == 11){DCPQuestion = "Is time relative to a person or universal?"};
+            if (DeadChatQuestion == 12){DCPQuestion = "What song always puts you in a good mood?"};
+            if (DeadChatQuestion == 13){DCPQuestion = "What is one of the funniest (but clean) jokes you know?"};
+            if (DeadChatQuestion == 14){DCPQuestion = "Survival, Creative or Hardcore Minecraft?"};
+            if (DeadChatQuestion == 15){DCPQuestion = "What do you like to do on the weekends?"};
+            if (DeadChatQuestion == 16){DCPQuestion = "Would you say you make friends easily?"};
+            if (DeadChatQuestion == 17){DCPQuestion = "What do you like to do on a rainy day?"};
+            if (DeadChatQuestion == 18){DCPQuestion = "What's your favourite type of music?"};
+            if (DeadChatQuestion == 19){DCPQuestion = "What is your favourite Disney movie?"};
+            if (DeadChatQuestion == 20){DCPQuestion = "What's your favorite activity?"};
+            if (DeadChatQuestion == 21){DCPQuestion = "Laptop, Desktop or Handheld?"};
+            if (DeadChatQuestion == 22){DCPQuestion = "What's your favorite food?"};
+            if (DeadChatQuestion == 23){DCPQuestion = "Java or Bedrock Minecraft?"};
+            if (DeadChatQuestion == 24){DCPQuestion = "Which is the better pie? Debate in chat!"};
+            if (DeadChatQuestion == 25){DCPQuestion = "Windows, MacOS or Linux?"};
+            if (DeadChatQuestion == 26){DCPQuestion = "Playstation Or Xbox?"};
+            if (DeadChatQuestion == 27){DCPQuestion = "How have you been?"};
+            if (DeadChatQuestion == 28){DCPQuestion = "Iphone or Android?"};
+            if (DeadChatQuestion == 29){DCPQuestion = "Do you have pets?"};
+            if (DeadChatQuestion == 30){DCPQuestion = "Airplane or Car?"};
+    
+            const DeadChatMessage = new discord.MessageEmbed()
+                .setTimestamp()
+                .setColor("RANDOM")
+                .setTitle("Dead Chat Ping!")
+                .addField(DCPQuestion, `<@&${DCPPingRoleID}>`)
+            let PingChannel = bot.channels.cache.get(DCPChannelID);
+            PingChannel.send(DeadChatMessage);
+    
+            function DCP(message){
+                PingChannel.send(`Dead Chat Ping! <@&${DCPPingRoleID}>`).then(message => {
+                    message.delete();
+                }); 
+            }
+        }else{
+            return;
         }
     }, 1000 * 60 * 60 * PingTime);
 });
-
-//NOTE Unchecked code below
-//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===//===---|||---===
-
-//Default Bot Settings | Don't touch!
-//if (db.get("StaffApplicationsSetting")== null)db.add("StaffApplicationsSetting", StaffApplicationsSetting);
-//if (db.get("AutoModerationSetting")== null)db.add("AutoModerationSetting", AutoModerationSetting);
-//if (db.get("DeadChatPingSetting")== null)db.add("DeadChatPingSetting", DeadChatPingSetting);
-//if (db.get("LevelUpsSetting")== null)db.add("LevelUpsSetting", LevelUpsSetting);
-//---------------------------------------------------------------------------

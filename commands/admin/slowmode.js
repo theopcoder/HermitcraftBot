@@ -65,7 +65,7 @@ module.exports = class SlowModeCommand extends Command {
         message.channel.setRateLimitPerUser(args[0], `${reason}`);
         const SlowMode = new discord.MessageEmbed()
 		.setColor("#00FF00")
-            .setDescription(`Slowmode enabled! You can now send a message every **${args[0]}** seconds!`)
+            .setDescription(`:white_check_mark: Slowmode enabled! You can now send a message every **${args[0]}** seconds!`)
         message.channel.send(SlowMode);
 
 		const SlowModeLogMessage = new discord.MessageEmbed()

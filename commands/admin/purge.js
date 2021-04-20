@@ -28,8 +28,12 @@ module.exports = class PurgeCommand extends Command {
 		}
         let words = args.split(' ');
 		let DeletedMessage = words.slice(0).join(' ');
-		if (isNaN(args[0])){//BUG decimals break it!
+		if (isNaN(args[0])){
 			message.reply("You can only use numbers for this command!");
+			return;
+		}
+		if (words[0].includes(".")){
+			message.reply("You can't use decimal numbers!");
 			return;
 		}
 		if (!DeletedMessage){
@@ -46,7 +50,6 @@ module.exports = class PurgeCommand extends Command {
 		}
 		message.channel.bulkDelete(words[0]);
 
-		//TODO Move to Auto Moderation for bulk message deletions
 		const PurgeLogMessage = new discord.MessageEmbed()
 			.setTimestamp()
 			.setColor("#187ddb")

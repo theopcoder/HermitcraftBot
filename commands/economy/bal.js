@@ -4,7 +4,6 @@ const BotData = require("../../BotData.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
-//TODO Wallet or -bal?
 module.exports = class WalletCommand extends Command {
 	constructor(client) {
 		super(client, {

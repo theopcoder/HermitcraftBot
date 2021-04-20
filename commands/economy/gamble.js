@@ -42,7 +42,9 @@ module.exports = class WalletCommand extends Command {
             message.delete({timeout: 5000});
         });
         db.subtract(`${message.author.id}.basic.money`, bet);
-        //TODO Add a transactions logger?
+        db.add(`GlobalMoneyConfirmationID`, 1);
+		let GetConfirmationID = db.get(`GlobalMoneyConfirmationID`);
+		db.push(`{ConfirmationMessage}_${message.author.id}`, `\n**PaymentID:** #${GetConfirmationID}\n**Date:** ${new Date().toLocaleString()}\n**Payment Type:** Gamble\n**Amount:** $${bet}\n`);
         var Chance = Math.floor(Math.random() * 15);
         var ChanceCompare = Math.floor(Math.random() * 15);
         if (Chance == ChanceCompare){

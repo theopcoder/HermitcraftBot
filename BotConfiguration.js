@@ -14,6 +14,7 @@ var BotConfiguration = [//TODO move over required components for 2.0.0 update to
     DeletedMessageLogChannelID = "799862866475220992",
     LogChannelID = "799862844253798441",
     MuteRoleID = "799863227269775371",
+    ApplicationChannelID = "833571972150591508",
     //--------------------------------------------------
     //Auto Moderation Configuration---------------------
     MuteBypassProtectionSetting = "1",
@@ -52,7 +53,7 @@ var BotConfiguration2 = [
         LevelUpChannelID = "799863344907419678",
         LevelUpMoney = "200",
         MaxRandomXP = "5",
-        MaxXP = "10",
+        MaxXP = "10",//Make 150?
     //======================
     //DCPConfiguration======
         DCPPingRoleID = "825568176178855977",

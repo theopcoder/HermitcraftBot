@@ -1,25 +1,24 @@
 Commands that might be added but could be removed
 
-Add commands?
-1. war.js
+Deciding:
+5. store.js
+
+Deprecated Commands:
 2. softwarn.js
 3. user_info.js
-4. pay.js
-5. store.js
-6. tax.js
-8. stats.js
 9. accept.js
-10. apply.js
 11. deny.js
 12. requesttoggle.js
 13. botlog.js
-14. poll.js
 15. report.js
 
 Re added command from above:
-
+1. war.js
 7. season.js
+4. pay.js
+8. stats.js
+10. apply.js
+6. tax.js
+14. poll.js
 
-TODOS
-
-//TODO make sure all admin commands log to correct admin storage
+//TODO rename offences to Violations in all commands
