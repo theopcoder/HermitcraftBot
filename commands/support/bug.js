@@ -36,9 +36,10 @@ module.exports = class BugCommand extends Command {
                 **User:** ${message.author}
                 **Bug:** ${bug}
             `)
-            .setFooter(`Bot Info\nVersion: ${Version} | DevID: ${DevID}`)
+            .setFooter(`Bot Info\nVersion: ${Version} | BuildID: ${BuildID}`)
         let BugReportChannel = message.guild.channels.cache.get(BugChannelID);
-		BugReportChannel.send(BugReportMessage);
-        message.reply("Successfully sent your bug report!");
+		BugReportChannel.send(BugReportMessage).catch(err => {
+            message.reply("Please shorten your suggestion!");
+        });
 	}
 };

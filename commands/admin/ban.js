@@ -97,8 +97,8 @@ module.exports = class BanCommand extends Command {
 				**User:** ${BannedUser}
 				**User ID:** ${BannedUser.id}
 				**Reason:** ${reason}
-				**Total Offences:** ${Violations}
-				**Other Offences:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
+				**Violations:** ${Violations}
+				**Other Violations:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
 			`)
 			let LogChannel = message.guild.channels.cache.get(LogChannelID);
 		LogChannel.send(BanLogMessage);

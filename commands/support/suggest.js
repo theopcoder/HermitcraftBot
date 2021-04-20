@@ -39,7 +39,8 @@ module.exports = class SuggestCommand extends Command {
 		SuggestionChannel.send(SuggestionMessage).then(MessageEmbed => {
             MessageEmbed.react("✅");
             MessageEmbed.react("❌");
+        }).catch(err => {
+            message.reply("Please shorten your suggestion!");
         });
-        message.reply("Successfully sent your suggestion!");
 	}
 };

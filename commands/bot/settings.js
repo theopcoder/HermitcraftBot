@@ -13,7 +13,6 @@ module.exports = class BugCommand extends Command {
 			description: 'Control and change the bot settings.',
 		});
 	}
-    //2. DCP, 3. auto moderation, 4. applications, 1. level up system
 
 	run(message, args) {
         if (!message.member.hasPermission("ADMINISTRATOR")){
@@ -31,10 +30,18 @@ module.exports = class BugCommand extends Command {
         if (settings == "help"){
             const SettingsHelpMessage = new discord.MessageEmbed()
                 .setTimestamp()
-                .setColor("")
+                .setColor("#FFA500")
+                .attachFiles('./Images/SettingsCog.png')
+                .setThumbnail('attachment://SettingsCog.png')
                 .setTitle("Settings Help")
                 .setDescription(`
-                    1. 
+                    1. Level Up System
+                    2. Dead Chat Pings
+                    3. Auto Moderation
+                    4. Applications
+
+                    To turn a setting off or on, do -setting <number> on/off
+                    Example: -setting 1 off
                 `)
             message.channel.send(SettingsHelpMessage);
             return;
@@ -93,13 +100,14 @@ module.exports = class BugCommand extends Command {
         const SettingsMessage = new discord.MessageEmbed()
             .setTimestamp()
             .setColor("#FFA500")
-            .setThumbnail('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvypYAFynUpTRITuiYvJstD17LjWB2zIzfLA&usqp=CAU')
+            .attachFiles('./Images/SettingsCog.png')
+            .setThumbnail('attachment://SettingsCog.png')
             .setTitle("Settings")
             .setDescription(`
-                **Level Ups:** ${LevelUpSetting}
+                **Staff Applications:** ${StaffApplicationSetting}
                 **Dead Chat Pings:** ${DeadChatPingSetting}
                 **Auto Moderation:** ${AutoModerationSetting}
-                **Staff Applications:** ${StaffApplicationSetting}
+                **Level Ups:** ${LevelUpSetting}
             `)
         message.channel.send(SettingsMessage);
 	}

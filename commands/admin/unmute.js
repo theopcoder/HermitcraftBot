@@ -55,6 +55,17 @@ module.exports = class UnmuteCommand extends Command {
             message.channel.send(UserAlreadyUnutedMessage);
             return;
 		}
+        let words = args.split(' ');
+		let reason = words.slice(1).join(' ');
+        if (!reason){
+			const NoReasonWarning = new discord.MessageEmbed()
+				.setColor()
+				.setDescription(`:warning: Please supply a reason for the ban!`)
+			message.channel.send(NoReasonWarning).then(message => {
+                message.delete({timeout: 10000});
+			});
+			return;
+		}
 
 		let Violations = db.get(`${message.mentions.users.first().id}.admin.Violations`); if (Violations == null)Violations = "0";
 		let Warnings = db.get(`${message.mentions.users.first().id}.admin.Warnings`); if (Warnings == null)Warnings = "0";
@@ -98,10 +109,8 @@ module.exports = class UnmuteCommand extends Command {
                 **User ID:** ${UnmutedUser.id}
                 **Reason:** ${reason}
                 **Bypasses:** ${MuteBypasses}
-                **Violations:** ${Violations}
-                **Other Violations:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
             `)
-        let LogChannel = message.guild.channels.cache.get(ModLogID);
+        let LogChannel = message.guild.channels.cache.get(LogChannelID);
         LogChannel.send(UnmuteLogMessage);
 	}
 };

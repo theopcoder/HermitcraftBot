@@ -31,15 +31,16 @@ bot.on('ready', function(){
     bot.user.setActivity(ActivityMessage);
     console.log(`Successfully Signed Into: ${bot.user.tag}`);
     console.log(`Bot Developer: ${Developer}`);
+    console.log(`Build Version: ${BuildID}`);
     console.log(`Running Version: ${Version}`);
 });
 
-/*if (db.get("settings.LevelUpSystem")== null)db.add("settings.LevelUpSystem", StaffApplicationsSetting);
-if (db.get("settings.DeadChatPings")== null)db.add("settings.DeadChatPings", AutoModerationSetting);
-if (db.get("settings.AutoModeration")== null)db.add("settings.AutoModeration", DeadChatPingSetting);
-if (db.get("settings.StaffApplications")== null)db.add("settings.StaffApplications", LevelUpsSetting);*/
+if (db.get("settings.StaffApplications")== null)db.add("settings.StaffApplications", StaffApplicationsSetting);
+if (db.get("settings.AutoModeration")== null)db.add("settings.AutoModeration", AutoModerationSetting);
+if (db.get("settings.DeadChatPings")== null)db.add("settings.DeadChatPings", DeadChatPingSetting);
+if (db.get("settings.LevelUpSystem")== null)db.add("settings.LevelUpSystem", LevelUpsSetting);
 
-//-----------------------
+//----------------------------
 
 //New Members
 bot.on("guildMemberAdd", member => {
@@ -88,8 +89,8 @@ bot.on('message', function(message){
         //XP Generator
         if (message.author.bot)return;
         if (message.guild === null)return;
-        var RandomXP = Math.floor(Math.random() * MaxRandomXP);
-        db.add(`${message.author.id}.basic.xp`, RandomXP);
+        var randomXP = Math.floor(Math.random() * RandomXP);
+        db.add(`${message.author.id}.basic.xp`, randomXP);
 
         //Level Up Message
         if (db.get(`${message.author.id}.basic.xp`) > MaxXP){
@@ -98,7 +99,7 @@ bot.on('message', function(message){
             db.delete(`${message.author.id}.basic.xp`);
             db.add(`${message.author.id}.basic.level`, 1);
             db.add(`${message.author.id}.basic.money`, LevelUpMoney);
-    
+
             const LevelUpMessage = new discord.MessageEmbed()
                 .setColor('0x0000FF')
                 .setTimestamp()
@@ -126,7 +127,15 @@ bot.on('message', function(message){
     if (message.content == "Bob Bingi"){
         message.channel.send("It's the one and only Bob Bingi! Introducing Markiplier and B.B! https://www.youtube.com/watch?v=0Pocn8aSWS4 make sure to watch!");
     }
-    //TODO Minecraft IP listener
+    var MCIPListener = [" ip ", " adress "];
+    let msg = message.content.toLowerCase();
+    for (x = 0; x < MCIPListener.length; x++){
+        if (msg.includes(MCIPListener[x])){
+            if (message.author.bot)return;
+            message.reply("If you need the ip for the Minecraft server, please visit <#704460219521957907>!");
+            return;     
+        }
+    }
 });
 
 //Auto Moderation
@@ -172,7 +181,6 @@ bot.on('message', function(message){
             return;
         }
         //Chat Filter
-        //TODO rework chat filter
         if (ChatFilterSetting == "1"){
             let msg = message.content.toLowerCase();
             for (x = 0; x < profanities.length; x++){
@@ -250,7 +258,7 @@ bot.on('message', function(message){
 //Auto Moderation | Deleted Messages
 bot.on('messageDelete', async (message) => {
     if (db.get("settings.AutoModeration")== 1) {
-        if (DeletedMessagesSetting == "1") {//TODO Update to new quick.db setting checker?
+        if (DeletedMessagesSetting == "1"){
             if (message.guild === null)return;
             let ModLogChannel = message.guild.channels.cache.get(ModLogID);
             const entry = await message.guild.fetchAuditLogs({type: 'MESSAGE_DELETE'}).then(audit => audit.entries.first());
@@ -299,7 +307,7 @@ bot.on('ready', () => {
             if (DeadChatQuestion == 6){DCPQuestion = "Why is science so important to modern society?"};
             if (DeadChatQuestion == 7){DCPQuestion = "What would you do if you where offered the chance to go to Mars?"};
             if (DeadChatQuestion == 8){DCPQuestion = "What is your favorite form of transportation?"};
-            if (DeadChatQuestion == 9){DCPQuestion = "Have you read the <#> for today?"};//TODO have this go for the QOD channel
+            if (DeadChatQuestion == 9){DCPQuestion = "Have you read the #qod of the day?"};
             if (DeadChatQuestion == 10){DCPQuestion = "What is your favorite version of Minecraft?"};
             if (DeadChatQuestion == 11){DCPQuestion = "Is time relative to a person or universal?"};
             if (DeadChatQuestion == 12){DCPQuestion = "What song always puts you in a good mood?"};

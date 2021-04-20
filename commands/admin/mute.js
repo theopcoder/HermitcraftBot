@@ -126,7 +126,7 @@ module.exports = class MuteCommand extends Command {
                     **Violations:** ${Violations}
                     **Other Violations:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
                 `)
-            let LogChannel = message.guild.channels.cache.get(ModLogID);
+            let LogChannel = message.guild.channels.cache.get(LogChannelID);
             return LogChannel.send(MuteLogMessage);
         }
 
@@ -167,7 +167,7 @@ module.exports = class MuteCommand extends Command {
                 **Violations:** ${Violations}
                 **Other Violations:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
             `)
-        let LogChannel = message.guild.channels.cache.get(ModLogID);
+        let LogChannel = message.guild.channels.cache.get(LogChannelID);
         LogChannel.send(MuteLogMessage);
 
         setTimeout(() => {
@@ -200,7 +200,7 @@ module.exports = class MuteCommand extends Command {
                     **Violations:** ${Violations}
                     **Other Violations:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
                 `)
-            let LogChannel = message.guild.channels.cache.get(ModLogID);
+            let LogChannel = message.guild.channels.cache.get(LogChannelID);
             LogChannel.send(UnmuteLogMessage);
         }, ms(`${time}`));
 	}

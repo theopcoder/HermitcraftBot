@@ -1,23 +1,33 @@
-//TODO Update before pushing update
 ==================================================
-Title: 0.3.0
-Version: 0.3.0
-DevID: 2021.04.01.0.3.0
-Date: 
+Title: 2.0.0 Official Release!
+Version: 2.0.0
+DevID: 2021.04.19.2.0.0
+Date: 4/19/2021
 Description: 
 
 Additions:
-1. 
+1. -slowmode
+2. -history
+3. -unban
+4. -rickroll
+5. -rps
+6. -topic
+7. -info
 
 Deletions:
-1. 
+1. softwarn.js
+2. user_info.js
+3. accept.js
+4. deny.js
+5. requesttoggle.js
+6. botlog.js
+7. report.js
 
 Bug Fixes:
-1. Fixed message responses
+1. Fixed many issues with the bot and commands
 
 Dependencies:
-1. Updated discord.js (12.5.1 => 12.5.3)
-2. Updated discord.js-commando (0.12.2 => 0.12.3)
+1. Added ms
 
 Security Patches:
 1. 

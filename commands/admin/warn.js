@@ -95,7 +95,7 @@ module.exports = class WarnCommand extends Command {
 				**Violations:** ${Violations}
 				**Other Violations:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
 			`)
-        let LogChannel = message.guild.channels.cache.get(ModLogID);
+        let LogChannel = message.guild.channels.cache.get(LogChannelID);
 		LogChannel.send(WarnLogMessage);
 	}
 };

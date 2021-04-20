@@ -97,8 +97,8 @@ module.exports = class KickCommand extends Command {
 				**User:** ${KickedUser}
 				**User ID:** ${KickedUser.id}
 				**Reason:** ${reason}
-				**Total Offences:** ${Violations}
-				**Other Offences:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
+				**Violations:** ${Violations}
+				**Other Violations:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
 			`)
 			let LogChannel = message.guild.channels.cache.get(LogChannelID);
 		LogChannel.send(KickLogMessage);

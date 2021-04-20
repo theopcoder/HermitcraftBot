@@ -1,9 +1,9 @@
 # HermitcraftBot
-This is a custom discord bot for Hermitcraft Fan Server on Discord.
+This is a custom Discord bot for Hermitcraft Fan Server on Discord.
 
 Developer: theopcoder  
-Bot Version: 0.1.0 | 2.0.0 Early Access
-DevID: 2021.03.16.0.1.0
+Bot Version: 2.0.0 Official Release
+DevID: 2021.04.19.2.0.0
 
 # Dependencies Used
 

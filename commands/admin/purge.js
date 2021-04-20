@@ -54,12 +54,12 @@ module.exports = class PurgeCommand extends Command {
 			.setTimestamp()
 			.setColor("#187ddb")
 			.setThumbnail(message.author.displayAvatarURL())
-			.setTitle("Bulk Message Deleted")
+			.setTitle("Purged Messages")
 			.setDescription(`
 				**User:** ${message.author}
 				**Amount:** ${args[0]}
 			`)
-		let LogChannel = message.guild.channels.cache.get(PurgeLogChannelID);
+		let LogChannel = message.guild.channels.cache.get(ModLogID);
 		LogChannel.send(PurgeLogMessage);
 	}
 };
