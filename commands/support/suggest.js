@@ -1,60 +1,46 @@
-const Commando = require("discord.js-commando");
+const BotConfiguration = require("../../BotConfiguration.js");
+const { Command } = require("discord.js-commando");
+const BotData = require("../../BotData.js");
 const discord = require("discord.js");
 const db = require("quick.db");
-const Errors = require("../../BotData.js");
 
-class SuggestCommand extends Commando.Command
-{
-    constructor(client)
-    {
-        super(client,{
-            name: "suggest",
-            group: "support",
-            memberName: 'suggest',
-            description: 'Sends your suggestion to #suggestions!'
-        });
-    }
+module.exports = class SuggestCommand extends Command {
+	constructor(client) {
+		super(client, {
+			name: 'suggest',
+			group: 'support',
+			memberName: 'suggest',
+			description: 'Send a suggestion!',
+		});
+	}
 
-    async run(message, args)
-    {
-        if (message.guild === null){
-            message.reply(DMMessage);
-            return;
-        }
-        message.delete();
+	run(message, args) {
         let words = args.split(' ');
         let suggestion = words.slice(0).join(' ');
-        if (!suggestion) return message.reply("Please say your suggestion!")
-        .then(msg => {
-            msg.delete(10000);
-        });
-        
-        const Suggestionmsg = new discord.RichEmbed()
-            .setColor("0x20B2AA")
-            .setTimestamp()
-            .setTitle('Suggestion')
-            .setAuthor(message.author.tag, message.author.avatarURL)
-            .setThumbnail(message.author.avatarURL)
-            .addField('User:', 
-            `${message.author}`)
-            .addField('Sugestion:', suggestion)
-            .setFooter("Click the green check to like the idea or the red x to not have the suggestion done!")
-        let logchannel = message.guild.channels.find('name', 'suggestions'); 
-        logchannel.send(Suggestionmsg).then(embedMessage => {
-            embedMessage.react("✅");
-            embedMessage.react("❌");
-        });
-        const SuggestionUsermsg = new discord.RichEmbed()
-            .setColor("0x20B2AA")
-            .setTimestamp()
-            .setTitle("Suggestion")
-            .setAuthor(message.author.tag, message.author.avatarURL)
-            .setThumbnail(message.author.avatarURL)
-            .addField("User:", message.author)
-            .addField("Your Suggestion:", suggestion)
-            .setFooter("Thank you for your suggestion! This is just a quick recap of what you suggested! Good luck! Sincerely, HC Dev Team")
-        message.member.sendEmbed(SuggestionUsermsg);
-    }
-}
+        if(!suggestion){
+            const NoSuggestionMessage = new discord.MessageEmbed()
+                .setColor("#FF0000")
+                .setDescription(`:warning: ${message.author}, what is your suggestion?`);
+            return message.channel.send(NoSuggestionMessage).then(message => {
+                message.delete({timeout: 10000});
+            });
+        }
 
-module.exports = SuggestCommand;
+        const SuggestionMessage = new discord.MessageEmbed()
+            .setTimestamp()
+            .setColor("#20B2AA")
+            .setThumbnail(message.author.displayAvatarURL())
+            .setTitle(`Suggestion`)
+            .setDescription(`
+                **User:** ${message.author}
+                **Suggestion:** ${suggestion}
+            `)
+        let SuggestionChannel = message.guild.channels.cache.get(SuggestionChannelID);
+		SuggestionChannel.send(SuggestionMessage).then(MessageEmbed => {
+            MessageEmbed.react("✅");
+            MessageEmbed.react("❌");
+        }).catch(err => {
+            message.reply("Please shorten your suggestion!");
+        });
+	}
+};

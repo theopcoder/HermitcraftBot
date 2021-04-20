@@ -1,69 +1,58 @@
-const Commando = require("discord.js-commando");
+const { Command } = require('discord.js-commando');
+const BotData = require("../../BotData.js");
 const discord = require("discord.js");
 const db = require("quick.db");
-const Errors = require("../../BotData.js");
 
-class TaxCommand extends Commando.Command
-{
-    constructor(client)
-    {
-        super(client,{
-            name: "tax",
-            group: "economy",
-            memberName: 'tax',
-            description: 'Shows you have much money is in your account!'
-        });
-    }
+module.exports = class TaxCommand extends Command {
+	constructor(client) {
+		super(client, {
+			name: 'tax',
+			group: 'economy',
+			memberName: 'tax',
+			description: 'Allows you to tax a user!',
+		});
+	}
 
-    async run(message, args)
-    {
-        if (message.guild === null){
+	run(message, args) {
+		if (message.guild === null){
             message.reply(DMMessage);
             return;
         }
-        if(!message.member.hasPermission("ADMINISTRATOR"))
-        {
-            message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
-            .then(msg => {
-                msg.delete(10000);
-            });
-            return;
-        }
+		if (!message.member.hasPermission("ADMINISTRATOR")){
+			const PermissionErrorMessage = new discord.MessageEmbed()
+				.setColor("#FF0000")
+				.setDescription(`${PermissionError}`)
+			message.channel.send(PermissionErrorMessage).then(message => {
+				message.delete({timeout: 10000});
+			});
+			return;
+		}
         let TaxedUser = message.guild.member(message.mentions.users.first());
         if(!TaxedUser){
-            message.channel.send(":warning: Sorry, I couldn't find that user")
-            .then(msg => {
-                msg.delete(10000);
-            });
-            return;
-        }
-        let words = args.split(' ');
-        let tax = words.slice(1).join(' ');
-        if (!tax) return message.reply(`:warning: How much money do you want to tax ${TaxedUser}?`)
-        .then(msg => {
-            msg.delete(10000);
-        });
-        if (isNaN(words[1])){
-            message.reply(`:warning: You can only use numbers for taxing someone! Example: -tax ${message.author} 1000`)
-            .then(msg => {
-                msg.delete(10000);
-            });
-            return;
-        }
-        let Extra = (words[2]);
-        if (Extra){
-            message.channel.send(`:warning: Incorrect command usage! Please make sure you are doing the command correctly! Example -tax ${message.author} 1000`)
-            .then(msg => {
-                msg.delete(10000);
-            });
-            return;
-        }
-        let TaxedUserBal = db.get(`{money}_${message.mentions.users.first().id}`); if (TaxedUserBal == null)TaxedUserBal = "0";
-        if (TaxedUserBal < tax)return message.reply(`${TaxedUser} doesn't have **$${tax}**! They only have **$${TaxedUserBal}**. That is **$${tax-TaxedUserBal}** more than what they have!`);
-        db.subtract(`{money}_${message.mentions.users.first().id}`, tax);
-        let NewTaxedUserBal = db.get(`{money}_${message.mentions.users.first().id}`); if (NewTaxedUserBal == null)NewTaxedUserBal = "0";
-        message.reply(`Successfully taxed ${TaxedUser} **$${tax}**! They now have **$${NewTaxedUserBal}**!`);
-    }
-}
+			const NullUserMessage = new discord.MessageEmbed()
+				.setColor()
+				.setDescription(NullUser)
+			message.channel.send(NullUserMessage).then(message => {
+				message.delete({timeout: 10000});
+			});
+			return;
+		}
+		let words = args.split(' ');
+		let tax = words.slice(1).join(' ');
+		let Balance = db.get(`${message.mentions.users.first().id}.basic.money`); if (Balance == null)Balance = "0";
+        if (!tax) return message.reply(`:warning: How much money do you want to tax ${TaxedUser.user.tag}?`).then(message => {
+            message.delete({timeout: 10000});
+		});
+		if(tax > db.get(`${message.mentions.users.first().id}.basic.money`)){
+			return message.channel.send(`${TaxedUser.user.tag} doesn't have $${tax}! They only have $${Balance}!`).then(message => {
+				message.delete({timeout: 10000});
+			});
+		}
 
-module.exports = TaxCommand;
+		db.subtract(`${message.mentions.users.first().id}.basic.money`, tax);
+		db.add(`GlobalMoneyConfirmationID`, 1);
+		let GetConfirmationID = db.get(`GlobalMoneyConfirmationID`);
+		db.push(`{ConfirmationMessage}_${message.author.id}`, `\n**PaymentID:** #${GetConfirmationID}\n**Date:** ${new Date().toLocaleString()}\n**Payment Type:** UserTax\n**TaxedUser:** ${TaxedUser}\n**Amount:** $${tax}\n`);
+        message.reply(`Successfully taxed ${TaxedUser.user.tag} $${tax}!`);
+	}
+};

@@ -1,51 +1,45 @@
-const Commando = require("discord.js-commando");
+const BotConfiguration = require("../../BotConfiguration.js");
+const { Command } = require("discord.js-commando");
+const BotData = require("../../BotData.js");
 const discord = require("discord.js");
 const db = require("quick.db");
-const Errors = require("../../BotData.js");
 
-class BalCommand extends Commando.Command
-{
-    constructor(client)
-    {
-        super(client,{
-            name: "bal",
-            group: "economy",
-            memberName: 'bal',
-            description: 'Shows you have much money is in your account!'
-        });
-    }
+module.exports = class WalletCommand extends Command {
+	constructor(client) {
+		super(client, {
+			name: 'bal',
+			group: 'economy',
+			memberName: 'bal',
+			description: 'Tells you how much money you have!',
+		});
+	}
 
-    async run(message, args)
-    {
-        if (message.guild === null){
-            message.reply(DMMessage);
-            return;
+	run(message, args) {
+        let MentionedUser = message.mentions.users.first();
+        if (MentionedUser){
+            let MentionedUserBalenceAmount = db.get(`${message.mentions.users.first().id}.basic.money`); if (MentionedUserBalenceAmount == null)MentionedUserBalenceAmount = "0";
+
+            let MentionUsersBalence = new discord.MessageEmbed()
+                .setTimestamp()
+                .setColor("#008000")
+                .setThumbnail(MentionedUser.displayAvatarURL())
+                .setTitle(`${MentionedUser.tag} Wallet`)
+                .setDescription(`
+                    **Balence:** $${MentionedUserBalenceAmount} :moneybag:
+                `)
+            message.channel.send(MentionUsersBalence);
+        }else{
+            let UserBalenceAmount = db.get(`${message.author.id}.basic.money`); if (UserBalenceAmount == null)UserBalenceAmount = "0";
+
+            const UserBalence = new discord.MessageEmbed()
+                .setTimestamp()
+                .setColor("#008000")
+                .setThumbnail(message.author.displayAvatarURL())
+                .setTitle(`${message.author.tag} Wallet`)
+                .setDescription(`
+                    :moneybag: **Balence:** $${UserBalenceAmount}
+                `)
+            message.channel.send(UserBalence);
         }
-        let BalUser = message.guild.member(message.mentions.users.first());
-        {
-            if (BalUser)
-            {
-                let MentionedUsersBalance = db.get(`{money}_${message.mentions.users.first().id}`); if (MentionedUsersBalance == null)MentionedUsersBalance = "0";
-                let users = message.mentions.users.first();
-                const MentionedUsersMoney = new discord.RichEmbed()
-                    .setColor(0x668d3c)
-                    .setThumbnail(users.displayAvatarURL)
-                    .setTitle("Balance")
-                    .addField("User:", message.mentions.users.first())
-                    .addField("Money:", `$${MentionedUsersBalance}`)
-                message.channel.sendEmbed(MentionedUsersMoney);
-            }else{
-                let UserBalance = db.get(`{money}_${message.author.id}`); if (UserBalance == null)UserBalance = "0";
-                const UserMoney = new discord.RichEmbed()
-                    .setColor(0x668d3c)
-                    .setThumbnail(message.author.avatarURL)
-                    .setTitle("Balance")
-                    .addField("User:", message.author)
-                    .addField("Money:", `$${UserBalance}`)
-                message.channel.sendEmbed(UserMoney);
-            }
-        }
-    }
-}
-
-module.exports = BalCommand;
+	}
+};

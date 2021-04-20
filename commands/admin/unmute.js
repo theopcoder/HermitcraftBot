@@ -1,90 +1,116 @@
-const Commando = require("discord.js-commando");
+const BotConfiguration = require("../../BotConfiguration.js");
+const { Command } = require("discord.js-commando");
+const BotData = require("../../BotData.js");
 const discord = require("discord.js");
 const db = require("quick.db");
-const Errors = require("../../BotData.js");
+const ms = require("ms");
 
-class UnmuteCommand extends Commando.Command
-{
-    constructor(client)
-    {
-        super(client,{
-            name: "unmute",
-            group: "admin",
-            memberName: 'unmute',
-            description: 'Unmutes a user'
-        });
-    }
+module.exports = class UnmuteCommand extends Command {
+	constructor(client) {
+		super(client, {
+			name: 'unmute',
+			group: 'admin',
+			memberName: 'unmute',
+			description: 'Unmutes a user!',
+		}); 
+	}
 
-    async run(message, args)
-    {
+	run(message, args) {
         if (message.guild === null){
             message.reply(DMMessage);
             return;
         }
-        if(!message.member.hasPermission("MANAGE_MESSAGES"))
-        {
-            message.channel.send(":no_entry_sign: You do NOT have the permission to perform this command! :no_entry_sign:")
-            .then(msg => {
-                msg.delete(10000);
-            });
-            return;
-        }
+        if (!message.member.hasPermission("MANAGE_MESSAGES")){
+			const PermissionErrorMessage = new discord.MessageEmbed()
+				.setColor("#FF0000")
+				.setDescription(`${PermissionError}`)
+			message.channel.send(PermissionErrorMessage).then(message => {
+				message.delete({timeout: 10000});
+			});
+			return;
+		}
         let UnmutedUser = message.guild.member(message.mentions.users.first());
-        if(!UnmutedUser)
-        {
-            message.channel.send(":warning: Sorry, I couldn't find that user")
-            .then(msg => {
-                msg.delete(10000);
+        if (!UnmutedUser) {
+			const NullUserMessage = new discord.MessageEmbed()
+				.setColor()
+				.setDescription(NullUser)
+			message.channel.send(NullUserMessage).then(message => {
+				message.delete({timeout: 10000});
+			});
+			return;
+        }
+        if (UnmutedUser.hasPermission("MANAGE_MESSAGES")) {
+            const StaffUserMessage = new discord.MessageEmbed()
+                .setColor("#FF0000")
+                .setDescription(StaffUser)
+            message.channel.send(StaffUserMessage).then(message => {
+                message.delete({timeout: 10000})
             });
             return;
         }
+        if (db.get(`${message.mentions.users.first().id}.admin.CurrentlyMuted`)== 0){
+            const UserAlreadyUnutedMessage = new discord.MessageEmbed()
+                .setColor("#FF0000")
+                .setDescription(UserAlreadyUnmuted)
+            message.channel.send(UserAlreadyUnutedMessage);
+            return;
+		}
         let words = args.split(' ');
-        let reason = words.slice(1).join(' ');
-        {
-            if (!reason) return message.reply(':warning: Please supply a reason for the unmute!')
-            .then(msg => {
-                msg.delete(10000);
-            });
-        }
+		let reason = words.slice(1).join(' ');
+        if (!reason){
+			const NoReasonWarning = new discord.MessageEmbed()
+				.setColor()
+				.setDescription(`:warning: Please supply a reason for the ban!`)
+			message.channel.send(NoReasonWarning).then(message => {
+                message.delete({timeout: 10000});
+			});
+			return;
+		}
 
-        let member = message.mentions.members.first();
-        let MemberRole = message.guild.roles.find(r => r.name === "Member");
-        member.addRole(MemberRole);
-        let MutedRole = message.guild.roles.find(r => r.name === "Muted");
-        member.removeRole(MutedRole);
+		let Violations = db.get(`${message.mentions.users.first().id}.admin.Violations`); if (Violations == null)Violations = "0";
+		let Warnings = db.get(`${message.mentions.users.first().id}.admin.Warnings`); if (Warnings == null)Warnings = "0";
+		let Mutes = db.get(`${message.mentions.users.first().id}.admin.Mutes`); if (Mutes == null)Mutes = "0";
+		let Kicks = db.get(`${message.mentions.users.first().id}.admin.Kicks`); if (Kicks == null)Kicks = "0";
+		let Bans = db.get(`${message.mentions.users.first().id}.admin.Bans`); if (Bans == null)Bans = "0";
+		let users = message.mentions.users.first();
 
-        db.subtract(`{CurrentlyMuted}_${message.mentions.users.first().id}`, 1);
-        db.delete(`{AMPSMuteBypass}_${message.mentions.users.first().id}`);
+        db.set(`${message.mentions.users.first().id}.admin.CurrentlyMuted`, 0);
+        let MuteBypasses = db.get(`${message.mentions.users.first().id}.admin.TimesBypassedMute`); if (MuteBypasses == null)MuteBypasses = "0";
+        db.delete(`${message.mentions.users.first().id}.admin.TimesBypassedMute`);
+        let MuteRole = message.guild.roles.cache.get(MuteRoleID);
+        UnmutedUser.roles.remove(MuteRole);
+        let MemberRole = message.guild.roles.cache.get(NewMemberRoleID);
+        UnmutedUser.roles.remove(MemberRole).then(function(){
+            UnmutedUser.send(`You have been unmuted on ${message.guild.name} because, ${reason}.`).catch(err => 
+                console.log(`Could not message unmuted user!`)
+            );
+        });
 
-        let users = message.mentions.users.first();
-        message.mentions.members.first().send(`You have been unmuted on ${message.guild.name} because, ${reason}.`);
-
-        const ChatUnmuteMessage = new discord.RichEmbed()
-            .setColor("0xFFA500")
+        const UnmuteChatMessage = new discord.MessageEmbed()
             .setTimestamp()
-            .setThumbnail(users.displayAvatarURL)
+            .setColor("#33ab63")
+            .setThumbnail(users.displayAvatarURL())
             .setTitle("Unmute")
             .setDescription(`
                 **Moderator:** ${message.author}
                 **User:** ${UnmutedUser}
                 **Reason:** ${reason}
             `)
-        message.channel.sendEmbed(ChatUnmuteMessage);
+        message.channel.send(UnmuteChatMessage);
 
-        const UnmuteMessage = new discord.RichEmbed()
-            .setColor("0xFFA500")
+        const UnmuteLogMessage = new discord.MessageEmbed()
             .setTimestamp()
-            .setThumbnail(users.displayAvatarURL)
+            .setColor("#33ab63")
+            .setThumbnail(users.displayAvatarURL())
             .setTitle("Unmute")
             .setDescription(`
                 **Moderator:** ${message.author}
                 **User:** ${UnmutedUser}
-                **User ID:** ${message.mentions.users.first().id}
+                **User ID:** ${UnmutedUser.id}
                 **Reason:** ${reason}
+                **Bypasses:** ${MuteBypasses}
             `)
-        let logchannel = message.guild.channels.find('name', 'logs');
-        return logchannel.send(UnmuteMessage);
-    }
-}
-
-module.exports = UnmuteCommand;
+        let LogChannel = message.guild.channels.cache.get(LogChannelID);
+        LogChannel.send(UnmuteLogMessage);
+	}
+};

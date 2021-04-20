@@ -1,62 +1,65 @@
-const Commando = require("discord.js-commando");
+const BotConfiguration = require("../../BotConfiguration.js");
+const { Command } = require("discord.js-commando");
+const BotData = require("../../BotData.js");
 const discord = require("discord.js");
 const db = require("quick.db");
-const Errors = require("../../BotData.js");
 
-class GambleCommand extends Commando.Command
-{
-    constructor(client)
-    {
-        super(client,{
-            name: "gamble",
-            group: "economy",
-            memberName: 'gamble',
-            description: 'Lets you gamble with your money'
-        });
-    }
+module.exports = class WalletCommand extends Command {
+	constructor(client) {
+		super(client, {
+			name: 'gamble',
+			group: 'economy',
+			memberName: 'gamble',
+			description: 'Allows you to gamble!',
+		});
+	}
 
-    async run(message, args)
-    {
-        if (message.guild === null){
-            message.reply(DMMessage);
-            return;
-        }
+	run(message, args) {
         let words = args.split(' ');
         let bet = words.slice(0).join(' ');
-        let Extra = words.slice(1).join(' ');
-        let bal = db.get(`{money}_${message.author.id}`); if (bal == null)bal = "0";
+        let extra = words.slice(1).join(' ');
+        let bal = db.get(`${message.author.id}.basic.money`);if (bal == null)bal = "0";
 
-        if (isNaN(args[0])){
-            message.reply("There where invalid charectors for the bet! Please make sure the bet is only numbers! Thank you!")
-            .then(msg => {
-                msg.delete(10000);
+		if (!bet){
+			return message.reply("How much money do you want to bet?").then(message => {
+				message.delete({timeout: 5000});
             });
-            return;
+		}
+        if (isNaN(args[0])){
+            return message.reply("There where invalid characters for the bet!").then(message => {
+				message.delete({timeout: 5000});
+            });
         }
-        if (Extra)return message.reply("Incorect command usage/arguments! Example: -gamble 1500");
-        if (!bet) return message.reply(':warning: You must bet atleast $1000 to use this command!').then(msg => {
-            msg.delete(10000);
+        if (extra){
+            return message.reply("Incorrect usage of command! Example: -gamble 1000").then(message => {
+				message.delete({timeout: 5000});
+            });
+        }
+        if (bet < 1000)return message.reply("You must bet $1000 or more to use this command!").then(message => {
+            message.delete({timeout: 5000});
         });
-        if (bet < 1000)return message.channel.send(`I'm sorry ${message.author}, you have to bet $1000 or more to use this command!`);
-        if (bet > bal)return message.channel.send(`I'm sorry ${message.author}, You don't have enough money to make a $**${bet}** bet. You only have $**${bal}**!`);
-        db.subtract(`{money}_${message.author.id}`, bet);
-        var GambleBet = Math.floor(Math.random() * 25);
-        var Compare = Math.floor(Math.random() * 25);
-        if (GambleBet == Compare){
-            var Win = Math.floor(Math.random() * 3000);
-            db.add(`{money}_${message.author.id}`, Win);
-            if (Win < bet)return message.channel.send(`Congradulations ${message.author}! You just won **$${Win}** but you still lost **$${bet-Win}**. :face_with_monocle:`);
-            if (Win == bet)return message.channel.send(`Congradulations ${message.author}! You got your **$${bet}** back! :dollar:`);
-            message.channel.send(`Congradulations ${message.author}! You just won **$${Win}**! :money_with_wings:`);
+        if (bet > bal)return message.reply(`You don't have enough money! You only have **$${bal}**!`).then(message => {
+            message.delete({timeout: 5000});
+        });
+        db.subtract(`${message.author.id}.basic.money`, bet);
+        db.add(`GlobalMoneyConfirmationID`, 1);
+		let GetConfirmationID = db.get(`GlobalMoneyConfirmationID`);
+		db.push(`{ConfirmationMessage}_${message.author.id}`, `\n**PaymentID:** #${GetConfirmationID}\n**Date:** ${new Date().toLocaleString()}\n**Payment Type:** Gamble\n**Amount:** $${bet}\n`);
+        var Chance = Math.floor(Math.random() * 15);
+        var ChanceCompare = Math.floor(Math.random() * 15);
+        if (Chance == ChanceCompare){
+            var Prize = Math.floor(Math.random() * 5000);
+            db.add(`${message.author.id}.basic.money`, Prize);
+            if (Prize < bet)return message.channel.send(`Congradulations ${message.author}! You just won **$${Win}** but, you still lost **$${bet-Win}**. :face_with_monocle:`);
+            if (Prize == bet)return message.channel.send(`Congradulations ${message.author}! You got your **$${bet}** back! :dollar:`);
+            if (Prize > bet)return message.reply(`Congradulation ${message.author}! You just won **$${Prize}!** :moneybag:`);
         }else{
-            let NewBal = db.get(`{money}_${message.author.id}`); if (NewBal == null)NewBal = "0";
-            if (NewBal > 1000){
-                message.reply(`Better luck next time. Why not try again? You still have **$${NewBal}**!`);
+            let Newbal = db.get(`${message.author.id}.basic.money`);if (Newbal == null)Newbal = "0";
+            if (Newbal > 1000){
+                message.reply(`Better luck next time. Why not try again? You still have **$${Newbal}**!`);
             }else{
-                message.reply("You lost. Better luck next time!");
+                message.reply("You lost, better luck next time!");
             }
         }
-    }
-}
-
-module.exports = GambleCommand;
+	}
+};
