@@ -18,3 +18,6 @@ discord.js-commando
 
 quick.db  
 [Documentation]: https://quickdb.js.org/docs.html
+
+ms  
+[Documentation]: https://github.com/vercel/ms#readme
