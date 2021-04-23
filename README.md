@@ -1,4 +1,7 @@
 # HermitcraftBot
+
+![Latest Release](https://img.shields.io/github/v/release/theopcoder/HermitcraftBot?style=for-the-badge&include_prereleases) ![GitHub](https://img.shields.io/badge/GitHub-theopcoder-green?style=for-the-badge)
+
 This is a custom Discord bot for Hermitcraft Fan Server on Discord.
 
 Developer: theopcoder  
