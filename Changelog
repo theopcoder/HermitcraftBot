@@ -1,18 +1,27 @@
 ==================================================
-Title: 2.0.1 Official Release!
-Version: 2.0.1
-DevID: 2021.04.19.2.0.1
-Date: 4/19/2021
-Description: A quick bug fix update
+Title: 2.0.2 Bug Fix update
+Version: 2.0.2
+DevID: 2021.04.22.2.0.2
+Date: 4/22/2021
+Description: A bug fix update to fix issues and improve some commands
 
-Additions:
-1. 
+Additions/Changes:
+1. -slowmode now mentions the channel in the log message
+2. Added -dcp to get the dead chat ping role
+3. -bug will now auto delete the suggestion in the channel to keep it clean
+4. -suggest will now auto delete the bug in the channel to keep it clean
+5. Changed -gamble isNaN message
+6. Added a channel exclusion for xp gain
+7. Updated Bot Configuration help section to include LevelUpChannelID
+8. Added ChannelExcludeID to Bot Configuration to exclude a channel from getting xp from messages
 
 Deletions:
 1. 
 
 Bug Fixes:
-1. Fixed an error that doesn't let you turn on the bot
+1. Fixed an error if you put to big of a number in -slowmode
+2. Fixed -war member error
+3. Fixed -tax giving an error when numbers aren't used
 
 Dependencies:
 1. 
@@ -20,5 +29,5 @@ Dependencies:
 Security Patches:
 1. 
 
-Notes: 
+Notes: -apply is currently having issues and may not function as intended. I am working on this issue and am aware of it. I will try to get the issues resolved as soon as possible!
 ==================================================

@@ -28,6 +28,6 @@ module.exports = class WarCommand extends Command {
             .addField('War Members:', message.guild.roles.cache.get('721920054660431912').members.map(m=>m.user.tag).join('\n')+",are in the war!")
             .addField('Red Team Members: ', message.guild.roles.cache.get('721920044019482675').members.map(m=>m.user.tag).join('\n')+",are in the RedTeam!")
             .addField('Blue Team Members:', message.guild.roles.cache.get('721920050361139260').members.map(m=>m.user.tag).join('\n')+",are in the BlueTeam!")
-        message.channel.sendEmbed(Warinfo);
+        message.channel.send(Warinfo);
 	}
 };

@@ -43,6 +43,11 @@ module.exports = class TaxCommand extends Command {
         if (!tax) return message.reply(`:warning: How much money do you want to tax ${TaxedUser.user.tag}?`).then(message => {
             message.delete({timeout: 10000});
 		});
+		if (isNaN(tax)){
+            return message.reply("You can only use numbers for this command!").then(message => {
+				message.delete({timeout: 5000});
+            });
+        }
 		if(tax > db.get(`${message.mentions.users.first().id}.basic.money`)){
 			return message.channel.send(`${TaxedUser.user.tag} doesn't have $${tax}! They only have $${Balance}!`).then(message => {
 				message.delete({timeout: 10000});

@@ -10,7 +10,7 @@ module.exports = class InfoCommand extends Command {
 			name: 'info',
 			group: 'support',
 			memberName: 'info',
-			description: `Gives you information about the Pedestria Discord server and Pedestria Bot Official`,
+			description: `Gives you the latest information about the Discord, Minecraft, and the Discord bot!`,
 		});
 	}
 

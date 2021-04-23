@@ -23,6 +23,7 @@ var BotConfiguration = [
     //=============================
     //LevelUpConfiguration=========
         LevelUpChannelID = "799863344907419678",
+        ChannelExcludeID = "799862796065308693",
         LevelUpMoney = "200",
         RandomXP = "5",
         MaxXP = "150",
@@ -77,6 +78,10 @@ var BotConfiguration = [
 //  DeadChatPingSetting: Set to 1 to turn on or set to 0 to turn off
 //
 //  LevelUpsSetting: Set to 1 to turn on or set to 0 to turn off
+//
+//  LevelUpChannelID: The channel ID to send level up messages to
+//
+//  ChannelExcludeID: A channel ID you can exclude from people getting xp from (can currently only support 1 channel)
 //
 //  LevelUpMoney: The amount of money a user gets for each level up
 //

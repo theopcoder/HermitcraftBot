@@ -94,9 +94,9 @@ module.exports = class MuteCommand extends Command {
 		    db.push(`{MuteReason}_${message.mentions.users.first().id}`, `**TempMute ${MuteViolationNumber}:** [Mod: ${message.author} | Time: ${new Date().toLocaleString()}] Duration: Permanently\nReason: ${words.slice(2).join(' ')}`);
             MutedUser.roles.add(MuteRole);
             MutedUser.roles.remove(MemberRole).then(function(){
-                MutedUser.send(`You have been permanently muted on ${message.guild.name} because, ${reason}.`).catch(err => 
-                    console.log(`Could not message muted user!`)
-                );
+                MutedUser.send(`You have been permanently muted on ${message.guild.name} because, ${reason}.`).catch(err => {
+                    console.log(`Could not message muted user!`);
+                });
             });
 
             const ChatMuteMessage = new discord.MessageEmbed()

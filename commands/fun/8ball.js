@@ -66,7 +66,7 @@ module.exports = class MagicBallCommand extends Command {
             message.reply("● Cannot predict now.");
         }
         if (chance == 14){
-            message.reply("● Concentrate and ask again");
+            message.reply("● Concentrate and ask again.");
         }
         if (chance == 15){
             message.reply("● Don't count on it.");

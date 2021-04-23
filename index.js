@@ -89,6 +89,7 @@ bot.on('message', function(message){
         //XP Generator
         if (message.author.bot)return;
         if (message.guild === null)return;
+        if (message.channel.id === `${ChannelExcludeID}`)return;
         var randomXP = Math.floor(Math.random() * RandomXP);
         db.add(`${message.author.id}.basic.xp`, randomXP);
 
@@ -221,7 +222,7 @@ bot.on('message', function(message){
         if (DiscordInviteSetting == "1"){
             if (message.content.includes('discord.gg/'||'discordapp.com/invite/')){
                 message.delete();
-                
+
                 //Chat Response
                 const DiscordInviteWarning = new discord.MessageEmbed()
                     .setTimestamp()
@@ -298,26 +299,26 @@ bot.on('ready', () => {
     setInterval(() => {
         if (db.get("settings.DeadChatPings") == 1){
             var DeadChatQuestion = Math.round(Math.random() * 31);
+            if (DeadChatQuestion == 7){DCPQuestion = "What would you do if you where offered the chance to go to Mars?"};
             if (DeadChatQuestion == 0){DCPQuestion = "What is the most valuable thing you currently have ingame?"};
+            if (DeadChatQuestion == 13){DCPQuestion = "What is one of the funniest (but clean) jokes you know?"};
             if (DeadChatQuestion == 1){DCPQuestion = "What movie or book character do you most identify with?"};
             if (DeadChatQuestion == 2){DCPQuestion = "As a child, what did you wish to be when you grew up?"};
             if (DeadChatQuestion == 3){DCPQuestion = "Are we seeing signs of evolution in our species?"};
             if (DeadChatQuestion == 4){DCPQuestion = "What's a trait do you like most about yourself?"};
-            if (DeadChatQuestion == 5){DCPQuestion = "What subject are you the best at in school?"};
             if (DeadChatQuestion == 6){DCPQuestion = "Why is science so important to modern society?"};
-            if (DeadChatQuestion == 7){DCPQuestion = "What would you do if you where offered the chance to go to Mars?"};
             if (DeadChatQuestion == 8){DCPQuestion = "What is your favorite form of transportation?"};
-            if (DeadChatQuestion == 9){DCPQuestion = "Have you read the #qod of the day?"};
             if (DeadChatQuestion == 10){DCPQuestion = "What is your favorite version of Minecraft?"};
             if (DeadChatQuestion == 11){DCPQuestion = "Is time relative to a person or universal?"};
+            if (DeadChatQuestion == 5){DCPQuestion = "What subject are you the best at in school?"};
             if (DeadChatQuestion == 12){DCPQuestion = "What song always puts you in a good mood?"};
-            if (DeadChatQuestion == 13){DCPQuestion = "What is one of the funniest (but clean) jokes you know?"};
             if (DeadChatQuestion == 14){DCPQuestion = "Survival, Creative or Hardcore Minecraft?"};
             if (DeadChatQuestion == 15){DCPQuestion = "What do you like to do on the weekends?"};
             if (DeadChatQuestion == 16){DCPQuestion = "Would you say you make friends easily?"};
             if (DeadChatQuestion == 17){DCPQuestion = "What do you like to do on a rainy day?"};
             if (DeadChatQuestion == 18){DCPQuestion = "What's your favourite type of music?"};
             if (DeadChatQuestion == 19){DCPQuestion = "What is your favourite Disney movie?"};
+            if (DeadChatQuestion == 9){DCPQuestion = "Have you read the #qod of the day?"};
             if (DeadChatQuestion == 20){DCPQuestion = "What's your favorite activity?"};
             if (DeadChatQuestion == 21){DCPQuestion = "Laptop, Desktop or Handheld?"};
             if (DeadChatQuestion == 22){DCPQuestion = "What's your favorite food?"};
@@ -329,7 +330,7 @@ bot.on('ready', () => {
             if (DeadChatQuestion == 28){DCPQuestion = "Iphone or Android?"};
             if (DeadChatQuestion == 29){DCPQuestion = "Do you have pets?"};
             if (DeadChatQuestion == 30){DCPQuestion = "Airplane or Car?"};
-    
+
             const DeadChatMessage = new discord.MessageEmbed()
                 .setTimestamp()
                 .setColor("RANDOM")
@@ -337,7 +338,7 @@ bot.on('ready', () => {
                 .addField(DCPQuestion, `<@&${DCPPingRoleID}>`)
             let PingChannel = bot.channels.cache.get(DCPChannelID);
             PingChannel.send(DeadChatMessage);
-    
+
             function DCP(message){
                 PingChannel.send(`Dead Chat Ping! <@&${DCPPingRoleID}>`).then(message => {
                     message.delete();

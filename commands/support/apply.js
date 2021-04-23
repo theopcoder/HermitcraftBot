@@ -20,7 +20,7 @@ module.exports = class ApplyCommand extends Command {
             message.reply(DMMessage);
             return;
         }
-        if (db.get("settings.StaffApplications")== null){
+        if (db.get("settings.StaffApplications")== 0){
             message.reply("Sorry, staff applications are currently closed!");
             return;
         }
@@ -122,6 +122,7 @@ module.exports = class ApplyCommand extends Command {
             message.reply("Sorry, you have over 3 violations.");
             return;
         }
+        //BUG Level check is inconsistant and may not DM the user but still sends the channel application
         if (db.get(`${message.author.id}.basic.level`)< 15){
             message.reply("Sorry, you must be level 15 or higher to apply.");
             return;
@@ -145,9 +146,9 @@ module.exports = class ApplyCommand extends Command {
                 Note: Sharing this link will have you terminated from applying from staff!
             `)
             .setFooter(`This is your ${db.get(`${message.author.id}.applications.ApplicationAttempts`)}/3 attempt!`)
-        message.member.send(ApplicationMessage).catch(err =>
-            message.reply("I could not DM you! Please contact the server owner for support!")
-        );
+        message.member.send(ApplicationMessage).catch(err => {
+            message.reply("I could not DM you! Please contact the server owner for support!");
+        });
 
         const UserApplicationInfo = new discord.MessageEmbed()
             .setTimestamp()

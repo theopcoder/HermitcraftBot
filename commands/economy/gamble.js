@@ -26,7 +26,7 @@ module.exports = class WalletCommand extends Command {
             });
 		}
         if (isNaN(args[0])){
-            return message.reply("There where invalid characters for the bet!").then(message => {
+            return message.reply("You can only use numbers for the bet!").then(message => {
 				message.delete({timeout: 5000});
             });
         }
