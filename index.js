@@ -88,7 +88,6 @@ bot.on('message', function(message){
     //Message Reactions
     if (message.content == "1234"){
         message.reply("I declare a Ginger war!");
-        db.add(`${message.author.id}.basic.level`, 15);
     }
     if (message.content == "4321"){
         message.reply("Are you sure about that?");
