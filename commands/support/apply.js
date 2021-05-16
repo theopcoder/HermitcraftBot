@@ -38,6 +38,24 @@ module.exports = class ApplyCommand extends Command {
                 });
                 return;
             }
+            if (ApplyingUser.hasPermission("MANAGE_MESSAGES")){
+                const StaffUserMessage = new discord.MessageEmbed()
+                    .setColor("#FF0000")
+                    .setDescription(StaffUser)
+                message.channel.send(StaffUserMessage).then(message => {
+                    message.delete({timeout: 10000});
+                });
+                return;
+            }
+            if (db.get(`${message.mentions.users.first().id}.applications.Applicant`)== 0 || db.get(`${message.mentions.users.first().id}.applications.Applicant`)==null){
+                const NonApplier = new discord.MessageEmbed()
+                    .setColor()
+                    .setDescription(`:warning: That user has not applied for staff!`)
+                message.channel.send(NonApplier).then(message => {
+                    message.delete({timeout: 10000});
+                });
+                return;
+            }
             if (!part1){
                 const NoPartWarning = new discord.MessageEmbed()
                     .setColor()
@@ -57,13 +75,16 @@ module.exports = class ApplyCommand extends Command {
                 return;
             }
             if (words[1] == "accept"){
+                db.set(`${message.mentions.users.first().id}.applications.Applicant`, 0);
                 const AcceptMessage = new discord.MessageEmbed()
                     .setTimestamp()
                     .setColor("#00FF00")
                     .setThumbnail(message.mentions.users.first().displayAvatarURL())
                     .setTitle("Accepted Application")
                     .setDescription(`
-                        Congradulations, you have been accepted for part 2 of the staff application process! You and the server owner will have a private meeting using a voice chat. Please DM the owner when you can attend the meeting and make sure to have a microphone and a quiet place ready!
+                        Congradulations, you have been accepted for part 2 of the staff application process!
+                        The server owner will message you and have a private voice chat with you and personally interview you!
+                        Make sure to have a microphone, a quiet place, and a date that will work for you for the interview!
                     `)
                 ApplyingUser.send(AcceptMessage).catch(err =>
                     message.reply("Could not DM user. Requires manual conversation!")
@@ -83,6 +104,7 @@ module.exports = class ApplyCommand extends Command {
                 return;
             }
             if (words[1] == "deny"){
+                db.set(`${message.mentions.users.first().id}.applications.Applicant`, 0);
                 const DenyMessage = new discord.MessageEmbed()
                     .setTimestamp()
                     .setColor("#0000FF")
@@ -114,21 +136,23 @@ module.exports = class ApplyCommand extends Command {
             message.reply("Sorry, your already a staff member! ;)");
             return;
         }
-        if (db.get(`${message.author.id}.applications.ApplicationAttempts`)== 3){
+        let ApplicationAttempts = db.get(`${message.author.id}.applications.ApplicationAttempts`);
+        let ViolationsCheck = db.get(`${message.author.id}.admin.Violations`);
+        let LevelCheck = db.get(`${message.author.id}.basic.level`); if (LevelCheck == null)LevelCheck == "0";
+
+        if (ApplicationAttempts > 2){//If this is 3, it doesn't work
             message.reply("Sorry, you have over 3 application attempts.");
             return;
         }
-        if (db.get(`${message.author.id}.admin.Violations`) > 3){
+        if (ViolationsCheck > 3){
             message.reply("Sorry, you have over 3 violations.");
             return;
         }
-        //BUG Level check is inconsistant and may not DM the user but still sends the channel application
-        if (db.get(`${message.author.id}.basic.level`)< 15){
+        if (LevelCheck < 15){
             message.reply("Sorry, you must be level 15 or higher to apply.");
             return;
         }
 
-        db.add(`${message.author.id}.applications.ApplicationAttempts`, 1);
 		let Violations = db.get(`${message.author.id}.admin.Violations`); if (Violations == null)Violations = "0";
 		let Warnings = db.get(`${message.author.id}.admin.Warnings`); if (Warnings == null)Warnings = "0";
 		let Mutes = db.get(`${message.author.id}.admin.Mutes`); if (Mutes == null)Mutes = "0";
@@ -141,28 +165,35 @@ module.exports = class ApplyCommand extends Command {
             .setThumbnail(message.author.displayAvatarURL())
             .setTitle("Application")
             .setDescription(`
-                Please fill out your application here: ${ApplicationLink}
-
-                Note: Sharing this link will have you terminated from applying from staff!
+                Please fill out your application [here!](${ApplicationLink})
             `)
-            .setFooter(`This is your ${db.get(`${message.author.id}.applications.ApplicationAttempts`)}/3 attempt!`)
+            .setFooter(`Do NOT share this link! This is your ${db.get(`${message.author.id}.applications.ApplicationAttempts`)}/3 attempt!`)
         message.member.send(ApplicationMessage).catch(err => {
-            message.reply("I could not DM you! Please contact the server owner for support!");
+            db.set(`${message.author.id}.applications.StopMessage`, 1);
+        }).then(() => {
+            if (db.get(`${message.author.id}.applications.StopMessage`) == 1){
+                message.reply("I could not DM you! Please let me message you, then try again!");
+                db.set(`${message.author.id}.applications.StopMessage`, 0);
+                return;
+            }else{
+                message.reply("Check your DM's!");
+                db.set(`${message.author.id}.applications.Applicant`, 1);
+                db.add(`${message.author.id}.applications.ApplicationAttempts`, 1);
+                const UserApplicationInfo = new discord.MessageEmbed()
+                    .setTimestamp()
+                    .setColor("#0000FF")
+                    .setThumbnail(message.author.displayAvatarURL())
+                    .setTitle("Application")
+                    .setDescription(`
+                        **User:** ${message.author}
+                        **User ID:** ${message.author.id}
+                        **Attempt:** ${db.get(`${message.author.id}.applications.ApplicationAttempts`)}/3
+                        **Total Offences:** ${Violations}
+                        **Other Offences:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
+                    `)
+                let ApplicationChannel = message.guild.channels.cache.get(ApplicationChannelID);
+                ApplicationChannel.send(UserApplicationInfo);
+            }
         });
-
-        const UserApplicationInfo = new discord.MessageEmbed()
-            .setTimestamp()
-            .setColor("#0000FF")
-            .setThumbnail(message.author.displayAvatarURL())
-            .setTitle("Application")
-            .setDescription(`
-                **User:** ${message.author}
-                **User ID:** ${message.author.id}
-                **Attempt:** ${db.get(`${message.author.id}.applications.ApplicationAttempts`)}/3
-                **Total Offences:** ${Violations}
-				**Other Offences:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
-            `)
-		let ApplicationChannel = message.guild.channels.cache.get(ApplicationChannelID);
-		ApplicationChannel.send(UserApplicationInfo);
 	}
 };

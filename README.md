@@ -5,19 +5,22 @@
 This is a custom Discord bot for Hermitcraft Fan Server on Discord.
 
 Developer: theopcoder  
-Bot Version: 2.0.2 Official Release  
+Bot Version: 2.1.0 Official Release  
 BuildID: 2021.04.22.2.0.2
 
 # Dependencies Used
 
-discord.js  
-[Documentation]: https://discord.js.org/#/docs/main/stable/general/welcome
+**[12.5.3]** discord.js  
+[Documentation] https://discord.js.org/#/docs/main/stable/general/welcome
 
-discord.js-commando  
-[Documentation]: https://discord.js.org/#/docs/commando/master/general/welcome
+**[0.12.3]** discord.js-commando  
+[Documentation] https://discord.js.org/#/docs/commando/master/general/welcome
 
-quick.db  
-[Documentation]: https://quickdb.js.org/docs.html
+**[7.1.3]** quick.db  
+[Documentation] https://quickdb.js.org/docs.html
 
-ms  
-[Documentation]: https://github.com/vercel/ms#readme
+**[4.1.1]** chalk  
+[Documentation] https://github.com/chalk/chalk#readme
+
+**[2.1.3]** ms  
+[Documentation] https://github.com/vercel/ms#readme

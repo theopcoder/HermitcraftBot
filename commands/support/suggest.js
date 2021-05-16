@@ -25,13 +25,14 @@ module.exports = class SuggestCommand extends Command {
                 message.delete({timeout: 10000});
             });
         }
-        
+
         message.delete();
+        db.add("SuggestionNumber", 1);
         const SuggestionMessage = new discord.MessageEmbed()
             .setTimestamp()
             .setColor("#20B2AA")
             .setThumbnail(message.author.displayAvatarURL())
-            .setTitle(`Suggestion`)
+            .setTitle(`Suggestion #${db.get(SuggestionNumber)}`)
             .setDescription(`
                 **User:** ${message.author}
                 **Suggestion:** ${suggestion}

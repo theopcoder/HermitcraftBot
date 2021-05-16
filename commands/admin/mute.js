@@ -179,7 +179,7 @@ module.exports = class MuteCommand extends Command {
 			let MuteRole = message.guild.roles.cache.get(MuteRoleID);
 			MutedUser.roles.remove(MuteRole);
 			let MemberRole = message.guild.roles.cache.get(NewMemberRoleID);
-			MutedUser.roles.remove(MemberRole).then(function(){
+			MutedUser.roles.add(MemberRole).then(function(){
 				MutedUser.send(`You have been unmuted on ${message.guild.name} because, ${reason}.`).catch(err => 
                     console.log(`Could not message unmuted user!`)
                 );

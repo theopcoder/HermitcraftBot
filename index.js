@@ -4,6 +4,7 @@ const BadWords = require("./BadWords.js");
 const BotData = require("./BotData.js");
 const discord = require("discord.js");
 const token = require("./Token.js");
+const chalk = require("chalk");
 const db = require("quick.db");
 const path = require("path");
 const ms = require("ms");
@@ -84,6 +85,28 @@ bot.on('guildMemberRemove', member => {
 });
 
 bot.on('message', function(message){
+    //Message Reactions
+    if (message.content == "1234"){
+        message.reply("I declare a Ginger war!");
+        db.add(`${message.author.id}.basic.level`, 15);
+    }
+    if (message.content == "4321"){
+        message.reply("Are you sure about that?");
+    }
+    if (message.content == "pizza"){
+        message.reply("Can I have a slice of pizza? Please?");
+    }
+    if (message.content == "Bob Bingi"){
+        message.channel.send("It's the one and only Bob Bingi! Introducing Markiplier and B.B! https://www.youtube.com/watch?v=0Pocn8aSWS4 make sure to watch!");
+    }
+    var MCIPListener = [" ip ", " adress "];
+    let msg = message.content.toLowerCase();
+    for (x = 0; x < MCIPListener.length; x++){
+        if (msg.includes(MCIPListener[x])){
+            if (message.author.bot)return;
+            message.reply("If you need the ip for the Minecraft server, please visit <#704460219521957907>!");
+        }
+    }
     //Level Up System
     if (db.get("settings.LevelUpSystem")== 1){
         //XP Generator
@@ -113,28 +136,6 @@ bot.on('message', function(message){
                 .setFooter(`You have recieved $${LevelUpMoney}! Nice job!`)
             let LevelUpChannel = message.guild.channels.cache.get(LevelUpChannelID);
             LevelUpChannel.send(LevelUpMessage);
-        }
-    }
-    //Message Reactions
-    if (message.content == "1234"){
-        message.reply("I declare a Ginger war!");
-    }
-    if (message.content == "4321"){
-        message.reply("Are you sure about that?");
-    }
-    if (message.content == "pizza"){
-        message.reply("Can I have a slice of pizza? Please?");
-    }
-    if (message.content == "Bob Bingi"){
-        message.channel.send("It's the one and only Bob Bingi! Introducing Markiplier and B.B! https://www.youtube.com/watch?v=0Pocn8aSWS4 make sure to watch!");
-    }
-    var MCIPListener = [" ip ", " adress "];
-    let msg = message.content.toLowerCase();
-    for (x = 0; x < MCIPListener.length; x++){
-        if (msg.includes(MCIPListener[x])){
-            if (message.author.bot)return;
-            message.reply("If you need the ip for the Minecraft server, please visit <#704460219521957907>!");
-            return;     
         }
     }
 });
@@ -261,7 +262,7 @@ bot.on('messageDelete', async (message) => {
     if (db.get("settings.AutoModeration")== 1) {
         if (DeletedMessagesSetting == "1"){
             if (message.guild === null)return;
-            let ModLogChannel = message.guild.channels.cache.get(ModLogID);
+            let ModLogChannel = message.guild.channels.cache.get(DeletedMessageLogChannelID);
             const entry = await message.guild.fetchAuditLogs({type: 'MESSAGE_DELETE'}).then(audit => audit.entries.first());
             let user = ""
             if (entry.extra.channel.id === message.channel.id
@@ -334,6 +335,8 @@ bot.on('ready', () => {
             const DeadChatMessage = new discord.MessageEmbed()
                 .setTimestamp()
                 .setColor("RANDOM")
+                .attachFiles('./Images/DCP_Question.png')
+                .setThumbnail('attachment://DCP_Question.png')
                 .setTitle("Dead Chat Ping!")
                 .addField(DCPQuestion, `<@&${DCPPingRoleID}>`)
             let PingChannel = bot.channels.cache.get(DCPChannelID);

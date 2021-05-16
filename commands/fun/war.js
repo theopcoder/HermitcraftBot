@@ -19,15 +19,18 @@ module.exports = class WarCommand extends Command {
             message.reply(DMMessage);
             return;
         }
+        //This is a custom command and will not work on your server! You can delte this command if you wish!
         const Warinfo = new discord.MessageEmbed()
             .setTimestamp()
             .setColor('#ffa500')
+            .attachFiles('./Images/WarImage.jpeg')
+            .setThumbnail('attachment://WarImage.jpeg')
             .setTitle('Minecraft WAR!')
-            .setFooter('Who will win? Will it be you or, will it be your enemy?')
             .addField('Members: ', "9")
             .addField('War Members:', message.guild.roles.cache.get('721920054660431912').members.map(m=>m.user.tag).join('\n')+",are in the war!")
             .addField('Red Team Members: ', message.guild.roles.cache.get('721920044019482675').members.map(m=>m.user.tag).join('\n')+",are in the RedTeam!")
             .addField('Blue Team Members:', message.guild.roles.cache.get('721920050361139260').members.map(m=>m.user.tag).join('\n')+",are in the BlueTeam!")
+            .setFooter('Who will win? Will it be you or, will it be your enemy?')
         message.channel.send(Warinfo);
 	}
 };

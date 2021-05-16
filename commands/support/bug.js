@@ -32,7 +32,7 @@ module.exports = class BugCommand extends Command {
             .setTimestamp()
             .setColor("#FFA500")
             .setThumbnail(message.author.displayAvatarURL())
-            .setTitle(`Bug Report ${db.get("BugNumber")}`)
+            .setTitle(`Bug Report #${db.get("BugNumber")}`)
             .setDescription(`
                 **User:** ${message.author}
                 **Bug:** ${bug}

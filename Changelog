@@ -1,33 +1,35 @@
 ==================================================
-Title: 2.0.2 Bug Fix update
-Version: 2.0.2
-DevID: 2021.04.22.2.0.2
-Date: 4/22/2021
-Description: A bug fix update to fix issues and improve some commands
+Title: 2.1.0 Update
+Version: 2.1.0
+DevID: 2021.05.15.2.1.0
+Date: 2021/05/15
+Description: Some small changes and bug fixes.
 
 Additions/Changes:
-1. -slowmode now mentions the channel in the log message
-2. Added -dcp to get the dead chat ping role
-3. -bug will now auto delete the suggestion in the channel to keep it clean
-4. -suggest will now auto delete the bug in the channel to keep it clean
-5. Changed -gamble isNaN message
-6. Added a channel exclusion for xp gain
-7. Updated Bot Configuration help section to include LevelUpChannelID
-8. Added ChannelExcludeID to Bot Configuration to exclude a channel from getting xp from messages
+1. Updated README.md to show chalk dependencie
+2. Added a bot check setting
+3. Dead Chat Pings now contain an image
+4. -war command now has an image
+5. Added ImageCredits to credit images that aren't mine
+6. Suggestions are now counted so you can discuss them easier. Ex: Suggestion 18 seems good
+7. Redisigned -settings graphics with new embeds and made it more consistent
+8. Added -invite so you can create a 24 hour invite to the server!
 
 Deletions:
 1. 
 
 Bug Fixes:
-1. Fixed an error if you put to big of a number in -slowmode
-2. Fixed -war member error
-3. Fixed -tax giving an error when numbers aren't used
+1. Message listeners are now working again
+2. Fixed DeletedMessages going to the wrong channel
+3. -poll Now contains a proper permission check
+4. Fixed -apply
+5. -unmute now reapplies the member role
 
 Dependencies:
-1. 
+1. Added chalk (Version: 4.1.1)
 
 Security Patches:
 1. 
 
-Notes: -apply is currently having issues and may not function as intended. I am working on this issue and am aware of it. I will try to get the issues resolved as soon as possible!
+Notes: -apply is now working again
 ==================================================

@@ -3,7 +3,7 @@ var BotConfiguration = [
     //BotConfiguration=============
         BotPrefix = "-",
         BotID = "762199290365607936",
-        ActivityMessage = "2.0.0 has been released!",
+        ActivityMessage = `Do you know theopcoder? (He coded me!)`,
     //=============================
     //ModerationConfiguration======
         DeletedMessageLogChannelID = "799862866475220992",

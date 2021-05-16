@@ -35,10 +35,10 @@ module.exports = class BugCommand extends Command {
                 .setThumbnail('attachment://SettingsCog.png')
                 .setTitle("Settings Help")
                 .setDescription(`
-                    1. Level Up System
-                    2. Dead Chat Pings
-                    3. Auto Moderation
-                    4. Applications
+                    **(1)** Level Up System
+                    **(2)** Dead Chat Pings
+                    **(3)** Auto Moderation
+                    **(4)** Staff Applications
 
                     To turn a setting off or on, do -setting <number> on/off
                     Example: -setting 1 off
@@ -50,45 +50,69 @@ module.exports = class BugCommand extends Command {
         //Level Up Settings
         if (settings == "1 on"){
             db.set("settings.LevelUpSystem", 1);
-            message.reply("Successfully turned on Level Ups!");
+            const LevelUpOnMessage = new discord.MessageEmbed()
+                .setColor("#00FF00")
+                .setDescription(`:white_check_mark: Successfully turned on Level Ups!`)
+            message.channel.send(LevelUpOnMessage);
             return;
         }
         if (settings == "1 off"){
             db.set("settings.LevelUpSystem", 0);
-            message.reply("Successfully turned off Level Ups!");
+            const LevelUpOffMessage = new discord.MessageEmbed()
+                .setColor("#FF0000")
+                .setDescription(`:x: Successfully turned off Level Ups!`)
+            message.channel.send(LevelUpOffMessage);
             return;
         }
         //Dead Chat Ping Settings
         if (settings == "2 on"){
             db.set("settings.DeadChatPings", 1);
-            message.reply("Successfully turned on Dead Chat Pings!");
+            const LevelUpOnMessage = new discord.MessageEmbed()
+                .setColor("#00FF00")
+                .setDescription(`:white_check_mark: Successfully turned on Dead Chat Pings!`)
+            message.channel.send(LevelUpOnMessage);
             return;
         }
         if (settings == "2 off"){
             db.set("settings.DeadChatPings", 0);
-            message.reply("Successfully turned off Dead Chat Pings!");
+            const LevelUpOnMessage = new discord.MessageEmbed()
+                .setColor("#FF0000")
+                .setDescription(`:x: Successfully turned off Dead Chat Pings!`)
+            message.channel.send(LevelUpOnMessage);
             return;
         }
         //Auto Moderation Settings
         if (settings == "3 on"){
             db.set("settings.AutoModeration", 1);
-            message.reply("Successfully turned on Auto Moderation!");
+            const AutoModerationOnMessage = new discord.MessageEmbed()
+                .setColor("#00FF00")
+                .setDescription(`:white_check_mark: Successfully turned on Auto Moderation!`)
+            message.channel.send(AutoModerationOnMessage);
             return;
         }
         if (settings == "3 off"){
             db.set("settings.AutoModeration", 0);
-            message.reply("Successfully turned off Auto Moderation!");
+            const AutoModerationOnMessage = new discord.MessageEmbed()
+                .setColor("#FF0000")
+                .setDescription(`:x: Successfully turned off Auto Moderation!`)
+            message.channel.send(AutoModerationOnMessage);
             return;
         }
         //Staff Application Settings
         if (settings == "4 on"){
             db.set("settings.StaffApplications", 1);
-            message.reply("Successfully turned on Staff Applications!");
+            const StaffApplicationsOnMessage = new discord.MessageEmbed()
+                .setColor("#00FF00")
+                .setDescription(`:white_check_mark: Successfully turned on Staff Applications!`)
+            message.channel.send(StaffApplicationsOnMessage);
             return;
         }
         if (settings == "4 off"){
             db.set("settings.StaffApplications", 0);
-            message.reply("Successfully turned off Staff Applications!");
+            const StaffApplicationsOffMessage = new discord.MessageEmbed()
+                .setColor("#FF0000")
+                .setDescription(`:x: Successfully turned off Staff Applications!`)
+            message.channel.send(StaffApplicationsOffMessage);
             return;
         }
 
@@ -104,10 +128,10 @@ module.exports = class BugCommand extends Command {
             .setThumbnail('attachment://SettingsCog.png')
             .setTitle("Settings")
             .setDescription(`
-                **Staff Applications:** ${StaffApplicationSetting}
-                **Dead Chat Pings:** ${DeadChatPingSetting}
-                **Auto Moderation:** ${AutoModerationSetting}
-                **Level Ups:** ${LevelUpSetting}
+                **(1) Level Ups:** ${LevelUpSetting}
+                **(2) Dead Chat Pings:** ${DeadChatPingSetting}
+                **(3) Auto Moderation:** ${AutoModerationSetting}
+                **(4) Staff Applications:** ${StaffApplicationSetting}
             `)
         message.channel.send(SettingsMessage);
 	}
