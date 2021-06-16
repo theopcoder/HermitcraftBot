@@ -28,12 +28,17 @@ module.exports = class PurgeCommand extends Command {
 		}
         let words = args.split(' ');
 		let DeletedMessage = words.slice(0).join(' ');
+		let Extra = words.slice(1).join(' ');
 		if (isNaN(args[0])){
 			message.reply("You can only use numbers for this command!");
 			return;
 		}
 		if (words[0].includes(".")){
 			message.reply("You can't use decimal numbers!");
+			return;
+		}
+		if (Extra){
+			message.reply("You can't add a second argument! Example: -purge 5");
 			return;
 		}
 		if (!DeletedMessage){
@@ -57,7 +62,7 @@ module.exports = class PurgeCommand extends Command {
 			.setTitle("Purged Messages")
 			.setDescription(`
 				**User:** ${message.author}
-				**Amount:** ${args[0]}
+				**Amount:** ${DeletedMessage}
 			`)
 		let LogChannel = message.guild.channels.cache.get(ModLogID);
 		LogChannel.send(PurgeLogMessage);

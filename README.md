@@ -1,12 +1,15 @@
 # HermitcraftBot
 
-![Latest Release](https://img.shields.io/github/v/release/theopcoder/HermitcraftBot?style=for-the-badge&include_prereleases) ![GitHub](https://img.shields.io/badge/GitHub-theopcoder-green?style=for-the-badge)
+![Latest Release](https://img.shields.io/github/v/release/theopcoder/HermitcraftBot?style=for-the-badge&include_prereleases) ![GitHub](https://img.shields.io/badge/GitHub-theopcoder-green?style=for-the-badge) [![CodeQL](https://github.com/theopcoder/HermitcraftBot/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/theopcoder/HermitcraftBot/actions/workflows/codeql-analysis.yml)
 
 This is a custom Discord bot for Hermitcraft Fan Server on Discord.
 
 Developer: theopcoder  
-Bot Version: 2.1.0 Official Release  
-BuildID: 2021.04.22.2.0.2
+Bot Version: 2.1.1 Update
+BuildID: 2021.06.15.2.1.1
+
+# Website
+Link: https://theopcoder.github.io/HermitcraftBot/
 
 # Dependencies Used
 

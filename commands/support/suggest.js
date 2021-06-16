@@ -32,7 +32,7 @@ module.exports = class SuggestCommand extends Command {
             .setTimestamp()
             .setColor("#20B2AA")
             .setThumbnail(message.author.displayAvatarURL())
-            .setTitle(`Suggestion #${db.get(SuggestionNumber)}`)
+            .setTitle(`Suggestion #${db.get("SuggestionNumber")}`)
             .setDescription(`
                 **User:** ${message.author}
                 **Suggestion:** ${suggestion}

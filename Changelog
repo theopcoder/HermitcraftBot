@@ -1,35 +1,29 @@
 ==================================================
-Title: 2.1.0 Update
-Version: 2.1.0
-DevID: 2021.05.15.2.1.0
-Date: 2021/05/15
-Description: Some small changes and bug fixes.
+Title: 2.1.1 Update
+Version: 2.1.1
+DevID: 2021.06.15.2.1.1
+Date: 6/15/2021
+Description: A small update with a few new features and a couple bug fixes
 
 Additions/Changes:
-1. Updated README.md to show chalk dependencie
-2. Added a bot check setting
-3. Dead Chat Pings now contain an image
-4. -war command now has an image
-5. Added ImageCredits to credit images that aren't mine
-6. Suggestions are now counted so you can discuss them easier. Ex: Suggestion 18 seems good
-7. Redisigned -settings graphics with new embeds and made it more consistent
-8. Added -invite so you can create a 24 hour invite to the server!
+1. Added -temperature. You can now do conversions inbetween celcius and Fahrenheit
+2. Added -spelling. Tell people they made a grammatical error!
+3. Added -afk
+4. Updated README with website link and updated some badges
 
 Deletions:
 1. 
 
 Bug Fixes:
-1. Message listeners are now working again
-2. Fixed DeletedMessages going to the wrong channel
-3. -poll Now contains a proper permission check
-4. Fixed -apply
-5. -unmute now reapplies the member role
+1. Fixed -Suggestion not working
+2. Fixed -purge not working adding another argument after number
+3. Fixed -purge log message not showing correct number greater than 9
 
 Dependencies:
-1. Added chalk (Version: 4.1.1)
+1.
 
 Security Patches:
 1. 
 
-Notes: -apply is now working again
+Notes:
 ==================================================
