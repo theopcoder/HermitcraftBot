@@ -2,9 +2,9 @@ const BotConfiguration = require("./BotConfiguration.js");
 const chalk = require("chalk");
 
 var BotData = [
-    Version = "2.1.1",
-    BuildID = "2021.06.15.2.1.1",
-    VN = "2.1.1 Update",//VN stands for Version Name
+    Version = "2.1.2",
+    BuildID = "2021.07.02.2.1.2",
+    VN = "2.1.2 Update",//VN stands for Version Name
     Developer = "TheMLGDude#2177 | theopcoder",
     DeveloperDiscord = "TheMLGDude#2177",
     DeveloperGitHub = "theopcoder",

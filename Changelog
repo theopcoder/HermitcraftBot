@@ -1,23 +1,19 @@
 ==================================================
-Title: 2.1.1 Update
-Version: 2.1.1
-DevID: 2021.06.15.2.1.1
-Date: 6/15/2021
-Description: A small update with a few new features and a couple bug fixes
+Title: 2.1.2 Update
+Version: 2.1.2
+DevID: 2021.07.02.2.1.2
+Date: 07/02/2021
+Description: New commands
 
 Additions/Changes:
-1. Added -temperature. You can now do conversions inbetween celcius and Fahrenheit
-2. Added -spelling. Tell people they made a grammatical error!
-3. Added -afk
-4. Updated README with website link and updated some badges
+1. Added -pf to view bot performance
+2. Added -power to restart/power off the bot.
 
 Deletions:
 1. 
 
 Bug Fixes:
-1. Fixed -Suggestion not working
-2. Fixed -purge not working adding another argument after number
-3. Fixed -purge log message not showing correct number greater than 9
+1. Fixed -settings to have the correct class name
 
 Dependencies:
 1.

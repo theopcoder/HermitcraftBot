@@ -4,7 +4,7 @@ const BotData = require("../../BotData.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
-module.exports = class BugCommand extends Command {
+module.exports = class SettingsCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'settings',
