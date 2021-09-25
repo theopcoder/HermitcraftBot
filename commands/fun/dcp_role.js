@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -21,7 +21,6 @@ module.exports = class DeadChatPingRoleCommand extends Command {
         }
 		let words = args.split(' ');
         let reason = words.slice(0).join(' ');
-		let DCPRole = message.guild.roles.cache.get(DCPPingRoleID);
 		if (!reason){
 			const IncorrectUsage = new discord.MessageEmbed()
 				.setColor("#FFFF00")
@@ -34,11 +33,11 @@ module.exports = class DeadChatPingRoleCommand extends Command {
 			return;
 		}
 		if (reason == "get"){
-			message.member.roles.add(DCPRole);
+			message.member.roles.add(DCPRoleID);
 			message.reply(`Successfully gave you the dead chat ping role! Do -dcp remove to remove the role!`);
 		}
 		if (reason == "remove"){
-			message.member.roles.remove(DCPRole);
+			message.member.roles.remove(DCPRoleID);
 			message.reply(`Successfully removed the dead chat ping role! Do -dcp get to get the role!`);
 		}
 	}

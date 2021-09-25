@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -47,7 +47,7 @@ module.exports = class TopicCommand extends Command {
             message.reply("Are you a redstone person or a builder?");
         }
         if (chance == 10){
-            message.reply("What is a book that you think everyone should read atleast once?");
+            message.reply("What is a book that you think everyone should read at least once?");
         }
 	}
 };

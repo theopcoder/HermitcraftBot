@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -17,29 +17,29 @@ module.exports = class WalletCommand extends Command {
 	run(message, args) {
         let MentionedUser = message.mentions.users.first();
         if (MentionedUser){
-            let MentionedUserBalenceAmount = db.get(`${message.mentions.users.first().id}.basic.money`); if (MentionedUserBalenceAmount == null)MentionedUserBalenceAmount = "0";
+            let MentionedUserBalanceAmount = db.get(`${message.mentions.users.first().id}.basic.money`); if (MentionedUserBalanceAmount == null)MentionedUserBalanceAmount = "0";
 
-            let MentionUsersBalence = new discord.MessageEmbed()
+            let MentionUsersBalance = new discord.MessageEmbed()
                 .setTimestamp()
                 .setColor("#008000")
                 .setThumbnail(MentionedUser.displayAvatarURL())
                 .setTitle(`${MentionedUser.tag} Wallet`)
                 .setDescription(`
-                    **Balence:** $${MentionedUserBalenceAmount} :moneybag:
+                    **Balance:** $${MentionedUserBalanceAmount} :moneybag:
                 `)
-            message.channel.send(MentionUsersBalence);
+            message.channel.send(MentionUsersBalance);
         }else{
-            let UserBalenceAmount = db.get(`${message.author.id}.basic.money`); if (UserBalenceAmount == null)UserBalenceAmount = "0";
+            let UserBalanceAmount = db.get(`${message.author.id}.basic.money`); if (UserBalanceAmount == null)UserBalanceAmount = "0";
 
-            const UserBalence = new discord.MessageEmbed()
+            const UserBalance = new discord.MessageEmbed()
                 .setTimestamp()
                 .setColor("#008000")
                 .setThumbnail(message.author.displayAvatarURL())
                 .setTitle(`${message.author.tag} Wallet`)
                 .setDescription(`
-                    :moneybag: **Balence:** $${UserBalenceAmount}
+                    :moneybag: **Balance:** $${UserBalanceAmount}
                 `)
-            message.channel.send(UserBalence);
+            message.channel.send(UserBalance);
         }
 	}
 };

@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -20,7 +20,7 @@ module.exports = class BugCommand extends Command {
         if(!bug){
             const NoBugReportMessage = new discord.MessageEmbed()
                 .setColor("#FF0000")
-                .setDescription(`:warning: ${message.author}, what is the bug?`);
+                .setDescription(NullArguments);
             return message.channel.send(NoBugReportMessage).then(message => {
                 message.delete({timeout: 10000});
             });
@@ -32,7 +32,7 @@ module.exports = class BugCommand extends Command {
             .setTimestamp()
             .setColor("#FFA500")
             .setThumbnail(message.author.displayAvatarURL())
-            .setTitle(`Bug Report #${db.get("BugNumber")}`)
+            .setTitle(`Bug Report #${db.get("BugNumber")} | ${message.author.tag}`)
             .setDescription(`
                 **User:** ${message.author}
                 **Bug:** ${bug}

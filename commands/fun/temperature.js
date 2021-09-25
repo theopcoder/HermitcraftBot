@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -23,17 +23,17 @@ module.exports = class TemperatureCommand extends Command {
                 .setColor("RED")
                 .setDescription(`
                 What's the number you want to convert?
-                Corrent Usage: -temperature <number> <f/c>`)
+                Correct Usage: -temperature <number> <f/c>`)
             message.channel.send(NoTemp);
             return;
         }
         if (isNaN(words[0])){
-            const IncorectNumber = new discord.MessageEmbed()
+            const IncorrectNumber = new discord.MessageEmbed()
                 .setColor("RED")
                 .setDescription(`
                 You must use a number!
-                Corrent Usage: -temperature <number> <f/c>`)
-            message.channel.send(IncorectNumber);
+                Correct Usage: -temperature <number> <f/c>`)
+            message.channel.send(IncorrectNumber);
             return;
         }
         if (!type){
@@ -41,7 +41,7 @@ module.exports = class TemperatureCommand extends Command {
                 .setColor("RED")
                 .setDescription(`
                 Do you want to convert to f or c?
-                Corrent Usage: -temperature <number> <f/c>`)
+                Correct Usage: -temperature <number> <f/c>`)
             message.channel.send(NoConversion);
             return;
         }

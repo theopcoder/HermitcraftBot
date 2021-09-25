@@ -1,6 +1,6 @@
+const BotConfiguration = require("../../Configuration.js");
 const { Command, CommandoClient } = require("discord.js-commando");
-const BotConfiguration = require("../../BotConfiguration.js");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const token = require("../../Token.js");
 const discord = require("discord.js");
 const client = new CommandoClient();

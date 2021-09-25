@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -19,8 +19,8 @@ module.exports = class WarCommand extends Command {
             message.reply(DMMessage);
             return;
         }
-        //This is a custom command and will not work on your server! You can delte this command if you wish!
-        const Warinfo = new discord.MessageEmbed()
+        //This is a custom command and will not work on your server! You can delete this command if you wish!
+        const WarInfo = new discord.MessageEmbed()
             .setTimestamp()
             .setColor('#ffa500')
             .attachFiles('./Images/WarImage.jpeg')
@@ -31,6 +31,6 @@ module.exports = class WarCommand extends Command {
             .addField('Red Team Members: ', message.guild.roles.cache.get('721920044019482675').members.map(m=>m.user.tag).join('\n')+",are in the RedTeam!")
             .addField('Blue Team Members:', message.guild.roles.cache.get('721920050361139260').members.map(m=>m.user.tag).join('\n')+",are in the BlueTeam!")
             .setFooter('Who will win? Will it be you or, will it be your enemy?')
-        message.channel.send(Warinfo);
+        message.channel.send(WarInfo);
 	}
 };

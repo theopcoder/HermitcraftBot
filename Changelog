@@ -1,25 +1,36 @@
 ==================================================
-Title: 2.1.2 Update
-Version: 2.1.2
+Title: 2.2.0 Recode
+Version: 2.2.0
 DevID: 2021.07.02.2.1.2
-Date: 07/02/2021
-Description: New commands
+Date: 
+Description: 
 
 Additions/Changes:
-1. Added -pf to view bot performance
-2. Added -power to restart/power off the bot.
+1. [Change] Some bot errors have been updated & deprecated errors have been officially removed
+2. [Change] Renamed BotData to System
+3. [Change] Renamed BotConfiguration to Configuration
+4. [Change] Fixed spelling mistakes in -bal
+5. [Change] Fixed spelling mistakes in -temperature
+6. [Change] Fixed spelling mistakes in -topic
+7. [Change] Fixed spelling mistakes in -gamble
+8. [Change] Fixed spelling mistake in Level Up Message
+9. [Change] Fixed spelling mistake in Dead Chat Pings
+10. [Change] Dead Chat Pings can now be set with variables meaning they are no longer set to hourly. Example: 6h to 1d
+11. [Change] A member who leaves the server will no longer get a survey on why they left
+12. [Change] Removed Bedrock Minecraft information as that server is no longer up
+13. [Change] The polls command description and no arguments message where changed
+14. 
+
+[Change] 
 
 Deletions:
 1. 
 
 Bug Fixes:
-1. Fixed -settings to have the correct class name
-
-Dependencies:
-1.
-
-Security Patches:
 1. 
+
+Dependencies & Security Patches:
+1. Fixed 2 vulnerabilities in quick.db
 
 Notes:
 ==================================================

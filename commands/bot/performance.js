@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 const os = require('os');
@@ -31,14 +31,14 @@ module.exports = class PerformanceCommand extends Command {
 		}
 
 		var usedMemory = os.totalmem() -os.freemem(), totalMemory = os.totalmem();
-		var  getpercentage = ((usedMemory/totalMemory) * 100).toFixed(2) + '%'
+		var  GetPercentage = ((usedMemory/totalMemory) * 100).toFixed(2) + '%'
 
 		const PerformanceMessage = new discord.MessageEmbed()
 			.setTimestamp()
 			.setColor("#d3d3d3")
 			.setTitle("Bot Performance")
 			.setDescription(`
-				**Used RAM:** ${getpercentage}
+				**Used RAM:** ${GetPercentage}
 				**RAM:** ${(usedMemory/ Math.pow(1024, 3)).toFixed(2)}
 				**Ping:** ${Date.now() - message.createdTimestamp} ms
 			`)

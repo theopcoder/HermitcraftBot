@@ -1,5 +1,6 @@
-const { Command } = require('discord.js-commando');
-const BotData = require("../../BotData.js");
+const BotConfiguration = require("../../Configuration.js");
+const { Command } = require("discord.js-commando");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
