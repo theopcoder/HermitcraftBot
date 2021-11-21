@@ -19,7 +19,9 @@ Additions/Changes:
 11. [Change] A member who leaves the server will no longer get a survey on why they left
 12. [Change] Removed Bedrock Minecraft information as that server is no longer up
 13. [Change] The polls command description and no arguments message where changed
-14. 
+14. [Change] -power now has message embeds instead of normal messages
+15. [Change] Added footer to -settings and updated -settings help message
+16. [Change] 
 
 [Change] 
 

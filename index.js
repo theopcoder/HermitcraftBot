@@ -18,6 +18,7 @@ const bot = new CommandoClient({
 //TODO Have it say Currently Muted in -stats command
 //TODO Add edited messages auto moderation
 //TODO Auto Moderation | Edited Messages
+//TODO Have commands use user ID's and not pings
 
 bot.registry
 	.registerDefaultTypes()

@@ -1,0 +1,1 @@
+//Have mutes logged in quick.db so they don't continue if bot restarts or shutdown
