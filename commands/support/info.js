@@ -25,7 +25,7 @@ module.exports = class InfoCommand extends Command {
             .setThumbnail(message.guild.iconURL())
             .setTitle(`${message.guild.name}`)
             .addField("Server Info:", `
-                :satellite: **Minecraft IP:** Hermitcraft.pedestriamc.com
+                :satellite: **Minecraft IP:** hermitcraft.pedestriamc.com
                 :e_mail: **Discord Invite:** https://discord.gg/AURDPCN
                 :person_in_tuxedo: **Members:** ${message.guild.memberCount}
             `)

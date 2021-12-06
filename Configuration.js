@@ -2,29 +2,27 @@ var BotConfiguration = [
     //=============================
     //BotConfiguration=============
         BotPrefix = "-",
-        ActivityMessage = "Is water wet?",
+        ActivityMessage = "Working on Updates",
     //=============================
     //DCPConfiguration=============
-        DCPChannelID = "861821974438608919",
         DCPRoleID = "825568176178855977",
+        DCPChannelID = "861821974438608919",
         PingTime = "12h",
     //=============================
-    //NewMemberConfiguration=======
-        WelcomeChannelID = "862185793911914516",
-        NewMemberRoleID = "799863064455282689",
-    //=============================
-    //MemberLeaveConfiguration=====
-        MemberLeaveChannelID = "862185793911914516",
-
-
-
-
+    //LevelUpConfiguration=========
+        LevelUpChannelID = "861821974438608919",
+        ChannelExcludeID = "911819288548093972",
+        LevelUpMoney = "20",
+        RandomXP = "5",
+        MaxXP = "10",
     //unlisted
         SeasonRoleID = "825556515284844544",
         BugChannelID = "878471568831963148",
         PollChannelID = "861806480084041779",
+        SuggestionChannelID = "911819288548093972",
+        ModLogID = "861806413848117248",
         DeletedMessageLogChannelID = "861806446337720340",
-        
+        EditedMessagesLogChannelID = "861806446337720340",
 ];
 
 //Other Configurations

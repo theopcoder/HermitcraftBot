@@ -17,4 +17,5 @@ module.exports = profanities = new Array(
     " frigger ",
     " prick ",
     " cuck ",
+    " test ",
 );

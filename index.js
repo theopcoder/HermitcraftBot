@@ -1,5 +1,6 @@
 const { CommandoClient } = require("discord.js-commando");
 const BotConfiguration = require("./Configuration.js");
+const BadWords = require("./BadWords.js");
 const System = require("./System.js");
 const discord = require("discord.js");
 const token = require("./Token.js");
@@ -41,6 +42,11 @@ bot.on('ready', function(){
     console.log(`Bot Developer: ${Developer}`);
     console.log(`Build Version: ${BuildID}`);
     console.log(`Running Version: ${Version}`);
+
+    //XXX Temp
+    db.set("settings.LevelUpSystem", 1);
+    db.set("settings.DeadChatPings", 1);
+    db.set("settings.AutoModeration", 1);
 });
 
 //New Member Message
@@ -138,14 +144,25 @@ bot.on('message', function(message){
     }
 });
 
+//temp
+let MuteBypassProtectionSetting = "1";
+let ChatFilterSetting = "1";
+let DiscordInviteSetting = "1";
+let DeletedMessagesSetting = "1";
+
+//TODO Add edited messages Auto Moderation
+
 //Auto Moderation
 bot.on('message', function(message){
     if (db.get("settings.AutoModeration")== 1){
         if (message.guild === null)return;
         if (message.author.bot)return;
         let ModLogChannel = message.guild.channels.cache.get(ModLogID);
+        //TODO Add moderation bypass role
         //Mute Bypass Protection
-        if (MuteBypassProtectionSetting == "1" && db.get(`${message.author.id}.admin.CurrentlyMuted`)== 1){
+
+        //TODO Fix this. When this is activated, it disables chat filter and auto moderation
+        /*if (MuteBypassProtectionSetting == "1" && db.get(`${message.author.id}.admin.CurrentlyMuted`)== 1){//TODO Have these set to moderation.<action> for -security
             message.delete();
             db.add(`${message.author.id}.admin.TimesBypassedMute`, 1);
             let MuteRole = message.guild.roles.cache.get(MuteRoleID);
@@ -171,13 +188,17 @@ bot.on('message', function(message){
                 .setAuthor("Mute Bypass | "+message.author.tag, message.author.displayAvatarURL())
                 .setDescription(`
                     **User:** ${message.author}
+                    **Channel:** ${message.channel}
                     **Bypasses:** ${db.get(`${message.author.id}.admin.TimesBypassedMute`)}
                 `)
                 .setFooter("Auto Moderation: Mute Bypass")
             ModLogChannel.send(MuteBypassMessageLog);
         }else{
             return;
-        }
+        }*/
+        //TODO Make it so after so many violations it does an auto mute?
+
+
         //Chat Filter
         if (ChatFilterSetting == "1"){
             let msg = message.content.toLowerCase();
@@ -206,6 +227,7 @@ bot.on('message', function(message){
                         .setAuthor("Chat Filter | "+message.author.tag, message.author.displayAvatarURL())
                         .setDescription(`
                             **User:** ${message.author}
+                            **Channel:** ${message.channel}
                             **Message:** ${message.content}
                         `)
                         .setFooter("Auto Moderation: Chat Filter")
@@ -240,6 +262,7 @@ bot.on('message', function(message){
                     .setAuthor("Discord Invite | "+message.author.tag, message.author.displayAvatarURL())
                     .setDescription(`
                         **User:** ${message.author}
+                        **Channel:** ${message.channel}
                         **Message:** ${message.content}
                     `)
                     .setFooter("Auto Moderation: Discord Invite")
@@ -253,10 +276,32 @@ bot.on('message', function(message){
     }
 });
 
+//Auto Moderation | Edited Messages
+bot.on('messageUpdate', (oldMessage, newMessage) => {
+    //TODO Add to auto moderation and own setting enabler
+    if (!oldMessage.author) return;
+    const MessageLog = bot.channels.cache.find(channel => channel.id === EditedMessagesLogChannelID);
+
+    const EditedMessage = new discord.MessageEmbed()
+        .setTimestamp()
+        .setColor("")//Leave empty
+        .setAuthor("Discord Invite | "+newMessage.author.tag, newMessage.author.displayAvatarURL())
+        .setDescription(`
+            **User:** ${newMessage.author}
+            **Channel:** ${newMessage.channel}
+            **Original Message:** ${oldMessage}
+
+            **New Message:** ${newMessage}
+        `)
+        .setFooter("Auto Moderation: Edited Message")
+    MessageLog.send(EditedMessage);
+});
+
 //Auto Moderation | Deleted Messages
 bot.on('messageDelete', async (message) => {
     if (db.get("settings.AutoModeration")== 1) {
         if (DeletedMessagesSetting == "1"){
+            return; //TODO Remove when fixed
             if (message.guild === null)return;
             let ModLogChannel = message.guild.channels.cache.get(DeletedMessageLogChannelID);
             const entry = await message.guild.fetchAuditLogs({type: 'MESSAGE_DELETE'}).then(audit => audit.entries.first());
@@ -291,10 +336,11 @@ bot.on('messageDelete', async (message) => {
     }
 });
 
+
 //Dead Chat Pings
 bot.on('ready', () => {
     setInterval(() => {
-        if (db.get("settings.DeadChatPings") == 1){
+        if (db.get("settings.DeadChatPings")== 1){
             const DCPQuestion = Math.floor(Math.random() * DeadChatQuestions.length);
             const DeadChatMessage = new discord.MessageEmbed()
                 .setTimestamp()
@@ -309,7 +355,7 @@ bot.on('ready', () => {
             function DCP(message){
                 PingChannel.send(`Dead Chat Ping! <@&${DCPPingRoleID}>`).then(message => {
                     message.delete();
-                }); 
+                });
             }
         }else{
             return;

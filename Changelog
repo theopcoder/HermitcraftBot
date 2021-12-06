@@ -21,9 +21,9 @@ Additions/Changes:
 13. [Change] The polls command description and no arguments message where changed
 14. [Change] -power now has message embeds instead of normal messages
 15. [Change] Added footer to -settings and updated -settings help message
-16. [Change] 
-
-[Change] 
+16. [Change] Auto moderation now logs the channel
+17. [Change] -pf Command ui updated
+18. [Change] Added edited messages logger
 
 Deletions:
 1. 
