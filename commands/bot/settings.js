@@ -133,7 +133,7 @@ module.exports = class SettingsCommand extends Command {
                 **(3) Auto Moderation:** ${AutoModerationSetting}
                 **(4) Staff Applications:** ${StaffApplicationSetting}
             `)
-            .setFooter("Do -settings help for help!")
+            .setFooter("-settings help")
         message.channel.send(SettingsMessage);
 	}
 };

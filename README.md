@@ -5,7 +5,7 @@
 This is a custom Discord bot for Hermitcraft Fan Server on Discord.
 
 Developer: theopcoder  
-Bot Version: 2.1.1 Update
+Bot Version: 2.1.1 Update  
 BuildID: 2021.06.15.2.1.1
 
 # Website

@@ -24,12 +24,15 @@ Additions/Changes:
 16. [Change] Auto moderation now logs the channel
 17. [Change] -pf Command ui updated
 18. [Change] Added edited messages logger
+19. [Change] -unban will now send error message in channel and not is console
+20. [Change] -slowmode will now say successfully disabled when set to 0 & Duration in log message says Duration: <time> seconds
+21. [Change] 
 
 Deletions:
 1. 
 
 Bug Fixes:
-1. 
+1. Fixed deleted messages showing as empty when trying to log embeds
 
 Dependencies & Security Patches:
 1. Fixed 2 vulnerabilities in quick.db

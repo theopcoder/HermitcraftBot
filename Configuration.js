@@ -23,7 +23,15 @@ var BotConfiguration = [
         ModLogID = "861806413848117248",
         DeletedMessageLogChannelID = "861806446337720340",
         EditedMessagesLogChannelID = "861806446337720340",
+        MemberLeaveChannelID = "862185793911914516",
+        LogChannelID = "861806425700564992",
+        WelcomeChannelID = "862185793911914516",
+        NewMemberRoleID = "799863064455282689",
+        MuteRoleID = "799863227269775371",
 ];
+
+//TODO Sort the configurations
+//TODO Add a help section for the configurations
 
 //Other Configurations
 DeadChatQuestions = [
