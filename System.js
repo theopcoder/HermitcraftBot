@@ -17,5 +17,3 @@ var BotErrors = [
     UserAlreadyMuted = ":warning: That user is already muted!",
     DMError = ":warning: I couldn't DM that user!",
 ];
-
-//TODO Add a first time setup

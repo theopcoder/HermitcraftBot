@@ -4,7 +4,7 @@ const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
-module.exports = class WalletCommand extends Command {
+module.exports = class GambleCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'gamble',

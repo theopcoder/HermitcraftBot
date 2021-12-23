@@ -20,19 +20,20 @@ Additions/Changes:
 12. [Change] Removed Bedrock Minecraft information as that server is no longer up
 13. [Change] The polls command description and no arguments message where changed
 14. [Change] -power now has message embeds instead of normal messages
-15. [Change] Added footer to -settings and updated -settings help message
+15. [Change] Added footer to -settings and updated -settings help message and updated cog icon
 16. [Change] Auto moderation now logs the channel
 17. [Change] -pf Command ui updated
 18. [Change] Added edited messages logger
 19. [Change] -unban will now send error message in channel and not is console
 20. [Change] -slowmode will now say successfully disabled when set to 0 & Duration in log message says Duration: <time> seconds
-21. [Change] 
+21. [Addition] Created BootLoader.js to ensure correct bot startup, diagnostics, and for first time setup
 
 Deletions:
-1. 
+1. Removed BotID in Configuration
 
 Bug Fixes:
 1. Fixed deleted messages showing as empty when trying to log embeds
+2. Fixed -mute unmuting user even if they where unmuted by another person
 
 Dependencies & Security Patches:
 1. Fixed 2 vulnerabilities in quick.db

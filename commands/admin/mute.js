@@ -141,6 +141,8 @@ module.exports = class MuteCommand extends Command {
             );
 		});
 
+        //BUG Does not unmute user after bot restart
+
         const ChatMuteMessage = new discord.MessageEmbed()
             .setTimestamp()
             .setColor("#FFA500")
@@ -172,7 +174,9 @@ module.exports = class MuteCommand extends Command {
         LogChannel.send(MuteLogMessage);
 
         setTimeout(() => {
-            //BUG If user is unmuted using unmute command, this still activates
+            if (db.get(`${message.mentions.users.first().id}.admin.CurrentlyMuted`)== 0){
+                return;
+            }
             var UnmuteViolationNumber = db.add(`{UnmuteViolationNumber}_${message.mentions.users.first().id}`, 1);
             db.push(`{UnmuteReason}_${message.mentions.users.first().id}`, `**TempMute ${UnmuteViolationNumber}:** [Mod: ${message.author} | Time: ${new Date().toLocaleString()}]\nReason: Times Up`);
             db.set(`${message.mentions.users.first().id}.admin.CurrentlyMuted`, 0);
@@ -186,8 +190,6 @@ module.exports = class MuteCommand extends Command {
                     console.log(`Could not message unmuted user!`)
                 );
 			});
-
-            //XXX Find a way to remove BotID variable and have it auto read the bots ID
 
             const UnmuteLogMessage = new discord.MessageEmbed()
                 .setTimestamp()

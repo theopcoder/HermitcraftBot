@@ -61,8 +61,7 @@ module.exports = class UnbanCommand extends Command {
 		var UnbanViolationNumber = db.add(`{UnbanViolationNumber}_${words[0].id}`, 1);
 		db.push(`{UnbanReason}_${words[0].id}`, `**Unban ${UnbanViolationNumber}:** [Mod: ${message.author} | Time: ${new Date().toLocaleString()}] ${words.slice(1).join(' ')}`);
 		message.guild.members.unban(words[0]).catch(err => 
-			message.channel.send("Could not unban user. They are either unbanned or there was an error!")
-			//console.log("Could not unban user. Either user is already unbanned or there was an error!")
+			message.reply("Could not unban user. They are either unbanned or there was an error!")
 		);
 		//BUG still sends log messages after sending error message
 

@@ -71,7 +71,9 @@ module.exports = class BanCommand extends Command {
 		let users = message.mentions.users.first();
 
 		BannedUser.send(`You have been ban from ${message.guild.name} because, ${reason}.`).catch(err => 
-			console.log(`Could not message banned user!`)
+			message.reply("Could not message banned user!").then(message => {
+                message.delete({timeout: 10000});
+			})
 		);
         BannedUser.ban({reason: reason});
 

@@ -14,8 +14,6 @@ module.exports = class SettingsCommand extends Command {
 		});
 	}
 
-    //TODO Settings Command: Configure in auto moderation/features and configuration file
-
 	run(message, args) {
         if (!message.member.hasPermission("ADMINISTRATOR")){
 			const PermissionErrorMessage = new discord.MessageEmbed()

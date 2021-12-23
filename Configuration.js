@@ -2,7 +2,8 @@ var BotConfiguration = [
     //=============================
     //BotConfiguration=============
         BotPrefix = "-",
-        ActivityMessage = "Working on Updates",
+        BotOwner = "453719594708762636",
+        ActivityMessage = "Update windows!",
     //=============================
     //DCPConfiguration=============
         DCPRoleID = "825568176178855977",
@@ -15,23 +16,30 @@ var BotConfiguration = [
         LevelUpMoney = "20",
         RandomXP = "5",
         MaxXP = "10",
-    //unlisted
-        SeasonRoleID = "825556515284844544",
-        BugChannelID = "878471568831963148",
-        PollChannelID = "861806480084041779",
+    //=============================
+    //SupportConfiguration=========
+        ApplicationChannelID = "923374480015904848",
         SuggestionChannelID = "911819288548093972",
-        ModLogID = "861806413848117248",
-        DeletedMessageLogChannelID = "861806446337720340",
-        EditedMessagesLogChannelID = "861806446337720340",
+        PollChannelID = "861806480084041779",
+        BugChannelID = "878471568831963148",
+    //=============================
+    //MemberConfiguration==========
         MemberLeaveChannelID = "862185793911914516",
-        LogChannelID = "861806425700564992",
         WelcomeChannelID = "862185793911914516",
         NewMemberRoleID = "799863064455282689",
+    //=============================
+    //ModerationConfiguration======
+        AMBypassPermissionCheck = "MANAGE_MESSAGES",
+        DeletedMessageLogChannelID = "861806446337720340",
+        EditedMessagesLogChannelID = "861806446337720340",
+        LogChannelID = "861806425700564992",
         MuteRoleID = "799863227269775371",
+        ModLogID = "861806413848117248",
+    //=============================
+    //OtherConfiguration===========
+        SeasonRoleID = "825556515284844544",
+        UpdateRoleID = "855279094149283880",
 ];
-
-//TODO Sort the configurations
-//TODO Add a help section for the configurations
 
 //Other Configurations
 DeadChatQuestions = [
@@ -67,3 +75,53 @@ DeadChatQuestions = [
     "Do you have pets?",
     "Airplane or Car?",
 ];
+
+//TODO Add a help section for the configurations
+
+//---------------Configuration Help---------------//
+//------------------------------------------------//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//

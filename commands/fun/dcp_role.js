@@ -38,7 +38,7 @@ module.exports = class DeadChatPingRoleCommand extends Command {
 		}
 		if (reason == "remove"){
 			message.member.roles.remove(DCPRoleID);
-			message.reply(`Successfully removed the dead chat ping role! Do -dcp get to get the role!`);
+			message.reply(`Successfully removed the dead chat ping role! Do -dcp get to reapply the role!`);
 		}
 	}
 };

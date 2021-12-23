@@ -62,6 +62,7 @@ module.exports = class SlowModeCommand extends Command {
 		}
 
 		if (time == 0){
+			message.channel.setRateLimitPerUser(0);
 			const SlowModeDisabled = new discord.MessageEmbed()
 				.setColor("#00FF00")
 				.setDescription(`:white_check_mark: Successfully disabled slowmode!`)

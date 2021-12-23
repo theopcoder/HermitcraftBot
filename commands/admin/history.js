@@ -4,8 +4,6 @@ const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
-//TODO Add ID check instead of ping
-
 module.exports = class HistoryCommand extends Command {
 	constructor(client) {
 		super(client, {
