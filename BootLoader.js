@@ -1,9 +1,26 @@
-const chalk = require("chalk");
-const db = require("quick.db");
 const fs = require("fs");
 
 module.exports = {
     StartUpChecks: () => {
+        //Checks for required packages
+            try {
+                const { CommandoClient } = require("discord.js-commando");
+                const discord = require("discord.js");
+                const chalk = require("chalk");
+                const db = require("quick.db");
+                const ms = require("ms");
+            }catch(err) {
+                console.log(`
+                Missing packages have been detected. Please insure the following packages are installed:
+                npm i discord.js
+                npm i discord.js-commando
+                npm i quick.db
+                npm i chalk
+                npm i ms
+                `);
+                process.exit();
+            }
+
         //Checks for Token.js
             try { 
                 if (!fs.existsSync("./Token.js")) {
@@ -26,6 +43,19 @@ module.exports = {
                 process.exit();
             };
 
+        //Checks for Configuration.js
+        try {
+            if (!fs.existsSync("./Configuration.js")) {
+                console.log(chalk.red("Fatal Error! Could not find Configuration.js"));
+                console.log(chalk.red("Configuration.js is a critical file and the bot will not work without it!"));
+                console.log(chalk.red("Please download the file and configure the file to start the bot!"));
+                console.log(chalk.green("Official Bot Website: https://github.com/theopcoder/HermitcraftBot/tree/master"));
+                process.exit();
+            }
+        }catch(err) {
+            console.error(err);
+        }
+
         //Checks for System.js
             try {
                 if (!fs.existsSync("./System.js")) {
@@ -39,19 +69,7 @@ module.exports = {
                 console.error(err);
             }
 
-        //Checks for Configuration.js
-            try {
-                if (!fs.existsSync("./Configuration.js")) {
-                    console.log(chalk.red("Fatal Error! Could not find Configuration.js"));
-                    console.log(chalk.red("Configuration.js is a critical file and the bot will not work without it!"));
-                    console.log(chalk.red("Please download the file and configure the file to start the bot!"));
-                    console.log(chalk.green("Official Bot Website: https://github.com/theopcoder/HermitcraftBot/tree/master"));
-                    process.exit();
-                }
-            }catch(err) {
-                console.error(err);
-            }
-
+            const db = require("quick.db");
         //First Time SetUp Setting Defaults
             //Settings
             if (db.get("settings.LevelUpSystem")== null)db.set("settings.LevelUpSystem", 1);

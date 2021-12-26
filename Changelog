@@ -1,9 +1,9 @@
 ==================================================
-Title: 2.2.0 Recode
+Title: 2.2.0 Christmas Update
 Version: 2.2.0
-DevID: 2021.07.02.2.1.2
-Date: 
-Description: 
+DevID: 2021.12.25.2.2.0
+Date: 12/25/2021
+Description: Fixes a few bugs and improves many features alongside adding new features.
 
 Additions/Changes:
 1. [Change] Some bot errors have been updated & deprecated errors have been officially removed
@@ -27,6 +27,8 @@ Additions/Changes:
 19. [Change] -unban will now send error message in channel and not is console
 20. [Change] -slowmode will now say successfully disabled when set to 0 & Duration in log message says Duration: <time> seconds
 21. [Addition] Created BootLoader.js to ensure correct bot startup, diagnostics, and for first time setup
+22. [Addition] Added -store
+22. [Addition] Added -transactions
 
 Deletions:
 1. Removed BotID in Configuration
@@ -38,5 +40,5 @@ Bug Fixes:
 Dependencies & Security Patches:
 1. Fixed 2 vulnerabilities in quick.db
 
-Notes:
+Notes: There are currently known issues with the bot. I hope to fix these issues in the next update.
 ==================================================

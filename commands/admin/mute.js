@@ -1,4 +1,3 @@
-//Have mutes logged in quick.db so they don't continue if bot restarts or shutdown
 const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
 const BotData = require("../../System.js");
@@ -206,6 +205,6 @@ module.exports = class MuteCommand extends Command {
                 `)
             let LogChannel = message.guild.channels.cache.get(LogChannelID);
             LogChannel.send(UnmuteLogMessage);
-        }, ms(`${time}`));
+        }, ms(time));//BUG Doesn't mute users if the time is over 2 numbers
 	}
 };

@@ -50,7 +50,7 @@ module.exports = class GambleCommand extends Command {
         if (Chance == ChanceCompare){
             var Prize = Math.floor(Math.random() * 5000);
             db.add(`${message.author.id}.basic.money`, Prize);
-            if (Prize < bet)return message.channel.send(`Congratulations ${message.author}! You just won **$${Win}** but, you still lost **$${bet-Win}**. :face_with_monocle:`);
+            if (Prize < bet)return message.channel.send(`Congratulations ${message.author}! You just won **$${Prize}** but, you still lost **$${bet-Prize}**. :face_with_monocle:`);
             if (Prize == bet)return message.channel.send(`Congratulations ${message.author}! You got your **$${bet}** back! :dollar:`);
             if (Prize > bet)return message.reply(`Congratulations ${message.author}! You just won **$${Prize}!** :moneybag:`);
         }else{

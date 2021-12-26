@@ -14,7 +14,7 @@ const ms = require("ms");
 
 const bot = new CommandoClient({
 	commandPrefix: BotPrefix,
-    owner: BotOwner,
+    owner: ServerOwnerID,
 });
 
 bot.registry
@@ -268,25 +268,23 @@ bot.on('messageUpdate', (oldMessage, newMessage) => {
         if (db.get("AutoModeration.EditedMessageLogger") == 1){
             if (newMessage.guild === null)return;
             if(newMessage.embeds.length > 0)return;
-            if (EditedMessageSetting == "1"){
-                if (!oldMessage.author) return;
-                const MessageLog = bot.channels.cache.find(channel => channel.id === EditedMessagesLogChannelID);
-                if(newMessage == null)return;
-    
-                const EditedMessage = new discord.MessageEmbed()
-                    .setTimestamp()
-                    .setColor("")//Leave empty
-                    .setAuthor("Edited Message | "+newMessage.author.tag, newMessage.author.displayAvatarURL())
-                    .setDescription(`
-                        **User:** ${newMessage.author}
-                        **Channel:** ${newMessage.channel}
-                        **Original Message:** ${oldMessage}
-    
-                        **New Message:** ${newMessage}
-                    `)
-                    .setFooter("Auto Moderation: Edited Message")
-                MessageLog.send(EditedMessage);
-            }
+            if (!oldMessage.author) return;
+            const MessageLog = bot.channels.cache.find(channel => channel.id === EditedMessagesLogChannelID);
+            if(newMessage == null)return;
+
+            const EditedMessage = new discord.MessageEmbed()
+                .setTimestamp()
+                .setColor("")//Leave empty
+                .setAuthor("Edited Message | "+newMessage.author.tag, newMessage.author.displayAvatarURL())
+                .setDescription(`
+                    **User:** ${newMessage.author}
+                    **Channel:** ${newMessage.channel}
+                    **Original Message:** ${oldMessage}
+
+                    **New Message:** ${newMessage}
+                `)
+                .setFooter("Auto Moderation: Edited Message")
+            MessageLog.send(EditedMessage);
         }
     }
 });
@@ -313,7 +311,7 @@ bot.on('messageDelete', async (message) => {
                 .setTimestamp()
                 .setColor("#fc3c3c")
                 .setThumbnail(user.displayAvatarURL())
-                .setAuthor(message.author.tag, message.author.displayAvatarURL())
+                .setAuthor("Deleted Message | "+message.author.tag, message.author.displayAvatarURL())
                 .setDescription(`
                     **Executor:** ${user}
                     **Author:** ${message.author}
