@@ -1,6 +1,6 @@
+const BootLoader = require("./BootLoader.js");
 BootLoader.StartUpChecks();
 const { CommandoClient } = require("discord.js-commando");
-const BootLoader = require("./BootLoader.js");
 const BotConfiguration = require("./Configuration.js");
 const BadWords = require("./BadWords.js");
 const System = require("./System.js");
