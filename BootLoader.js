@@ -20,7 +20,9 @@ module.exports = {
                 `);
                 process.exit();
             }
-
+        
+        const chalk = require("chalk");
+        const db = require("quick.db");
         //Checks for Token.js
             try { 
                 if (!fs.existsSync("./Token.js")) {
@@ -69,7 +71,6 @@ module.exports = {
                 console.error(err);
             }
 
-            const db = require("quick.db");
         //First Time SetUp Setting Defaults
             //Settings
             if (db.get("settings.LevelUpSystem")== null)db.set("settings.LevelUpSystem", 1);

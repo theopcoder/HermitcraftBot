@@ -5,8 +5,8 @@
 This is a custom Discord bot for Hermitcraft Fan Server on Discord.
 
 Developer: theopcoder  
-Bot Version: 2.1.1 Update  
-BuildID: 2021.06.15.2.1.1
+Bot Version: 2.2.0 Christmas Update  
+BuildID: 2021.12.25.2.2.0
 
 # Website
 Link: https://theopcoder.github.io/HermitcraftBot/
@@ -22,7 +22,7 @@ Link: https://theopcoder.github.io/HermitcraftBot/
 **[7.1.3]** quick.db  
 [Documentation] https://quickdb.js.org/docs.html
 
-**[4.1.1]** chalk  
+**[4.1.2]** chalk  
 [Documentation] https://github.com/chalk/chalk#readme
 
 **[2.1.3]** ms  
