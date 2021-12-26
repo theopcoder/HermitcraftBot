@@ -1,10 +1,10 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
-module.exports = class WalletCommand extends Command {
+module.exports = class GambleCommand extends Command {
 	constructor(client) {
 		super(client, {
 			name: 'gamble',
@@ -50,13 +50,13 @@ module.exports = class WalletCommand extends Command {
         if (Chance == ChanceCompare){
             var Prize = Math.floor(Math.random() * 5000);
             db.add(`${message.author.id}.basic.money`, Prize);
-            if (Prize < bet)return message.channel.send(`Congradulations ${message.author}! You just won **$${Win}** but, you still lost **$${bet-Win}**. :face_with_monocle:`);
-            if (Prize == bet)return message.channel.send(`Congradulations ${message.author}! You got your **$${bet}** back! :dollar:`);
-            if (Prize > bet)return message.reply(`Congradulation ${message.author}! You just won **$${Prize}!** :moneybag:`);
+            if (Prize < bet)return message.channel.send(`Congratulations ${message.author}! You just won **$${Prize}** but, you still lost **$${bet-Prize}**. :face_with_monocle:`);
+            if (Prize == bet)return message.channel.send(`Congratulations ${message.author}! You got your **$${bet}** back! :dollar:`);
+            if (Prize > bet)return message.reply(`Congratulations ${message.author}! You just won **$${Prize}!** :moneybag:`);
         }else{
-            let Newbal = db.get(`${message.author.id}.basic.money`);if (Newbal == null)Newbal = "0";
-            if (Newbal > 1000){
-                message.reply(`Better luck next time. Why not try again? You still have **$${Newbal}**!`);
+            let NewBal = db.get(`${message.author.id}.basic.money`);if (NewBal == null)NewBal = "0";
+            if (NewBal > 1000){
+                message.reply(`Better luck next time. Why not try again? You still have **$${NewBal}**!`);
             }else{
                 message.reply("You lost, better luck next time!");
             }

@@ -2,6 +2,4 @@ node_modules
 Token.js
 package-lock.json
 json.sqlite
-DeveloperFolder
-.vscode
-docs
+Developer

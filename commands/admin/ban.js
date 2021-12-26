@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -71,7 +71,9 @@ module.exports = class BanCommand extends Command {
 		let users = message.mentions.users.first();
 
 		BannedUser.send(`You have been ban from ${message.guild.name} because, ${reason}.`).catch(err => 
-			console.log(`Could not message banned user!`)
+			message.reply("Could not message banned user!").then(message => {
+                message.delete({timeout: 10000});
+			})
 		);
         BannedUser.ban({reason: reason});
 

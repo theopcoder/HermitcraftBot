@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -25,8 +25,7 @@ module.exports = class InfoCommand extends Command {
             .setThumbnail(message.guild.iconURL())
             .setTitle(`${message.guild.name}`)
             .addField("Server Info:", `
-                :satellite: **Minecraft IP:** Hermitcraft.pedestriamc.com
-                :satellite: **Minecraft Bedrock IP:** Bedrock.hermitcraft.pedestriamc.com | Port: 19133
+                :satellite: **Minecraft IP:** hermitcraft.pedestriamc.com
                 :e_mail: **Discord Invite:** https://discord.gg/AURDPCN
                 :person_in_tuxedo: **Members:** ${message.guild.memberCount}
             `)

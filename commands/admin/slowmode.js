@@ -1,9 +1,8 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
-const ms = require("ms");
 
 module.exports = class SlowModeCommand extends Command {
 	constructor(client) {
@@ -62,6 +61,15 @@ module.exports = class SlowModeCommand extends Command {
 			return;
 		}
 
+		if (time == 0){
+			message.channel.setRateLimitPerUser(0);
+			const SlowModeDisabled = new discord.MessageEmbed()
+				.setColor("#00FF00")
+				.setDescription(`:white_check_mark: Successfully disabled slowmode!`)
+			message.channel.send(SlowModeDisabled);
+			return;
+		}
+
 		message.channel.setRateLimitPerUser(time);
         const SlowMode = new discord.MessageEmbed()
 			.setColor("#00FF00")
@@ -76,7 +84,7 @@ module.exports = class SlowModeCommand extends Command {
 			.setDescription(`
 				**Moderator:** ${message.author}
 				**Channel:** ${message.channel}
-				**Duration:** ${words[0]}
+				**Duration:** ${time} seconds
 			`)
 		let LogChannel = message.guild.channels.cache.get(ModLogID);
 		LogChannel.send(SlowModeLogMessage);

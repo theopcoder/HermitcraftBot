@@ -1,9 +1,8 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
-const ms = require("ms");
 
 module.exports = class UnmuteCommand extends Command {
 	constructor(client) {
@@ -49,10 +48,10 @@ module.exports = class UnmuteCommand extends Command {
             return;
         }
         if (db.get(`${message.mentions.users.first().id}.admin.CurrentlyMuted`)== 0){
-            const UserAlreadyUnutedMessage = new discord.MessageEmbed()
+            const UserAlreadyUnmutedMessage = new discord.MessageEmbed()
                 .setColor("#FF0000")
                 .setDescription(UserAlreadyUnmuted)
-            message.channel.send(UserAlreadyUnutedMessage);
+            message.channel.send(UserAlreadyUnmutedMessage);
             return;
 		}
         let words = args.split(' ');

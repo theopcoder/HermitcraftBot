@@ -1,5 +1,6 @@
-const { Command } = require('discord.js-commando');
-const BotData = require("../../BotData.js");
+const BotConfiguration = require("../../Configuration.js");
+const { Command } = require("discord.js-commando");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -49,7 +50,7 @@ module.exports = class TaxCommand extends Command {
             });
         }
 		if(tax > db.get(`${message.mentions.users.first().id}.basic.money`)){
-			return message.channel.send(`${TaxedUser.user.tag} doesn't have $${tax}! They only have $${Balance}!`).then(message => {
+			return message.reply(`${TaxedUser.user.tag} doesn't have $${tax}! They only have $${Balance}!`).then(message => {
 				message.delete({timeout: 10000});
 			});
 		}

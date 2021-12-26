@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 const ms = require("ms");
@@ -140,6 +140,8 @@ module.exports = class MuteCommand extends Command {
             );
 		});
 
+        //BUG Does not unmute user after bot restart
+
         const ChatMuteMessage = new discord.MessageEmbed()
             .setTimestamp()
             .setColor("#FFA500")
@@ -171,6 +173,9 @@ module.exports = class MuteCommand extends Command {
         LogChannel.send(MuteLogMessage);
 
         setTimeout(() => {
+            if (db.get(`${message.mentions.users.first().id}.admin.CurrentlyMuted`)== 0){
+                return;
+            }
             var UnmuteViolationNumber = db.add(`{UnmuteViolationNumber}_${message.mentions.users.first().id}`, 1);
             db.push(`{UnmuteReason}_${message.mentions.users.first().id}`, `**TempMute ${UnmuteViolationNumber}:** [Mod: ${message.author} | Time: ${new Date().toLocaleString()}]\nReason: Times Up`);
             db.set(`${message.mentions.users.first().id}.admin.CurrentlyMuted`, 0);
@@ -191,17 +196,15 @@ module.exports = class MuteCommand extends Command {
                 .setThumbnail(users.displayAvatarURL())
                 .setTitle("Unmute")
                 .setDescription(`
-                    **Moderator:** <@${BotID}>
+                    **Moderator:** <@${message.client.user.id}>
                     **User:** ${MutedUser}
                     **User ID:** ${MutedUser.id}
-                    **Reason:** ${reason}
+                    **Reason:** Mute is over.
                     **Time:** ${time}
                     **Bypasses:** ${MuteBypasses}
-                    **Violations:** ${Violations}
-                    **Other Violations:** Warnings: ${Warnings} | Mutes: ${Mutes} | Kicks: ${Kicks} | Bans: ${Bans}
                 `)
             let LogChannel = message.guild.channels.cache.get(LogChannelID);
             LogChannel.send(UnmuteLogMessage);
-        }, ms(`${time}`));
+        }, ms(time));//BUG Doesn't mute users if the time is over 2 numbers
 	}
 };

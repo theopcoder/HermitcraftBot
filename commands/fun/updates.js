@@ -4,13 +4,13 @@ const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
-module.exports = class DeadChatPingRoleCommand extends Command {
+module.exports = class UpdateRoleCommand extends Command {
 	constructor(client) {
 		super(client, {
-			name: 'dcp',
+			name: 'update',
 			group: 'fun',
-			memberName: 'dcp',
-			description: 'Get or remove the Dead Chat Ping role!',
+			memberName: 'update',
+			description: `Gives you the update role!`,
 		});
 	}
 
@@ -19,26 +19,26 @@ module.exports = class DeadChatPingRoleCommand extends Command {
             message.reply(DMMessage);
             return;
         }
-		let words = args.split(' ');
+        let words = args.split(' ');
         let reason = words.slice(0).join(' ');
 		if (!reason){
 			const IncorrectUsage = new discord.MessageEmbed()
 				.setColor("#FFFF00")
 				.setTitle("Incorrect Usage!")
 				.setDescription(`
-					-dcp get | This allows you to get the Dead Chat Ping Role
-					-dcp remove | This allows you to remove the Dead Chat Ping Role
+					-update get | This allows you to get the update role
+					-update remove | This allows you to remove the update role
 				`)
 			message.channel.send(IncorrectUsage);
 			return;
 		}
 		if (reason == "get"){
-			message.member.roles.add(DCPRoleID);
-			message.reply(`Successfully gave you the dead chat ping role! Do -dcp remove to remove the role!`);
+			message.member.roles.add(UpdateRoleID);
+			message.reply(`Successfully gave you the update role! Do -update remove to remove the role!`);
 		}
 		if (reason == "remove"){
-			message.member.roles.remove(DCPRoleID);
-			message.reply(`Successfully removed the dead chat ping role! Do -dcp get to reapply the role!`);
+			message.member.roles.remove(UpdateRoleID);
+			message.reply(`Successfully removed the update role! Do -update get to reapply the role!`);
 		}
 	}
 };

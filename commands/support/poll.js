@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -10,7 +10,7 @@ module.exports = class PollCommand extends Command {
 			name: 'poll',
 			group: 'support',
 			memberName: 'poll',
-			description: 'Send a server poll!',
+			description: 'Create a poll!',
 		});
 	}
 
@@ -29,7 +29,7 @@ module.exports = class PollCommand extends Command {
         if(!poll){
             const NoArgumentsGiven = new discord.MessageEmbed()
                 .setColor("#FF0000")
-                .setDescription(`:warning: What is the poll`);
+                .setDescription(NullArguments);
             return message.channel.send(NoArgumentsGiven).then(message => {
                 message.delete({timeout: 10000});
             });

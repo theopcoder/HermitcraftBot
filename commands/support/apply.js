@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const token = require("../../Token.js");
 const discord = require("discord.js");
 const db = require("quick.db");
@@ -14,6 +14,8 @@ module.exports = class ApplyCommand extends Command {
 			description: 'Apply for staff!',
 		});
 	}
+
+    //TODO Work on -apply command/fix the issues with it
 
 	run(message, args) {
         if (message.guild === null){
@@ -82,7 +84,7 @@ module.exports = class ApplyCommand extends Command {
                     .setThumbnail(message.mentions.users.first().displayAvatarURL())
                     .setTitle("Accepted Application")
                     .setDescription(`
-                        Congradulations, you have been accepted for part 2 of the staff application process!
+                        Congratulations, you have been accepted for part 2 of the staff application process!
                         The server owner will message you and have a private voice chat with you and personally interview you!
                         Make sure to have a microphone, a quiet place, and a date that will work for you for the interview!
                     `)

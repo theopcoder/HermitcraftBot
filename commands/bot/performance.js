@@ -1,9 +1,9 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
-const os = require('os');
+const os = require("os");
 
 module.exports = class PerformanceCommand extends Command {
 	constructor(client) {
@@ -11,7 +11,7 @@ module.exports = class PerformanceCommand extends Command {
 			name: 'pf',
 			group: 'bot',
 			memberName: 'pf',
-			description: `Performance command for the bot!`,
+			description: `Performance command for the bot.`,
 		});
 	}
 
@@ -31,16 +31,16 @@ module.exports = class PerformanceCommand extends Command {
 		}
 
 		var usedMemory = os.totalmem() -os.freemem(), totalMemory = os.totalmem();
-		var  getpercentage = ((usedMemory/totalMemory) * 100).toFixed(2) + '%'
+		var  GetPercentage = ((usedMemory/totalMemory) * 100).toFixed(2) + '%'
 
 		const PerformanceMessage = new discord.MessageEmbed()
 			.setTimestamp()
 			.setColor("#d3d3d3")
 			.setTitle("Bot Performance")
 			.setDescription(`
-				**Used RAM:** ${getpercentage}
-				**RAM:** ${(usedMemory/ Math.pow(1024, 3)).toFixed(2)}
-				**Ping:** ${Date.now() - message.createdTimestamp} ms
+				:desktop: **RAM:** ${(usedMemory/ Math.pow(1024, 3)).toFixed(2)}
+				:bar_chart: **Used RAM:** ${GetPercentage}
+				:satellite: **Ping:** ${Date.now() - message.createdTimestamp} ms
 			`)
 		message.channel.send(PerformanceMessage);
 	}

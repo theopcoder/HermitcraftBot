@@ -1,6 +1,6 @@
-const BotConfiguration = require("../../BotConfiguration.js");
+const BotConfiguration = require("../../Configuration.js");
 const { Command } = require("discord.js-commando");
-const BotData = require("../../BotData.js");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -29,7 +29,6 @@ module.exports = class SettingsCommand extends Command {
 
         if (settings == "help"){
             const SettingsHelpMessage = new discord.MessageEmbed()
-                .setTimestamp()
                 .setColor("#FFA500")
                 .attachFiles('./Images/SettingsCog.png')
                 .setThumbnail('attachment://SettingsCog.png')
@@ -40,8 +39,7 @@ module.exports = class SettingsCommand extends Command {
                     **(3)** Auto Moderation
                     **(4)** Staff Applications
 
-                    To turn a setting off or on, do -setting <number> on/off
-                    Example: -setting 1 off
+                    To turn a setting off or on, do -settings <number> on/off
                 `)
             message.channel.send(SettingsHelpMessage);
             return;
@@ -133,6 +131,7 @@ module.exports = class SettingsCommand extends Command {
                 **(3) Auto Moderation:** ${AutoModerationSetting}
                 **(4) Staff Applications:** ${StaffApplicationSetting}
             `)
+            .setFooter("-settings help")
         message.channel.send(SettingsMessage);
 	}
 };

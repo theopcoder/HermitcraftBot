@@ -1,5 +1,6 @@
-const { Command } = require('discord.js-commando');
-const BotData = require("../../BotData.js");
+const BotConfiguration = require("../../Configuration.js");
+const { Command } = require("discord.js-commando");
+const BotData = require("../../System.js");
 const discord = require("discord.js");
 const db = require("quick.db");
 
@@ -40,10 +41,10 @@ module.exports = class HistoryCommand extends Command {
 		let words = args.split(' ');
 		let part = words.slice(1).join(' ');
 
-		let WarnHistory = db.get(`{WarnReason}_${message.mentions.users.first().id}`); if (WarnHistory == null)WarnHistory = "No Logged Data For Warnings";
-		let MuteHistory = db.get(`{MuteReason}_${message.mentions.users.first().id}`); if (MuteHistory == null)MuteHistory = "No Logged Data For Mutes";
-		let KickHistory = db.get(`{KickReason}_${message.mentions.users.first().id}`); if (KickHistory == null)KickHistory = "No Logged Data For Kicks";
-		let BanHistory = db.get(`{BanReason}_${message.mentions.users.first().id}`); if (BanHistory == null)BanHistory = "No Logged Data For Bans";
+		let WarnHistory = db.get(`{WarnReason}_${message.mentions.users.first().id}`); if (WarnHistory == null)WarnHistory = "No Logged Warnings";
+		let MuteHistory = db.get(`{MuteReason}_${message.mentions.users.first().id}`); if (MuteHistory == null)MuteHistory = "No Logged Mutes";
+		let KickHistory = db.get(`{KickReason}_${message.mentions.users.first().id}`); if (KickHistory == null)KickHistory = "No Logged Kicks";
+		let BanHistory = db.get(`{BanReason}_${message.mentions.users.first().id}`); if (BanHistory == null)BanHistory = "No Logged Bans";
 		let Violations = db.get(`${message.mentions.users.first().id}.admin.Violations`); if (Violations == null)Violations = "0";
 		let Warnings = db.get(`${message.mentions.users.first().id}.admin.Warnings`); if (Warnings == null)Warnings = "0";
 		let Mutes = db.get(`${message.mentions.users.first().id}.admin.Mutes`); if (Mutes == null)Mutes = "0";
@@ -57,9 +58,9 @@ module.exports = class HistoryCommand extends Command {
 				.setColor("#FFA500")
 				.setAuthor(message.mentions.users.first().tag, message.mentions.users.first().displayAvatarURL())
 				.setThumbnail(users.displayAvatarURL())
-				.setTitle(`User Warning Records`)
+				.setTitle(`${Warnings} Logged Warnings`)
 				.addField("Warnings:", WarnHistory)
-				.setFooter("You can do -history [warnings, mutes, kicks, bans] to only view those logs!")
+				.setFooter("Do -history [warnings, mutes, kicks, bans] for specific logs!")
 			message.channel.send(UserWarningHistory);
 			return;
 		}
@@ -69,9 +70,9 @@ module.exports = class HistoryCommand extends Command {
 				.setColor("#FFA500")
 				.setAuthor(message.mentions.users.first().tag, message.mentions.users.first().displayAvatarURL())
 				.setThumbnail(users.displayAvatarURL())
-				.setTitle(`User Mute Records`)
+				.setTitle(`${Mutes} Logged Mutes`)
 				.addField("Mutes:", MuteHistory)
-				.setFooter("You can do -history [warnings, mutes, kicks, bans] to only view those logs!")
+				.setFooter("Do -history [warnings, mutes, kicks, bans] for specific logs!")
 			message.channel.send(UserMuteHistory);
 			return;
 		}
@@ -81,9 +82,9 @@ module.exports = class HistoryCommand extends Command {
 				.setColor("#6a0dad")
 				.setAuthor(message.mentions.users.first().tag, message.mentions.users.first().displayAvatarURL())
 				.setThumbnail(users.displayAvatarURL())
-				.setTitle(`User Kick Records`)
+				.setTitle(`${Kicks} Logged Kicks`)
 				.addField("Kicks:", KickHistory)
-				.setFooter("You can do -history [warnings, mutes, kicks, bans] to only view those logs!")
+				.setFooter("Do -history [warnings, mutes, kicks, bans] for specific logs!")
 			message.channel.send(UserKickHistory);
 			return;
 		}
@@ -93,9 +94,9 @@ module.exports = class HistoryCommand extends Command {
 				.setColor("#FF0000")
 				.setAuthor(message.mentions.users.first().tag, message.mentions.users.first().displayAvatarURL())
 				.setThumbnail(users.displayAvatarURL())
-				.setTitle(`User Ban Records`)
+				.setTitle(`${Bans} Logged Bans`)
 				.addField("Bans:", BanHistory)
-				.setFooter("You can do -history [warnings, mutes, kicks, bans] to only view those logs!")
+				.setFooter("Do -history [warnings, mutes, kicks, bans] for specific logs!")
 			message.channel.send(UserBanHistory);
 			return;
 		}
@@ -105,12 +106,12 @@ module.exports = class HistoryCommand extends Command {
 			.setColor("")
             .setAuthor(message.mentions.users.first().tag, message.mentions.users.first().displayAvatarURL())
 			.setThumbnail(users.displayAvatarURL())
-			.setTitle(`User Records`)
+			.setTitle(`${Violations} Logged Records`)
 			.addField("Warnings:", WarnHistory)
 			.addField("Mutes:", MuteHistory)
 			.addField("Kicks:", KickHistory)
 			.addField("Bans:", BanHistory)
-			.setFooter("You can do -history [warnings, mutes, kicks, bans] to only view those logs!")
+			.setFooter("Do -history [warnings, mutes, kicks, bans] for specific logs!")
 		message.channel.send(UserHistory);
 	}
 };
