@@ -1,44 +1,25 @@
 ==================================================
-Title: 2.2.0 Christmas Update
-Version: 2.2.0
-DevID: 2021.12.25.2.2.0
-Date: 12/25/2021
-Description: Fixes a few bugs and improves many features alongside adding new features.
+Title: 
+Version: 
+DevID:  2022.month.day.version
+Date: 
+Description: 
 
 Additions/Changes:
-1. [Change] Some bot errors have been updated & deprecated errors have been officially removed
-2. [Change] Renamed BotData to System
-3. [Change] Renamed BotConfiguration to Configuration
-4. [Change] Fixed spelling mistakes in -bal
-5. [Change] Fixed spelling mistakes in -temperature
-6. [Change] Fixed spelling mistakes in -topic
-7. [Change] Fixed spelling mistakes in -gamble
-8. [Change] Fixed spelling mistake in Level Up Message
-9. [Change] Fixed spelling mistake in Dead Chat Pings
-10. [Change] Dead Chat Pings can now be set with variables meaning they are no longer set to hourly. Example: 6h to 1d
-11. [Change] A member who leaves the server will no longer get a survey on why they left
-12. [Change] Removed Bedrock Minecraft information as that server is no longer up
-13. [Change] The polls command description and no arguments message where changed
-14. [Change] -power now has message embeds instead of normal messages
-15. [Change] Added footer to -settings and updated -settings help message and updated cog icon
-16. [Change] Auto moderation now logs the channel
-17. [Change] -pf Command ui updated
-18. [Change] Added edited messages logger
-19. [Change] -unban will now send error message in channel and not is console
-20. [Change] -slowmode will now say successfully disabled when set to 0 & Duration in log message says Duration: <time> seconds
-21. [Addition] Created BootLoader.js to ensure correct bot startup, diagnostics, and for first time setup
-22. [Addition] Added -store
-22. [Addition] Added -transactions
+1. [Addition] Added UnusAnnus message response
+2. [Addition] Added All checks passed message in BootLoader.js StartUpChecks
+3. [Addition] Added Next Level in -rank command to tell you how far until you level up
+4. [Change] Moved Channel and User in -purge log message
+5. [] 
 
 Deletions:
-1. Removed BotID in Configuration
+1. 
 
 Bug Fixes:
-1. Fixed deleted messages showing as empty when trying to log embeds
-2. Fixed -mute unmuting user even if they where unmuted by another person
+1. 
 
 Dependencies & Security Patches:
-1. Fixed 2 vulnerabilities in quick.db
+1. 
 
-Notes: There are currently known issues with the bot. I hope to fix these issues in the next update.
+Notes:
 ==================================================

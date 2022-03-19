@@ -26,6 +26,7 @@ module.exports = class RankCommand extends Command {
                 .setTitle("Rank")
                 .setDescription(`
                     **User:** ${message.mentions.users.first()}
+                    **Next Level:** ${MentionedUserXP} / ${MaxXP}
                     **Level:** ${MentionedUserLevel}
                     **XP:** ${MentionedUserXP}
                 `)
@@ -40,6 +41,7 @@ module.exports = class RankCommand extends Command {
                 .setThumbnail(message.author.displayAvatarURL())
                 .setTitle("Rank")
                 .setDescription(`
+                    **Next Level:** ${YourXP} / ${MaxXP}
                     **Level:** ${YourLevel}
                     **XP:** ${YourXP}
                 `)

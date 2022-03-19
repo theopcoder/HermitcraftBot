@@ -17,6 +17,8 @@ const bot = new CommandoClient({
     owner: ServerOwnerID,
 });
 
+//TODO Have commands like mute send could not message users in chat rather than console
+
 bot.registry
 	.registerDefaultTypes()
 	.registerGroups([
@@ -93,6 +95,9 @@ bot.on('message', function(message){
     }
     if (message.content == "dapopo"){
         message.reply("You knew him?");
+    }
+    if (message.content == "UnusAnnus"){
+        message.reply("Momento Mori");
     }
     //Listener for Minecraft IP
     var MCIPListener = [" ip ", " address "];
