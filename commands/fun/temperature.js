@@ -10,6 +10,7 @@ module.exports = class TemperatureCommand extends Command {
 			name: 'temperature',
 			group: 'fun',
 			memberName: 'temperature',
+            aliases: ["temp"],
 			description: 'Converts the temperature from F or C!',
 		});
 	}

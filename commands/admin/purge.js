@@ -61,6 +61,7 @@ module.exports = class PurgeCommand extends Command {
 			.setThumbnail(message.author.displayAvatarURL())
 			.setTitle("Purged Messages")
 			.setDescription(`
+				**Channel:** ${message.channel}
 				**User:** ${message.author}
                 **Channel:** ${message.channel}
 				**Amount:** ${DeletedMessage}
