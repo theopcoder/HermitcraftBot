@@ -86,7 +86,6 @@ module.exports = {
             if (db.get("AutoModeration.DeletedMessageLogger")== null)db.set("AutoModeration.DeletedMessageLogger", 1);
         
         //
-
         //Finish Message
         console.log(chalk.greenBright("All Startup Checks Passed Successfully!"));
     },
