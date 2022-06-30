@@ -63,6 +63,7 @@ module.exports = class PurgeCommand extends Command {
 			.setDescription(`
 				**Channel:** ${message.channel}
 				**User:** ${message.author}
+                **Channel:** ${message.channel}
 				**Amount:** ${DeletedMessage}
 			`)
 		let LogChannel = message.guild.channels.cache.get(ModLogID);
