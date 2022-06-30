@@ -1,16 +1,15 @@
 ==================================================
-Title: 
-Version: 
-DevID:  2022.month.day.version
-Date: 
-Description: 
+Title: 2.2.1 Update
+Version: 2.2.1
+DevID:  2022.06.30.2.2.1
+Date: 6/30/2022
+Description: A small update with a couple changes
 
 Additions/Changes:
 1. [Addition] Added UnusAnnus message response
 2. [Addition] Added All checks passed message in BootLoader.js StartUpChecks
 3. [Addition] Added Next Level in -rank command to tell you how far until you level up
 4. [Change] Moved Channel and User in -purge log message
-5. [] 
 
 Deletions:
 1. 
@@ -21,5 +20,5 @@ Bug Fixes:
 Dependencies & Security Patches:
 1. 
 
-Notes:
+Notes: 
 ==================================================

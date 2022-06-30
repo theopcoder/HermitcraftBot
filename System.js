@@ -1,7 +1,7 @@
 var BotInfo = [
-    Version = "2.2.0",
-    BuildID = "2021.12.25.2.2.0",
-    VN = "2.2.0 Christmas Update",
+    Version = "2.2.1",
+    BuildID = "2022.06.30.2.2.1",
+    VN = "2.2.1 Update",
     Developer = "theopcoder",
 ];
 
