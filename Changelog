@@ -1,15 +1,13 @@
 ==================================================
-Title: 2.2.1 Update
-Version: 2.2.1
-DevID:  2022.06.30.2.2.1
+Title: 3.0.0 Development | Release 1
+Version: 3.0.0
+DevID:  2022.06.30.3.0.0
 Date: 6/30/2022
-Description: A small update with a couple changes
+Description: Updating the bot to discord.js V13. This is an EARLY DEVELOPMENT build! Nothing in this branch is official nor prone to working!
 
 Additions/Changes:
-1. [Addition] Added UnusAnnus message response
-2. [Addition] Added All checks passed message in BootLoader.js StartUpChecks
-3. [Addition] Added Next Level in -rank command to tell you how far until you level up
-4. [Change] Moved Channel and User in -purge log message
+1. Renamed Configuration.js to Config.js
+2. 
 
 Deletions:
 1. 
@@ -18,7 +16,8 @@ Bug Fixes:
 1. 
 
 Dependencies & Security Patches:
-1. 
+1. Updated discord.js to V13
+2. 
 
 Notes: 
 ==================================================

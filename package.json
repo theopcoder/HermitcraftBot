@@ -1,7 +1,7 @@
 {
-  "name": "hermitcraftbot",
-  "version": "2.2.0",
-  "description": "A custom Discord bot for HermitCraft Fan Server",
+  "name": "oakvillesmpbot",
+  "version": "3.0.0",
+  "description": "A custom bot for the Oakville SMP Discord server.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/theopcoder/HermitcraftBot.git"
   },
+  "keywords": [
+    "bot",
+    "discord.js",
+    "v13",
+    "node.js",
+    "js"
+  ],
   "author": "theopcoder",
   "license": "ISC",
   "bugs": {
@@ -17,11 +24,6 @@
   },
   "homepage": "https://github.com/theopcoder/HermitcraftBot#readme",
   "dependencies": {
-    "chalk": "^4.1.2",
-    "discord.js": "^12.5.3",
-    "discord.js-commando": "^0.12.3",
-    "ms": "^2.1.3",
-    "prompt": "^1.2.2",
-    "quick.db": "^7.1.3"
+    "discord.js": "^13.8.1"
   }
 }
