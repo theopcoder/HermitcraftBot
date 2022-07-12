@@ -7,7 +7,13 @@ Description: Updating the bot to discord.js V13. This is an EARLY DEVELOPMENT bu
 
 Additions/Changes:
 1. Renamed Configuration.js to Config.js
-2. 
+2. Added help.js command
+3. Added ping.js command
+4. Changed ServerOwnerID to developerID in Config.js //TODO Make it devID?
+5. Added handlers folder to load commands
+6. Added bot token check
+7. Changed performance command from pf to performance
+8. 
 
 Deletions:
 1. 
@@ -17,7 +23,8 @@ Bug Fixes:
 
 Dependencies & Security Patches:
 1. Updated discord.js to V13
-2. 
+2. Removed discord.js-commando
+3. 
 
 Notes: 
 ==================================================
