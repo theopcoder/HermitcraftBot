@@ -44,6 +44,11 @@ module.exports = class PayCommand extends Command {
 				message.delete({timeout: 10000});
 			});
 		}
+        if (Payment < 1) {
+			return message.channel.send(`You can't pay a negative amount!`).then(message => {
+				message.delete({timeout: 10000});
+			});
+		}
 
 		db.add(`${message.mentions.users.first().id}.basic.money`, Payment);
 		db.subtract(`${message.author.id}.basic.money`, Payment);
